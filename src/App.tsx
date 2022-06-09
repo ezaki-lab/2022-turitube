@@ -6,9 +6,10 @@ import Login from "./Login";
 import NotFound from "./NotFound";
 import User from "./User/index";
 
-export const App: React.VFC = () => {
+export const App = () => {
+  const basename = process.env.BASENAME
   return (
-  <BrowserRouter>
+  <BrowserRouter basename={basename}>
     <Routes>
         <Route index element={<Home />} />
         <Route path="/register" element={<Register />} />
