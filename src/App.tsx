@@ -1,24 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import Register from "./Register";
-import Login from "./Login";
+import Home from "./pages/Home";
 import NotFound from "./NotFound";
-import User from "./User/index";
+import User from "./pages/User";
+import { RecoilRoot } from "recoil"
 
 export const App = () => {
   const basename = process.env.BASENAME
   return (
-  <BrowserRouter basename={basename}>
-    <Routes>
-        <Route index element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/user/:username" element={<User />} />
+    <RecoilRoot>
+      <BrowserRouter basename={basename}>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/user/:username" element={<User />} />
 
-        { /* 404用 */ }
-        <Route path="*" element={<NotFound />} />
-    </Routes>
-  </BrowserRouter>
+          { /* 404用 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   )
 }

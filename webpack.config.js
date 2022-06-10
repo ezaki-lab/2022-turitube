@@ -37,6 +37,19 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
+      },
+      { 
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {},
+      },
     ],
   },
   devServer: {
