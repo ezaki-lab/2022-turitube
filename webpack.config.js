@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        use: [{loader: 'babel-loader', options: { presets: ['@babel/preset-env', '@babel/react'] }}]
+        use: [{ loader: 'babel-loader', options: { presets: ['@babel/preset-env', '@babel/react'] } }]
       },
       {
         test: /\.scss$/,
@@ -45,11 +45,15 @@ module.exports = {
           'postcss-loader',
         ],
       },
-      { 
+      {
         test: /\.(png|jpg|gif)$/,
         loader: 'file-loader',
-        options: {},
-      },
+        options: {
+          name: '[name].[hash].[ext]',
+          outputPath: '~turitube/img', // 出力先
+          publicPath: './~turitube/img'
+        }
+      }
     ],
   },
   devServer: {
@@ -58,16 +62,17 @@ module.exports = {
     },
     port: 3000,
     historyApiFallback: true,
+    open: ['/'],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   target: 'web',
-  
+
   plugins: [
     new Dotenv({
       path: path.resolve(__dirname, `.env.${enviroment}`),
     }),
-]
+  ]
 
 };

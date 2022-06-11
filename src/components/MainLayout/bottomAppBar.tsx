@@ -54,7 +54,7 @@ const BottomAppbar = () => {
 
     return (
         <>
-            <nav className="w-full h-16 ext-1xl flex flex-row bottom-0 z-50 fixed">
+            <nav className="w-full h-12 ext-1xl border-t flex flex-row bottom-0 z-50 fixed bg-white">
                 {bottom_apps.map((app, index) => {
                     // そのページに居たら
                     if (head_route == app.id){
@@ -75,7 +75,7 @@ const BottomAppbar = () => {
 
 const Item = ({ text, to, icon }) => {
     return (
-        <Link to={to} className="w-full h-full border-t">
+        <Link to={to} className="w-full h-full">
             <button className="w-full h-full flex flex-col justify-around items-center">
                 <img
                     src={icon}
