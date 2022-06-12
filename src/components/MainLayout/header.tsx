@@ -14,8 +14,8 @@ const Header = () => {
                     className="pointer-events-none h-8 flex-none"
                 />
                 <div className="ml-auto flex-row flex">
-                    <div className="mx-2">icon1</div>
-                    <div className="mx-2">icon2</div>
+                    <div className="mx-2">i1</div>
+                    <div className="mx-2">i2</div>
                 </div>
             </div>
         </>

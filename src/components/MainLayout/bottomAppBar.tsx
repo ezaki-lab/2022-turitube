@@ -54,7 +54,7 @@ const BottomAppbar = () => {
 
     return (
         <>
-            <nav className="w-full h-12 ext-1xl border-t flex flex-row bottom-0 z-50 fixed bg-white">
+            <nav className="w-full h-12 border-t flex flex-row bottom-0 z-51 sticky bg-white">
                 {bottom_apps.map((app, index) => {
                     // そのページに居たら
                     if (head_route == app.id){
