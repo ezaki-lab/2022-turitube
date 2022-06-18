@@ -8,12 +8,14 @@ import NotFound from "./NotFound";
 import User from "./pages/User";
 import { RecoilRoot } from "recoil"
 import MainLayout from './components/MainLayout';
+import { ContextSocketProvider } from './common/socContext';
 
 
 export const App = () => {
   const basename = process.env.BASENAME
   return (
-    <RecoilRoot>
+    <ContextSocketProvider>
+      <RecoilRoot>
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<MainLayout />}>
@@ -28,6 +30,8 @@ export const App = () => {
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
+    </ContextSocketProvider>
+    
   )
 }
 
