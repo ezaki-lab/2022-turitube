@@ -47,7 +47,7 @@ const BottomAppbar = () => {
     {
         id: "diary",
         text: "日誌",
-        to: "diary",
+        to: "/diary",
         active: DiaryActive,
         inactive: DiaryInactive
     }]
