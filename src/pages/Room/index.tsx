@@ -40,6 +40,11 @@ const Chat = () => {
         );
     };
 
+    // 再読み込み時、socketを削除
+    window.addEventListener('beforeunload', (e) => {
+        socket.disconnect();
+      });
+
     return (
         <>
             <div>
