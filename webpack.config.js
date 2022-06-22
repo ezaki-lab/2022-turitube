@@ -50,8 +50,8 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[name].[hash].[ext]',
-          outputPath: '~turitube/img', // 出力先
-          publicPath: './~turitube/img'
+          outputPath: 'img', // 出力先
+          publicPath: enviroment=="development" ? '/img' : '/~turitube/img'
         }
       }
     ],

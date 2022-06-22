@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 const Chat = () => {
     const [count, setCount] = useState(0);
     const [text, setText] = useState("");
-    const {room_id} = useParams();
+    const { room_id } = useParams();
     const socket = useSocketIo('chat');
 
     useEffect(() => {
@@ -15,14 +15,14 @@ const Chat = () => {
             return;
         }
 
-        socket.on('connect', function(){
+        socket.on('connect', function () {
             console.log(socket)
-            socket.emit("join", {"room_id": room_id,});
+            socket.emit("join", { "room_id": room_id, });
         })
 
         socket.on('text_update', (msg) => {
             setText(msg.text);
-          });
+        });
 
         return (() => {
             socket.disconnect();
