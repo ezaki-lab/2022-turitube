@@ -7,7 +7,6 @@ import * as atom from '../../common/atom';
 // Home - streams.tsx
 // 配信状況の取得と表示命令
 const Streams = () => {
-  const [user, setUser] = useRecoilState(atom.user);
 
   return (
     <>
@@ -31,7 +30,7 @@ const Streams = () => {
 const Card = ({room_id}) => {
   // 配信状況を引数で受け取ってそれを表示
   return (
-    <Link to={"/chat/"+room_id}>
+    <Link to={"/room/"+room_id}>
       <div className="w-full md:w-64 md:mx-4 bg-white-100 my-4 flex flex-col">
       <img src="https://tsurinews.jp/data/wp-content/uploads/2020/09/wpecDSC_3262-690x427.jpg" className="w-full object-fill" />
       <div className="flex-grow flex flex-row m-1">

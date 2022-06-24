@@ -5,7 +5,7 @@ import  useHeadRoute  from "./useHeadRoute"
 const useIdRoute = () => {
   const id = {
       "/": "home",
-      "/chat": "home",
+      "/room": "home",
       "/map": "map",
       "/fishing": "fishing",
       "/notification": "notification",

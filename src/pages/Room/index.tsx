@@ -1,62 +1,55 @@
 /*  Room */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
+import Chat from './chat';
+import Stream from './stream';
+import Send from './send';
+
 
 // ちゃっとのてすと
-const Chat = () => {
+const Room = () => {
     const [count, setCount] = useState(0);
-    const [text, setText] = useState("");
-    const { room_id } = useParams();
     const socket = useSocketIo('chat');
 
-    useEffect(() => {
-        if (!socket) {
-            return;
-        }
-
-        socket.on('connect', function () {
-            console.log(socket)
-            socket.emit("join", { "room_id": room_id, });
-        })
-
-        socket.on('text_update', (msg) => {
-            setText(msg.text);
-        });
-
-        return (() => {
-            socket.disconnect();
-        });
-    }, [socket])
-
-    const handleInput = (e) => {
-        setText(e.target.value);
-
-        socket.emit('text_update_request',
-            {
-                'text': e.target.value,
-                'room_id': room_id
-            }
-        );
-    };
-
-    // 再読み込み時、socketを削除
-    window.addEventListener('beforeunload', (e) => {
-        socket.disconnect();
-      });
 
     return (
         <>
-            <div>
-                <p>現在の接続者数: {count}</p>
-                <textarea
-                    className="mt-5 w-full h-40 p-3 border-2 border-sky-300 rounded-xl"
-                    value={text}
-                    onInput={handleInput}
-                />
+            <div className="flex flex-col w-full h-screen">
+
+                <div className="w-full h-12 fixed top-0 flex flex-row items-center p-2 z-50 bg-opacity-50">
+                    <p>header...現在の接続者数: {count}</p>
+                </div>
+
+
+
+                <div className="flex-grow">
+                    <Stream />
+                </div>
+
+
+                <div className="flex flex-col fixed h-full w-full pt-12 z-51">
+                    <div className="flex-grow flex flex-row">
+                        <div className="flex-grow" />
+                        <div className="w-64 lg:w-96 h-full flex flex-col">
+                            <div className="flex-grow" />
+                            <Chat socket={socket}/>
+                        </div>
+                    </div>
+                    <div className="h-14 w-full flex flex-row px-8">
+                        <div className="flex-grow mx-2">
+                            <Send socket={socket}/>
+                        </div>
+                        <div className="mutebutton w-14 h-14">
+                            a
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </>
     );
 };
 
-export default Chat;
+export default Room;

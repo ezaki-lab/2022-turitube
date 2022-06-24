@@ -6,7 +6,7 @@ import Diary from "./pages/Diary";
 import Notification from "./pages/Notification";
 import NotFound from "./NotFound";
 import User from "./pages/User";
-import Chat from './pages/Room';
+import Room from './pages/Room';
 import { RecoilRoot } from "recoil"
 import MainLayout from './components/MainLayout';
 
@@ -32,13 +32,13 @@ export const App = () => {
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path="/user/:username" element={<User />} />
-                <Route path="/chat/:room_id" element={<Chat />} />
                 { /* 404用 */}
                 <Route path="*" element={<NotFound />} />
               </>
               : <></>}
 
           </Route>
+          <Route path="/room/:room_id" element={<Room />} />
         </Routes>
       </BrowserRouter>
 
