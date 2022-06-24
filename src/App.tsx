@@ -17,28 +17,30 @@ export const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setReady(true);
-    }, 100);
+    }, 1000);
   }, []);
 
   return (
     <RecoilRoot>
       <BrowserRouter basename={basename}>
-        <Routes>
-          <Route element={<MainLayout />}>
-            {ready
-              ? <>
-                <Route index element={<Home />} />
-                <Route path="/map" element={<Map />} />
-                <Route path="/notification" element={<Notification />} />
-                <Route path="/diary" element={<Diary />} />
-                <Route path="/user/:username" element={<User />} />
-                { /* 404用 */}
-                <Route path="*" element={<NotFound />} />
-              </>
-              : <></>}
+        <Routes>{ready
+          ?
+          <>
+            <Route element={<MainLayout />}>
 
-          </Route>
-          <Route path="/room/:room_id" element={<Room />} />
+              <Route index element={<Home />} />
+              <Route path="/map" element={<Map />} />
+              <Route path="/notification" element={<Notification />} />
+              <Route path="/diary" element={<Diary />} />
+              <Route path="/user/:username" element={<User />} />
+              { /* 404用 */}
+              <Route path="*" element={<NotFound />} />
+
+            </Route>
+            <Route path="/room/:room_id" element={<Room />} />
+          </>
+          : <></>}
+
         </Routes>
       </BrowserRouter>
 
