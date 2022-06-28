@@ -1,33 +1,25 @@
 /*  Room/chat */
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 // チャットログ
 const Chat = (props) => {
     const socket = props.socket;
-    const { room_id } = useParams();
     const [messageList, setMessagelist] = useState([]);
 
     useEffect(() => {
         if (!socket) {
             return;
         }
-
-        socket.on('connect', function () {
-            socket.emit("join", { "room_id": room_id, });
-        })
-
+    
         socket.on("chat", (data) => {
             setMessagelist((messageList) => [...messageList, data])
         })
-
 
         return (() => {
             socket.disconnect();
         });
     }, [socket])
-
 
     return (
         <>

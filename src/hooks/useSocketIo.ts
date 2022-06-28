@@ -16,18 +16,8 @@ const useSocketIo = (namespace = '') => {
   );
 
   useEffect(() => {
-    setSocket(io(uri, { path: path }));
+        setSocket(io(uri, { path: path, transports: ["polling"]})); // pollingにしないとエラー吐くよ
   }, [namespace]);
-
-  useEffect(() => {
-    if (!socket) {
-      return;
-  }
-    socket.on("close", function(event){
-      console.log("切断されたらしい")
-      setSocket(io(uri, { path: path }));
-  })
-}, [socket])
 
 return socket;
 };
