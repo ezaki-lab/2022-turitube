@@ -9,7 +9,7 @@ const MainLayout = () => {
         <>
             <div className="flex flex-col h-screen">
                 <Header />
-                <div className="flex-grow">
+                <div className="flex-grow bg-white">
                     <Outlet />
                 </div>
                 <BottomAppbar />

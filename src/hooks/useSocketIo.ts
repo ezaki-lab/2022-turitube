@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import urlJoin from 'url-join';
 
-const useSocketIo = (namespace = '') => {
+const useSocketIo = (namespace:string = '') => {
   const [socket, setSocket] = useState<Socket>();
 
   const uri = urlJoin(
