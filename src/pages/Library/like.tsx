@@ -80,10 +80,10 @@ const Like = () => {
 
 const LikeDiary = ({ img, title, author, id }) => {
     return (
-        <div className="h-12 flex flex-row my-1 w-full">
+        <div className="h-12 flex flex-row my-1 w-full pr-24">
             <img src={img} className="mx-5 w-10 h-10 aspect-square" />
             
-            <div className="flex flex-col justify-between w-full pr-24 h-10">
+            <div className="flex flex-col justify-between w-full h-10">
                 <p className="truncate">{title}</p>
                 <p className="text-xs text-gray-600">{author}</p>
             </div>
