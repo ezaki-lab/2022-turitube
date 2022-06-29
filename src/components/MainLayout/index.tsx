@@ -7,9 +7,9 @@ import Header from './header';
 const MainLayout = () => {
     return (
         <>
-            <div className="flex flex-col h-screen">
+            <div className="flex flex-col h-screen overflow-auto">
                 <Header />
-                <div className="flex-grow bg-white">
+                <div className="flex-grow bg-white pt-12 pb-16">
                     <Outlet />
                 </div>
                 <BottomAppbar />

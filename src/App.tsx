@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Map from "./pages/Map";
-import Diary from "./pages/Diary";
+import Library from "./pages/Library";
 import Notification from "./pages/Notification";
 import NotFound from "./NotFound";
 import User from "./pages/User";
@@ -17,7 +17,7 @@ export const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setReady(true);
-    }, 1000);
+    }, 1);
   }, []);
 
   return (
@@ -31,7 +31,7 @@ export const App = () => {
               <Route index element={<Home />} />
               <Route path="/map" element={<Map />} />
               <Route path="/notification" element={<Notification />} />
-              <Route path="/diary" element={<Diary />} />
+              <Route path="/library" element={<Library />} />
               <Route path="/user/:username" element={<User />} />
               { /* 404用 */}
               <Route path="*" element={<NotFound />} />

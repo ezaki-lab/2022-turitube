@@ -7,7 +7,7 @@ import Logo from "./icons/mainlogo.png";
 const Header = () => {
     return (
         <>
-            <div className="w-full h-12 sticky top-0 bg-basic flex flex-row items-center p-2 z-50">
+            <div className="w-full h-12 fixed top-0 bg-basic flex flex-row items-center p-2 z-50">
                 <img
                     src={Logo}
                     alt={"つりちゅーぶ"}

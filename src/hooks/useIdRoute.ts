@@ -9,7 +9,7 @@ const useIdRoute = () => {
       "/map": "map",
       "/fishing": "fishing",
       "/notification": "notification",
-      "/diary": "diary"
+      "/library": "library"
   }
 
   const headRoute = useHeadRoute();

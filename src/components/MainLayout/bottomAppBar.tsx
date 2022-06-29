@@ -1,18 +1,15 @@
-import { useRecoilState } from 'recoil';
 import React from 'react';
 import { Link } from "react-router-dom";
-import * as atom from '../../common/atom';
-import HomeActive from "./icons/home.active.png";
+import HomeActive from "/img/icons/home.active.png";
 import HomeInactive from "./icons/home.inactive.png";
-import MapActive from "./icons/map.active.png";
-import MapInactive from "./icons/map.inactive.png";
-import DiaryActive from "./icons/diary.active.png";
-import DiaryInactive from "./icons/diary.inactive.png";
+import MapActive from "../../img/icons/map.active.png";
+import MapInactive from "../../img/icons/map.inactive.png";
+import LibraryActive from "../../img/icons/library.active.png";
+import LibraryInactive from "../../img/icons/library.inactive.png";
 import NotificationActive from "./icons/notification.active.png";
 import NotificationInactive from "./icons/notification.inactive.png";
-import Fish from "./icons/fish.png";
+import Fish from "../../img/icons/fish.png";
 import useIdRoute from '../../hooks/useIdRoute';
-import { App } from '../../App';
 
 
 const BottomAppbar = () => {
@@ -26,16 +23,16 @@ const BottomAppbar = () => {
             inactive: MapInactive,
         },
         {
-            id: "diary",
-            text: "日誌",
-            to: "/diary",
-            active: DiaryActive,
-            inactive: DiaryInactive
+            id: "library",
+            text: "ライブラリ",
+            to: "/library",
+            active: LibraryActive,
+            inactive: LibraryInactive
         }]
 
     return (
         <>
-            <nav className="w-full h-24 bottom-0 z-51 sticky bg-gray-200">
+            <nav className="w-full h-16 bottom-0 z-50 fixed bg-gray-200">
                 <div className="w-full h-full flex flex-row">
                     <NormalTab app={bottom_apps[0]} />
                     <CircleTab />
@@ -68,7 +65,7 @@ const Item = ({ text, to, icon }) => {
                 <img
                     src={icon}
                     alt={"a"}
-                    width="75rem"
+                    width="55rem"
                     className="pointer-events-none"
                 />
             </button>
@@ -79,11 +76,11 @@ const Item = ({ text, to, icon }) => {
 const CircleTab = () => {
     return (
         <Link to="/" className="w-full h-full justify-around items-center flex">
-            <div className="rounded-full h-32 mb-8 bg-basic aspect-square justify-around items-center flex">
+            <div className="rounded-full h-28 mb-12 bg-basic aspect-square justify-around items-center flex">
                 <img 
                 src={Fish}
                 alt="クエスト選択"
-                width="90rem"
+                width="80rem"
                 className="pointer-events-none"
                 />
             </div>
