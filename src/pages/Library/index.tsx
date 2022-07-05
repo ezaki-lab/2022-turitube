@@ -9,13 +9,13 @@ const apps = [
   {
     id: "diary",
     text: "自分の日誌",
-    to: "/library/diary",
+    to: "/diary",
     icon: Diary
   },
   {
     id: "book",
     text: "自分の図鑑",
-    to: "/library/book",
+    to: "/book",
     icon: Book
   }
 ]

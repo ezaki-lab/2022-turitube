@@ -9,7 +9,7 @@ const MainLayout = () => {
         <>
             <div className="flex flex-col h-screen overflow-auto">
                 <Header />
-                <div className="flex-grow bg-white pt-12 pb-16">
+                <div className="flex-grow bg-white pt-12 pb-28">
                     <Outlet />
                 </div>
                 <BottomAppbar />

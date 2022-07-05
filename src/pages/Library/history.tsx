@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Title from "../../components/Title";
 
 const History = () => {
     const images = [
@@ -43,7 +44,7 @@ const History = () => {
         <>
           <div className="h-52 bg-white flex flex-col">
             <div className="h-12 flex flex-row content-around w-full items-center">
-              <h1 className="font-bold text-xl flex-1 ml-2">過去の釣り</h1>
+              <Title title="最近釣った魚" />
               <h2 className="mr-2">全て表示?</h2>
             </div>
             <div className="w-full h-40 border-b-2">

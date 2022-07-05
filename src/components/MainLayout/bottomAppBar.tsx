@@ -32,7 +32,7 @@ const BottomAppbar = () => {
 
     return (
         <>
-            <nav className="w-full h-16 bottom-0 z-50 fixed bg-gray-200">
+            <nav className="w-full h-20 bottom-0 z-50 fixed bg-gray-200">
                 <div className="w-full h-full flex flex-row">
                     <NormalTab app={bottom_apps[0]} />
                     <CircleTab />
@@ -76,7 +76,7 @@ const Item = ({ text, to, icon }) => {
 const CircleTab = () => {
     return (
         <Link to="/" className="w-full h-full justify-around items-center flex">
-            <div className="rounded-full h-28 mb-12 bg-basic aspect-square justify-around items-center flex">
+            <div className="rounded-full h-32 mb-12 bg-basic aspect-square justify-around items-center flex">
                 <img 
                 src={Fish}
                 alt="クエスト選択"

@@ -51,7 +51,7 @@ module.exports = {
         options: {
           name: '[name].[hash].[ext]',
           outputPath: 'img', // 出力先
-          publicPath: enviroment=="development" ? '/img' : '/~turitube/img'
+          publicPath: './img'
         }
       }
     ],
