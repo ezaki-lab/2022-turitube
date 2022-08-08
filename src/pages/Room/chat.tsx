@@ -23,7 +23,7 @@ const Chat = (props) => {
 
     return (
         <>
-            <div className="h-52 overflow-x-hidden whitespace-normal">
+            <div className="h-48 overflow-x-hidden whitespace-normal">
                 <ScrollToBottom>
                     <ul className="w-64 lg:w-96">
                     {messageList.map((data, index) => {
@@ -32,7 +32,7 @@ const Chat = (props) => {
                                 <div className="aspect-square h-8 flex items-center justify-center">
                                     <img src="https://tsurinews.jp/data/wp-content/uploads/2020/09/wpecDSC_3262-690x427.jpg" className="h-5/6 w-5/6 object-cover rounded-full" />
                                 </div>
-                                <p className="flex-auto break-words w-56">{data.screen_name} {data.text}</p> 
+                                <p className="flex-auto break-words w-56 pr-8">{data.screen_name} {data.text}</p> 
                             </div>
                         </li>);
                     })}

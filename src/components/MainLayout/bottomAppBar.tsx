@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import HomeActive from "/img/icons/home.active.png";
-import HomeInactive from "./icons/home.inactive.png";
-import MapActive from "../../img/icons/map.active.png";
-import MapInactive from "../../img/icons/map.inactive.png";
+import HomeActive from "../../img/icons/home.active.png";
+import HomeInactive from "../../img/icons/home.inactive.png";
 import LibraryActive from "../../img/icons/library.active.png";
 import LibraryInactive from "../../img/icons/library.inactive.png";
-import NotificationActive from "./icons/notification.active.png";
-import NotificationInactive from "./icons/notification.inactive.png";
 import Fish from "../../img/icons/fish.png";
 import useIdRoute from '../../hooks/useIdRoute';
 
@@ -16,11 +12,11 @@ const BottomAppbar = () => {
     // bottomappbarの情報(画像など含む)
     const bottom_apps = [
         {
-            id: "map",
-            text: "マップ",
-            to: "/map",
-            active: MapActive,
-            inactive: MapInactive,
+            id: "home",
+            text: "ホーム",
+            to: "/",
+            active: HomeActive,
+            inactive: HomeInactive,
         },
         {
             id: "library",

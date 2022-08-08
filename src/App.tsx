@@ -14,13 +14,13 @@ import Diary from './pages/Diary';
 import Book from './pages/Book';
 
 export const App = () => {
-  const basename = process.env.BASENAME
+  const basename = process.env.BASENAME;
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setReady(true);
-    }, 1);
+    }, 1000);
   }, []);
 
   return (

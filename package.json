@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "/~turitube/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
@@ -14,6 +15,7 @@
   "dependencies": {
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.1.0",

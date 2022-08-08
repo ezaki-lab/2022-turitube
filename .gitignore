@@ -11,6 +11,8 @@
 # production
 /build
 /dist/bundle.js
+/dist/img
+/dist/index.html
 
 # misc
 .DS_Store
@@ -26,4 +28,3 @@ yarn-error.log*
 
 # user add
 .vscode/
-/dist/

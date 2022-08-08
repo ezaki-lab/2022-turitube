@@ -12,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+
   module: {
     rules: [
       {
@@ -51,14 +52,14 @@ module.exports = {
         options: {
           name: '[name].[hash].[ext]',
           outputPath: 'img', // 出力先
-          publicPath: './img'
+          publicPath: '/img'
         }
       }
     ],
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'public'),
     },
     port: 3000,
     historyApiFallback: true,
@@ -72,7 +73,7 @@ module.exports = {
   plugins: [
     new Dotenv({
       path: path.resolve(__dirname, `.env.${enviroment}`),
-    }),
+    })
   ]
 
 };
