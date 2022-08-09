@@ -2,8 +2,10 @@ import { useRecoilState } from 'recoil';
 import React from 'react';
 import BottomAppbar from './bottomAppBar';
 import { Outlet } from "react-router-dom"
-import Logo from "./icons/mainlogo.png";
+import Logo from "../../img/icons/mainlogo.png";
 import Map from "../../img/icons/map.png";
+import Stream from "../../img/icons/stream.png";
+import Profile from "../../img/icons/profile.png";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -14,10 +16,11 @@ const Header = () => {
             img: Map,
         },
         {
-            id: "map2",
-            to: "/map",
-            img: Map,
-        }]
+            id: "stream",
+            to: "/start_stream",
+            img: Stream,
+        }
+    ]
 
     return (
         <>
@@ -31,6 +34,9 @@ const Header = () => {
                     {header_apps.map((app, index) => (
                         <HeaderTab key={app.id} app={app} />
                     ))}
+                    <Link to="/profile">
+                        <img src={Profile} className="mx-2 h-8 rounded-full" />
+                    </Link>
                 </div>
             </div>
         </>
