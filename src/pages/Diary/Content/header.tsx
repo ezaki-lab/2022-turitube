@@ -15,7 +15,7 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className="w-1/3">
-                    <h1 className="text-basic text-4xl font-bold text-center">図鑑</h1>
+                    <h1 className="text-basic text-4xl font-bold text-center">日誌</h1>
                 </div>
                 <div className="w-1/3">
                     <img src={Share} className="h-8 mr-0 ml-auto" />

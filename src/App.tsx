@@ -24,7 +24,7 @@ export const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setReady(true);
-    }, 1000);
+    }, 1);
   }, []);
 
   return (
