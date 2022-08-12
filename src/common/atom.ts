@@ -9,3 +9,8 @@ export const user_info = atom({
     screen_name: "こさか"
   }
 });
+
+export const user_id = atom({
+  key: 'user_id',
+  default: localStorage.getItem('userId')
+})
