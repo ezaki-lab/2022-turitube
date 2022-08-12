@@ -1,7 +1,10 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
-const enviroment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'development';
+const img_publicPath = environment == 'development' ? '/img' : '/~turitube/img'
+console.log(environment);
+console.log(img_publicPath)
 
 module.exports = {
 
@@ -52,7 +55,7 @@ module.exports = {
         options: {
           name: '[name].[hash].[ext]',
           outputPath: 'img', // 出力先
-          publicPath: '/img'
+          publicPath: img_publicPath 
         }
       }
     ],
@@ -72,7 +75,7 @@ module.exports = {
 
   plugins: [
     new Dotenv({
-      path: path.resolve(__dirname, `.env.${enviroment}`),
+      path: path.resolve(__dirname, `.env.${environment}`),
     })
   ]
 

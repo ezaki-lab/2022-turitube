@@ -1,6 +1,7 @@
 /*  Diary/index */
 import React from 'react';
 import Title from "../../components/Title";
+import { Link } from 'react-router-dom';
 
 // ユーザーページ
 const DiaryList = () => {
@@ -25,7 +26,8 @@ const DiaryList = () => {
 const Diary = () => {
 
   return (
-    <li className="h-16 flex flex-row my-3 w-full pr-32">
+    <Link to="/diary/1">
+      <li className="h-16 flex flex-row my-3 w-full pr-32">
         <img src="https://monusco.unmissions.org/sites/default/files/styles/full_width_image/public/field/image/20201023_120152.jpg?itok=LkjrZ3rj" className="mr-2 h-16 aspect-ratio" />
 
         <div className="flex flex-col w-full h-18 pl-2">
@@ -34,6 +36,7 @@ const Diary = () => {
             <p className="text-xs text-gray-600 truncate">3日前</p>
         </div>
     </li>
+    </Link>
 )
 }
 

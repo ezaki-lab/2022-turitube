@@ -85,13 +85,15 @@ const Book = () => {
 const Panel = ({ fish }) => {
   return (
     <>
-      <div className="flex flex-col w-20 sm:w-32 md:w-40 lg:w-48 xl:w-64 m-4">
-        <img src={Unregistered} className="w-full rounded-xl" />
-        <div className="flex flex-row justify-between">
-          <p className="font-bold text-sm">{('000' + fish.id).slice(-3)}</p>
-          <p className="font-bold text-sm">{fish.name}</p>
+      <Link to="/book/1">
+        <div className="flex flex-col w-20 sm:w-32 md:w-40 lg:w-48 xl:w-64 m-4">
+          <img src={Unregistered} className="w-full rounded-xl" />
+          <div className="flex flex-row justify-between">
+            <p className="font-bold text-sm">{('000' + fish.id).slice(-3)}</p>
+            <p className="font-bold text-sm">{fish.name}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   )
 }

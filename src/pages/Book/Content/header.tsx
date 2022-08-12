@@ -10,7 +10,7 @@ const Header = () => {
         <>
             <div className="w-full h-16 fixed top-0 bg-bgray flex flex-row items-center justify-between p-2 z-50">
                 <div className="w-1/3">
-                    <Link to="/diary">
+                    <Link to="/book">
                         <img src={Back} className="h-8 mx-1" />
                     </Link>
                 </div>
