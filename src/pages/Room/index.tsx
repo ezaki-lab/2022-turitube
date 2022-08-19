@@ -1,86 +1,109 @@
-/*  Room */
+/*  Room/stream */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useSocketIo from '../../hooks/useSocketIo';
-import Chat from './chat';
-import Stream from './stream';
+import Video from './Video';
+import Metaverse from './Metaverse';
+
+import Shrink from "../../img/icons/shrink.png";
+import LeaveStream from "../../img/icons/leave_stream.png";
 import Send from './send';
-import Shrink from '../../img/icons/shrink.png';
+import Chat from './chat';
+
+import useSocketIo from '../../hooks/useSocketIo';
 import Mic from '../../img/icons/mic.active.png';
 import MicInactive from '../../img/icons/mic.inactive.png';
+import { Link } from 'react-router-dom';
 
-// ちゃっとのてすと
+import { useRecoilState } from 'recoil';
+import * as atom from '../../common/atom';
+
+// 配信画面
 const Room = () => {
-	const [ready, setReady] = useState<boolean>(false);
-	const [mic, setMic] = useState<boolean>(false); // trueならマイクオン
-	const { room_id } = useParams();
-	const socket = useSocketIo('chat');
-
-	useEffect(() => {
-		if (socket) {
-			// 接続できたら
-			socket.on('connect', async () => {
-				// roomに参加
-				socket.emit("join", { "room_id": room_id, });
-				setReady(true);
-			})
-		}
-	}, [socket]);
-
-	const MuteSwitch = () => {
-		setMic(mic ? false : true);
-		console.log(mic)
-	};
-
-	if (!ready) {
-		return (<></>)
-	}
-	else {
-		return (
-			<>
-				<div className="flex flex-col w-full h-screen">
-
-					<div className="w-full h-16 fixed top-0 mt-2 flex flex-row justify-end items-center p-2 z-50 bg-opacity-50">
-						<button className="aspect-square h-full mr-2 flex items-center justify-center">
-							<img src={Shrink} className="h-full object-cover" />
-						</button>
-					</div>
+  const [ready, setReady] = useState<boolean>(false);
+  const [mic, setMic] = useState<boolean>(false); // trueならマイクオン
+  const [screen, setScreen] = useState<string>("metaverse");
+  const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
+  const [userNameList, setUserNameList] = useState([])
+  console.log(userInfo);
+  const { room_id } = useParams();
+  const socket = useSocketIo('stream');
 
 
+  // socket.io関連
+  useEffect(() => {
+    if (socket) {
+      // 接続できたら
+      socket.on('connect', async () => {
+        // roomに参加
+        socket.emit("join", {
+          room_id: room_id,
+          user_name: userInfo.user_name,
+          screen_name: userInfo.screen_name
+        });
+        setReady(true);
+      });
 
-					<div className="flex-grow">
-						<Stream />
-					</div>
+      // roomの環境が変化したときに実行
+      socket.on("update_room", (data) => {
+        // room情報を反映させる
+        console.log(data)
+      });
+
+      // 誰かが抜けたときの処理
+      socket.on("disconnect_others", (data) => {
+        // 表示上の削除を行う(というか再レンダリング)
+        console.log(data);
+      })
+
+      return (() => {
+        socket.disconnect();
+      });
+
+    }
+  }, [socket]);
 
 
-					<div className="flex flex-col fixed h-full w-full pt-20 z-51">
-						<div className="flex-grow flex flex-row pb-4">
-							<div className="flex-grow" />
-							<div className="w-64 lg:w-96 h-full flex flex-col">
-								<div className="flex-grow" />
-								<Chat socket={socket} />
-							</div>
-						</div>
+  const MuteSwitch = () => {
+    setMic(mic ? false : true);
+    console.log(mic)
+  };
 
-						<div className="h-16 w-full flex flex-row px-8 pb-4">
-							<div className="flex-grow mx-2 self-end">
-								<Send socket={socket} />
-							</div>
+  const ScreenSwitch = () => {
+    setScreen(screen == "metaverse" ? "video" : "metaverse")
+  };
 
-							<div className="mutebutton w-20 h-full">
-								<button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-50" onClick={MuteSwitch}>
-									<img src={mic ? Mic : MicInactive} className="h-full object-cover rounded-full h-5/6 w-5/6" />
-								</button>
-							</div>
+  if (!ready) return (<></>)
 
-						</div>
-					</div>
+  return (
+    <>
+      <Link to="/">
+        <button className="aspect-square h-12 mr-4 mt-4 fixed z-50 top-0 right-0">
+          <img src={LeaveStream} className="h-full object-cover" />
+        </button>
+      </Link>
 
 
-				</div>
-			</>
-		);
-	}
+      <div className="h-10 mb-4 px-4 w-full fixed z-50 bottom-0 flex flex-row justify-around">
+        <div className="w-full px-6">
+          <Send socket={socket} />
+        </div>
+
+        <button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-75 h-full" onClick={MuteSwitch}>
+          <img src={mic ? Mic : MicInactive} className="h-full object-cover rounded-full h-5/6 w-5/6" />
+        </button>
+      </div>
+
+      <div className="h-40 sm:h-2/5 mb-4 sm:mx-4 fixed z-50 bottom-16 w-full sm:w-64 xl:w-96 right-0 sm:bg-yellow-100 sm:bg-opacity-50 rounded-xl">
+        <Chat socket={socket} />
+      </div>
+
+      <button className="aspect-square h-24 ml-4 mt-4 fixed z-50 top-0 left-0" onClick={ScreenSwitch}>
+        <img src="https://appleenglish.jp/wp-content/uploads/2020/11/ECF9852A-03F8-4F76-9301-414D6C84D745.jpeg" className="h-full object-cover" />
+      </button>
+
+      {screen == "video" ? <Video /> : <Metaverse socket={socket} />}
+    </>
+  );
 };
 
 export default Room;

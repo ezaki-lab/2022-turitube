@@ -5,8 +5,7 @@ import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
 
 // チャット送信画面
-const Send = (props) => {
-    const socket = props.socket;
+const Send = ({socket}) => {
     const [message, setMessage] = useState("");
     const { room_id } = useParams();
     const [user, setUser] = useRecoilState(atom.user_info);
@@ -43,19 +42,17 @@ const Send = (props) => {
 
     return (
         <>
-            <div className="">
-                <input
-                    className="w-full text-white placeholder-white h-10 p-3 bg-yellow-100 bg-opacity-50 rounded-xl"
-                    placeholder="コメントを入力"
-                    value={message}
-                    onChange={onChangeMessage}
-                    onKeyPress={e => {
-                        if (e.key == "Enter") {
-                            onClickSend(e);
-                        }
-                    }}
-                />
-            </div>
+            <input
+                className="w-full text-white placeholder-white h-10 p-3 bg-yellow-100 bg-opacity-50 rounded-xl"
+                placeholder="コメントを入力"
+                value={message}
+                onChange={onChangeMessage}
+                onKeyPress={e => {
+                    if (e.key == "Enter") {
+                        onClickSend(e);
+                    }
+                }}
+            />
         </>
     );
 };

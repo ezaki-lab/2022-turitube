@@ -8,15 +8,14 @@ import Streams from './streams';
 // Home - index.tsx
 const Home = () => {
   const [user, setUser] = useRecoilState(atom.user_info);
-  console.log(user)
 
   useEffect(() => {
-    console.log(user)
+    ;
   }, [])
   
   return (
     <>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-col md:flex-wrap md:flex-row md:pt-12 justify-start h-full">
         <Streams />
       </div>
 

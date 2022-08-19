@@ -15,11 +15,6 @@ const Header = () => {
             to: "/map",
             img: Map,
         },
-        {
-            id: "stream",
-            to: "/start_stream",
-            img: Stream,
-        }
     ]
 
     return (
@@ -34,6 +29,9 @@ const Header = () => {
                     {header_apps.map((app, index) => (
                         <HeaderTab key={app.id} app={app} />
                     ))}
+                    <label htmlFor="my-modal-3" className="modal-button">
+                        <img src={Stream} className="mx-2 h-8" />
+                    </label>
                     <Link to="/profile">
                         <img src={Profile} className="mx-2 h-8 rounded-full" />
                     </Link>
@@ -46,9 +44,10 @@ const Header = () => {
 const HeaderTab = ({ app }) => {
     return (
         <Link to={app.to}>
-            <img src={app.img} className="mx-2 h-8"/>
+            <img src={app.img} className="mx-2 h-8" />
         </Link>
     );
 }
+
 
 export default Header;

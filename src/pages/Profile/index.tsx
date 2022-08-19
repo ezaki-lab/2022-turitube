@@ -4,19 +4,22 @@ import * as atom from '../../common/atom';
 
 const Profile = () => {
 
-  const [userId, setUserId] = useRecoilState(atom.user_id);
+  const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
 
   const Logout = () => {
-    setUserId(null);
-    console.log(userId);
+    setUserInfo(null);
     localStorage.setItem("userId", "");
   };
+
+  console.log(userInfo)
 
   return (
     <>
       <div className="flex flex-col p-4 items-center">
-        <p>{userId}でログイン中</p>
-        <button className="btn w-32" onClick={Logout}>
+        <p className="py-2 break-words w-64">user_id: {userInfo.user_id}</p>
+        <p className="py-2">user_name: {userInfo.user_name}</p>
+        <p className="py-2">screen_name: {userInfo.screen_name}</p>
+        <button className="btn w-32 py-4" onClick={Logout}>
           Logout
         </button>
       </div>

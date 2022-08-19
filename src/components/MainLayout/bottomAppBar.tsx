@@ -61,8 +61,7 @@ const Item = ({ text, to, icon }) => {
                 <img
                     src={icon}
                     alt={"a"}
-                    width="55rem"
-                    className="pointer-events-none"
+                    className="pointer-events-none h-3/4"
                 />
             </button>
         </Link>
@@ -76,8 +75,7 @@ const CircleTab = () => {
                 <img 
                 src={Fish}
                 alt="クエスト選択"
-                width="80rem"
-                className="pointer-events-none"
+                className="pointer-events-none w-24"
                 />
             </div>
         </Link>
