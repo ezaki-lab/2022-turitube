@@ -17,18 +17,19 @@ import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
 
+import { useSkyWay } from '../../hooks/useSkyWay';
+
 // 配信画面
 const Room = () => {
   const [ready, setReady] = useState<boolean>(false);
   const [mic, setMic] = useState<boolean>(false); // trueならマイクオン
-  const [screen, setScreen] = useState<string>("metaverse");
+  const [screen, setScreen] = useState<string>("video"); // デフォルトではmetaverse
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
-  const [userNameList, setUserNameList] = useState([])
-  console.log(userInfo);
   const { room_id } = useParams();
   const socket = useSocketIo('stream');
-
-
+  
+  const [remoteVideo, setLocalStream] = useSkyWay(room_id);
+  
   // socket.io関連
   useEffect(() => {
     if (socket) {
@@ -46,13 +47,11 @@ const Room = () => {
       // roomの環境が変化したときに実行
       socket.on("update_room", (data) => {
         // room情報を反映させる
-        console.log(data)
       });
 
       // 誰かが抜けたときの処理
       socket.on("disconnect_others", (data) => {
         // 表示上の削除を行う(というか再レンダリング)
-        console.log(data);
       })
 
       return (() => {
@@ -61,7 +60,6 @@ const Room = () => {
 
     }
   }, [socket]);
-
 
   const MuteSwitch = () => {
     setMic(mic ? false : true);
@@ -101,7 +99,7 @@ const Room = () => {
         <img src="https://appleenglish.jp/wp-content/uploads/2020/11/ECF9852A-03F8-4F76-9301-414D6C84D745.jpeg" className="h-full object-cover" />
       </button>
 
-      {screen == "video" ? <Video /> : <Metaverse socket={socket} />}
+      {screen == "video" ? <Video remoteVideo={remoteVideo} setLocalStream={setLocalStream}  /> : <Metaverse socket={socket} />}
     </>
   );
 };

@@ -16,7 +16,7 @@ const Metaverse = ({socket}) => {
 
   // 自分の座標を送信
   useEffect(() => {
-    console.log(myPos);
+    ;
   }, [myPos]);
 
   const [backgroundImage] = useImage(BackGround);
