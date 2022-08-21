@@ -1,5 +1,5 @@
 // ビデオ画面
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import Shrink from '../../../img/icons/shrink.png';
 
 type VideoStream = {
@@ -7,28 +7,40 @@ type VideoStream = {
   peerId: string;
 };
 
-const Video = ({ remoteVideo, setLocalStream }) => {
-  /*
-    const RemoteVideo = (props: { video: VideoStream }) => {
-      const videoRef = useRef<HTMLVideoElement>(null);
-    
-      useEffect(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = props.video.stream;
-          videoRef.current.play().catch((e) => console.log(e));
-        }
-      }, [props.video]);
-      return <video ref={videoRef} playsInline></video>;
-    };
-  */
+const Video = ({ remoteVideo, stream, myStream }) => {
+  const [videoIndex, setVideoIndex] = useState<number>(0);
+  const [existRemoteVideo, setExistRemoteVideo] = useState(false);
 
-  console.log(remoteVideo);
-  return (
-    <>
-      <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-start ">
-        {remoteVideo.length ? <RemoteVideo remoteVideo={remoteVideo} video_index={0} /> : <></>}
+  useEffect(() => {
+    let remoteExistflg = false
+    console.log(stream)
+    stream.users.forEach((elem, index) => {
+      if(elem.cam && elem.user_name!==myStream.user_name){
+        remoteExistflg = true;
+      }
+    })
+    setExistRemoteVideo(remoteExistflg);
+  }, [stream]);
+  
+  // ビデオインデックスを設定する
+  // (video emit(peer_id) receive → remoteVideoからindexをifで取得);
+
+  // remoteでの配信があるとき
+  if (existRemoteVideo) {
+    return (
+      <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-start">
+        {remoteVideo.length ? <RemoteVideo remoteVideo={remoteVideo} video_index={videoIndex} /> : <></>}
       </div>
-    </>
+    )
+  }
+
+  // remoteのカメラが無い時
+  return (
+      <>
+        <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-center items-center">
+          <h1 className="text-xl font-bold text-white">他に誰も配信していません</h1>
+        </div>
+      </>
   )
 };
 
@@ -41,7 +53,8 @@ const RemoteVideo = ({ remoteVideo, video_index }) => {
       videoRef.current.play().catch((e) => console.log(e));
     }
   }, [remoteVideo]);
-  return <video ref={videoRef} className="w-full h-full object-cover" playsInline /> 
+
+  return <video ref={videoRef} className="w-full h-full object-contain object-top" playsInline />
 }
 
 export default Video;

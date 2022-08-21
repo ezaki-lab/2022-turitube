@@ -6,94 +6,84 @@ import Peer, { SfuRoom } from "skyway-js";
 import Video from '../pages/Room/Video';
 
 type VideoStream = {
-    stream: MediaStream;
-    peerId: string;
+  stream: MediaStream;
+  peerId: string;
 };
 
 const peer = new Peer({ key: process.env.SKYWAY_KEY })
 
-export const useSkyWay = (roomId: string) => {
-    const [localStream, setLocalStream] = useState<MediaStream>();
-    const [remoteVideo, setRemoteVideo] = useState<VideoStream[]>([]);
-    const [room, setRoom] = useState<SfuRoom>();
+export const useSkyWay = (roomId: string, setMyStream, myStream) => {
+  // const [localStream, setLocalStream] = useRef<MediaStream>();
+  const localStream = useRef<MediaStream>();
+  const [remoteVideo, setRemoteVideo] = useState<VideoStream[]>([]);
+  const [room, setRoom] = useState<SfuRoom>();
 
-    const [ready, setReady] = useState<boolean>(false);
+  const [readyCam, setReadyCam] = useState<boolean>(false);
 
-    useEffect(() => {
-        setTimeout(() => {
-          setReady(true);
-        }, 2000);
-      }, []);
+  // 外カメにしたいけどよくわからなくなってるので今は無視
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true/*{facingMode: "environment"}*/, audio: true })
+      .then((stream) => {
+        localStream.current = stream;
+        setReadyCam(true);
+      })
+  }, []);
 
-    useEffect(() => {
-        navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then((stream) => {
-            setLocalStream(stream);
-            /*
-            if (localVideoRef.current) {
-              localVideoRef.current.srcObject = stream;
-              localVideoRef.current.play().catch((e) => console.log(e));
+  useEffect(() => {
+    if (peer.open && readyCam) {
+      localStream.current.getAudioTracks().forEach((track) => (track.enabled=false))
+      localStream.current.getVideoTracks().forEach((track) => (track.enabled=false))
+
+      setMyStream({...myStream, peer_id: peer.id})
+
+      const tmpRoom = peer.joinRoom<SfuRoom>(roomId, {
+        mode: "sfu",
+        stream: localStream.current,
+      });
+
+      // 自分が入室したときの処理
+      tmpRoom.once("open", () => {
+        console.log(`=== You Joined ${peer.id} ===\n`);
+      });
+
+      // 誰かが入室したときの処理
+      tmpRoom.on("peerJoin", (peerId) => {
+        console.log(`=== ${peerId} joined ===\n`);
+      });
+
+      // 誰かがストリーム開始したとき
+      tmpRoom.on("stream", async (stream) => {
+        console.log(`${stream.peerId} start stream`)
+        setRemoteVideo((prev) => [
+          ...prev,
+          { stream: stream, peerId: stream.peerId },
+        ])
+      })
+
+      tmpRoom.on("peerLeave", (peerId) => {
+        setRemoteVideo((prev) => {
+          return prev.filter((video) => {
+            if (video.peerId === peerId) {
+              video.stream.getTracks().forEach((track) => track.stop());
             }
-            */
-          })
-          .catch((e) => {
-            console.log(e);
+            return video.peerId !== peerId;
           });
-      }, []);
+        });
+        console.log(`=== ${peerId} left ===\n`);
+      });
+      setRoom(tmpRoom);
+    }
 
-    useEffect(() => {
-        if (peer.open && ready) {
-            console.log("a")
-
-            const tmpRoom = peer.joinRoom<SfuRoom>(roomId, {
-                mode: "sfu",
-                stream: localStream,
-            });
-
-            // 自分が入室したときの処理
-            tmpRoom.once("open", () => {
-                console.log("=== You Joined ===\n");
-            });
-
-            // 誰かが入室したときの処理
-            tmpRoom.on("peerJoin", (peerId) => {
-                console.log(`=== ${peerId} joined ===\n`);
-            });
-
-            // 誰かがストリーム開始したとき
-            tmpRoom.on("stream", async (stream) => {
-                console.log(`${stream.peerId} start stream`)
-                setRemoteVideo((prev) => [
-                    ...prev,
-                    { stream: stream, peerId: stream.peerId },
-                ])
-            })
-
-            tmpRoom.on("peerLeave", (peerId) => {
-                setRemoteVideo((prev) => {
-                    return prev.filter((video) => {
-                        if (video.peerId === peerId) {
-                            video.stream.getTracks().forEach((track) => track.stop());
-                        }
-                    return video.peerId !== peerId;
-                    });
-                });
-                console.log(`=== ${peerId} left ===\n`);
-            });
-            setRoom(tmpRoom);
-        }
-
-        return () => {
-            if (room) room.close();
-        }
-    }, [ready]);
+    return () => {
+      if (room) room.close();
+    }
+  }, [readyCam]);
 
 
+  useEffect(() => {
+    console.log(remoteVideo);
+  }, [remoteVideo])
 
-    useEffect(() => {
-        console.log(remoteVideo);
-    }, [remoteVideo])
-
-    return [remoteVideo, setLocalStream];
+  return { remoteVideo, localStream };
 };
