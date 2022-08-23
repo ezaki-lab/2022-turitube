@@ -3,6 +3,8 @@ import { useRecoilState } from 'recoil';
 import * as atom from '../common/atom';
 import axios from 'axios'
 
+// サイトに入った時にlocalStorageの情報だけでログインできるか試みる
+// ログインできなければサインインページに飛ばす。ログインできればお望みのページに飛ばす。
 export const UseLogin = () => {
     const base_url = "https://ezaki-lab.cloud/~turitube/api/login";
     const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
@@ -19,7 +21,8 @@ export const UseLogin = () => {
                 setUserInfo({
                     ...userInfo,
                     user_name: res.data.user_name,
-                    screen_name: res.data.screen_name
+                    screen_name: res.data.screen_name,
+                    avatar: res.data.avatar
                 });
             }
             // ユーザーが存在しなかったらuserInfoとlocalStorageの情報を抹消

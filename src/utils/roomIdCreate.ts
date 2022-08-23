@@ -1,3 +1,4 @@
+// ルーム作成時にIDを作成するための関数
 export const RoomIdCreate = () => {
     let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let rand_str = '';

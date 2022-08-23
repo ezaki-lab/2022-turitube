@@ -23,7 +23,8 @@ const Signin = () => {
         setUserInfo({
           user_id: res.data.user_id,
           user_name: res.data.user_name,
-          screen_name: res.data.screen_name
+          screen_name: res.data.screen_name,
+          avatar: res.data.avatar
         });
       }
       else {
@@ -37,15 +38,17 @@ const Signin = () => {
     console.log(newUserNameRef.current.value, newScreenNameRef.current.value)
     axios.post(base_url, {
       user_name: newUserNameRef.current.value,
-      screen_name: newScreenNameRef.current.value
+      screen_name: newScreenNameRef.current.value,
+      avatar: userInfo.avatar
     }).then((res) => {
       if (res.data.status) {
         localStorage.setItem("userId", res.data.user_id);
-        setUserInfo({
+        setUserInfo((rev) => ({
+          ...rev,
           user_id: res.data.user_id,
           user_name: newUserNameRef.current.value,
-          screen_name: newScreenNameRef.current.value
-        });
+          screen_name: newScreenNameRef.current.value,
+        }))
       }
       else {
         ;

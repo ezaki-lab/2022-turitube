@@ -21,6 +21,7 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
   const [readyCam, setReadyCam] = useState<boolean>(false);
 
   // 外カメにしたいけどよくわからなくなってるので今は無視
+  // カメラとマイクのデフォルトはオフだが、設定上trueにする必要がある
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true/*{facingMode: "environment"}*/, audio: true })
@@ -30,13 +31,16 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
       })
   }, []);
 
+  // カメラの準備ができていれば実行される。
   useEffect(() => {
     if (peer.open && readyCam) {
+      // カメラとマイクはデフォルトではオフにする
       localStream.current.getAudioTracks().forEach((track) => (track.enabled=false))
       localStream.current.getVideoTracks().forEach((track) => (track.enabled=false))
 
       setMyStream({...myStream, peer_id: peer.id})
 
+      // SFUルームを利用する。
       const tmpRoom = peer.joinRoom<SfuRoom>(roomId, {
         mode: "sfu",
         stream: localStream.current,
@@ -53,6 +57,7 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
       });
 
       // 誰かがストリーム開始したとき
+      // remoteVideoに画面配信情報を書き込み
       tmpRoom.on("stream", async (stream) => {
         console.log(`${stream.peerId} start stream`)
         setRemoteVideo((prev) => [
@@ -61,6 +66,8 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
         ])
       })
 
+      // 誰かが退室したとき
+      // remoteVideoから適したビデオ情報を削除する
       tmpRoom.on("peerLeave", (peerId) => {
         setRemoteVideo((prev) => {
           return prev.filter((video) => {
@@ -74,10 +81,6 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
       });
       setRoom(tmpRoom);
     }
-
-    return () => {
-      if (room) room.close();
-    }
   }, [readyCam]);
 
 
@@ -85,5 +88,5 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
     console.log(remoteVideo);
   }, [remoteVideo])
 
-  return { remoteVideo, localStream };
+  return { remoteVideo, localStream, room };
 };

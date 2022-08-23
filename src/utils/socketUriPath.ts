@@ -1,5 +1,6 @@
 import urlJoin from 'url-join';
 
+// socket.ioの接続先指定
 export const SocketUri = () => {
     return (process.env.SOCKET_PATH)
 };

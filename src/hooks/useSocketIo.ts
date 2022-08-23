@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import urlJoin from 'url-join';
 
+// socket.ioに接続する。namespaceでsocket先を分ける。
 const useSocketIo = (namespace:string = '') => {
   const [socket, setSocket] = useState<Socket>();
 

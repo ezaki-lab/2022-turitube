@@ -1,60 +1,67 @@
 // ビデオ画面
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import Shrink from '../../../img/icons/shrink.png';
 
-type VideoStream = {
-  stream: MediaStream;
-  peerId: string;
-};
-
-const Video = ({ remoteVideo, stream, myStream }) => {
-  const [videoIndex, setVideoIndex] = useState<number>(0);
+const RemoteVideo = ({ remoteVideo, remoteStream }) => {
   const [existRemoteVideo, setExistRemoteVideo] = useState(false);
+  const [video, setVideo] = useState(null);
+  const [displayPeerId, setDisplayPeerId] = useState("");
 
+  // ユーザー情報の変化時に配信不都合が起きてないか確認
   useEffect(() => {
-    let remoteExistflg = false
-    console.log(stream)
-    stream.users.forEach((elem, index) => {
-      if(elem.cam && elem.user_name!==myStream.user_name){
-        remoteExistflg = true;
+    // 他の配信者にカメラonがいるかを確認
+    let tmpPeerId = "";
+    let tmpexist = false
+    remoteStream.users.forEach((elem, index) => {
+      if (elem.cam) {
+        tmpPeerId = elem.peer_id
+        tmpexist = true
       }
     })
-    setExistRemoteVideo(remoteExistflg);
-  }, [stream]);
-  
-  // ビデオインデックスを設定する
-  // (video emit(peer_id) receive → remoteVideoからindexをifで取得);
+    setDisplayPeerId(tmpPeerId);
+    setExistRemoteVideo(tmpexist);
+
+  }, [remoteStream]);
+
+  // displayPeerId変化時、表示させるvideoを変化させる
+  useEffect(() => {
+    remoteVideo.forEach(function(video) {
+      if (video.stream.peerId == displayPeerId) {
+        setVideo(video.stream);
+      }
+    }) 
+  }, [displayPeerId]);
 
   // remoteでの配信があるとき
   if (existRemoteVideo) {
     return (
       <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-start">
-        {remoteVideo.length ? <RemoteVideo remoteVideo={remoteVideo} video_index={videoIndex} /> : <></>}
+        {remoteVideo.length ? <Video video={video} /> : <></>}
       </div>
     )
   }
 
   // remoteのカメラが無い時
   return (
-      <>
-        <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-center items-center">
-          <h1 className="text-xl font-bold text-white">他に誰も配信していません</h1>
-        </div>
-      </>
+    <>
+      <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-center items-center">
+        <h1 className="text-xl font-bold text-white">他に誰も配信していません</h1>
+      </div>
+    </>
   )
 };
 
-const RemoteVideo = ({ remoteVideo, video_index }) => {
+// 指定ビデオ出力(声は出力しない)
+const Video = ({ video }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = remoteVideo[video_index].stream;
-      videoRef.current.play().catch((e) => console.log(e));
+    if (video) {
+      videoRef.current.srcObject = video;
+      videoRef.current.play();
     }
-  }, [remoteVideo]);
+  }, [video]);
 
-  return <video ref={videoRef} className="w-full h-full object-contain object-top" playsInline />
+  return <video ref={videoRef} className="w-full h-full object-contain object-top" playsInline muted />
 }
 
-export default Video;
+export default RemoteVideo;

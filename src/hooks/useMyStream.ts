@@ -14,27 +14,43 @@ interface MyStream {
   sid: string,
   peer_id: string,
   loading: boolean
+  avatar: {
+    hat: number,
+    hair: number,
+    face: number,
+    body: number,
+    pants: number,
+    foot: number
+  }
 }
 
-// 識別用のルートを取得
+// 自分の配信情報を管理する
+// + 自分の配信情報が更新(setMyStream)されたら自動的に他のユーザーにじぶんの情報を送信する
 const useMyStream = (room_id, socket) => {
   const [myStream, setMyStream] = useState<MyStream>(
     {
-    cam: false,
-    is_leader: false,
-    mic: false,
-    pos_x: 0,
-    pos_y: 0,
-    screen_name: "loading",
-    user_name: "loading",
-    sid: "loading",
-    peer_id: "loading",
-    loading: true
-  });
+      cam: false,
+      is_leader: false,
+      mic: false,
+      pos_x: 0.5,
+      pos_y: 0.5,
+      screen_name: "loading",
+      user_name: "loading",
+      sid: "loading",
+      peer_id: "loading",
+      loading: true,
+      avatar: {
+        hat: 0,
+        hair: 0,
+        face: 0,
+        body: 0,
+        pants: 0,
+        foot: 0
+      }
+    });
 
   useEffect(() => {
     if (!myStream.loading) {
-      console.log(myStream);
       socket.emit("update_user", {
         room_id: room_id,
         user: myStream

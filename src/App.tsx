@@ -16,7 +16,7 @@ import Book from './pages/Book';
 import DiaryContent from "./pages/Diary/Content";
 import BookContent from './pages/Book/Content';
 
-import Login from './pages/Signin';
+import Signin from './pages/Signin';
 import { useRecoilState } from 'recoil';
 import * as atom from './common/atom';
 
@@ -38,47 +38,51 @@ export const App = () => {
     }, 1000);
   }, []);
 
+  // ブラウザルートの指定
   return (
-    <BrowserRouter basename={basename}>
-      {!ready ?
-        <Loading />
-        :
-        <Routes> {userInfo.user_id
-          ?
-          (<>
-            <Route element={<MainLayout />}>
-              <Route index element={<Home />} />
-              <Route path="/map" element={<Map />} />
-              <Route path="/notification" element={<Notification />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/user/:username" element={<User />} />
-              { /* 404用 */}
-              <Route path="*" element={<NotFound />} />
-            </Route>
-
-            <Route element={<SimpleLayout />}>
-              <Route path="/diary" element={<Diary />} />
-              <Route path="/book" element={<Book />} />
-            </Route>
-
-            <Route path="/diary/:diary_id" element={<DiaryContent />} />
-            <Route path="/book/:book_id" element={<BookContent />} />
-
-            <Route path="/room/:room_id" element={<Room />} />
-          </>)
+    <div className="font-body">
+      <BrowserRouter basename={basename}>
+        {!ready ?
+          <Loading />
           :
-          (<>
-            <Route element={<MainLayout />}>
-              <Route path="*" element={<Login />} />
-            </Route>
-          </>)
+          <Routes> {userInfo.user_id
+            ?
+            (<>
+              <Route element={<MainLayout />}>
+                <Route index element={<Home />} />
+                <Route path="/map" element={<Map />} />
+                <Route path="/notification" element={<Notification />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/user/:username" element={<User />} />
+                { /* 404用 */}
+                <Route path="*" element={<NotFound />} />
+              </Route>
+
+              <Route element={<SimpleLayout />}>
+                <Route path="/diary" element={<Diary />} />
+                <Route path="/book" element={<Book />} />
+              </Route>
+
+              <Route path="/diary/:diary_id" element={<DiaryContent />} />
+              <Route path="/book/:book_id" element={<BookContent />} />
+
+              <Route path="/room/:room_id" element={<Room />} />
+            </>)
+            :
+            (<>
+              <Route element={<MainLayout />}>
+                <Route path="*" element={<Signin />} />
+              </Route>
+            </>)
+          }
+
+          </Routes>
         }
 
-        </Routes>
-      }
+      </BrowserRouter>
+    </div>
 
-    </BrowserRouter>
 
   )
 }

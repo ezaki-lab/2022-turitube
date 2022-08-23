@@ -43,7 +43,7 @@ const LocalVideo = ({ localStream, cam }) => {
     }
   }, [cam]);
 
-  return <video ref={videoRef} className="w-full object-contain object-top" playsInline />
+  return <video ref={videoRef} className="w-full object-contain object-top" muted playsInline />
 }
 
 export default Modal;

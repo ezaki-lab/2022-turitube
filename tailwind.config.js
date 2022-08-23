@@ -5,7 +5,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Blinker', 'Noto Sans JP', 'Meiryo', 'sans-serif']
+        body: [
+          '"Helvetica Neue"',
+          'Arial',
+          '"Hiragino Kaku Gothic ProN"',
+          '"Hiragino Sans"',
+          'Meiryo',
+          'sans-serif'
+        ]
       },
       colors: {
         'basic': '#40A4CE',

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
-// チャットログ
+// チャットログを流すためのコンポーネント
 const Chat = ({socket}) => {
     const [messageList, setMessagelist] = useState([]);
 
