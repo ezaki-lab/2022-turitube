@@ -20,6 +20,8 @@ import Cam from '../../img/icons/camera.active.png';
 import CamInactive from '../../img/icons/camera.inactive.png';
 import Setting from '../../img/icons/setting.png';
 
+import toggleMetaverseImg from '../../img/metaverse_background.png';
+import kariImg from '../../img/kari.jpg';
 
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
@@ -152,7 +154,8 @@ const Room = () => {
       </div>
 
       <button className="aspect-square h-24 ml-4 mt-4 fixed z-50 top-0 left-0" onClick={ScreenSwitch}>
-        <img src="https://appleenglish.jp/wp-content/uploads/2020/11/ECF9852A-03F8-4F76-9301-414D6C84D745.jpeg" className="h-full object-cover" />
+        {/*<img src="https://appleenglish.jp/wp-content/uploads/2020/11/ECF9852A-03F8-4F76-9301-414D6C84D745.jpeg" className="h-full object-cover" />*/}
+        {screen == "video" ? <img src={toggleMetaverseImg} className="h-full object-cover rounded-xl" /> : <img src={kariImg} className="h-full object-cover rounded-xl" />}
       </button>
 
       <Audio remoteVideo={remoteVideo} />

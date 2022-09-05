@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import Layout from "./layout";
 import Unregistered from "../../../img/icons/unregistered.png";
+import kariImg from "../../../img/kari4.png";
 import Infomation from "./fish_info";
 import Timeline from "./timeline";
 
@@ -46,7 +47,8 @@ const BookContent = () => {
     <>
       <Layout>
         <div className="flex flex-col items-center pt-2">
-          <img src={Unregistered} className="rounded-xl my-2" />
+          {/*<img src={Unregistered} className="rounded-xl my-2" />*/}
+          <img src={kariImg} className="rounded-xl my-2" />
           <div className="flex flex-row flex-wrap justify-center w-full pb-5 border-b-2 border-basic">
             <div className="text-md font-bold text-white rounded-full bg-basic h-8 w-8 leading-8 text-center mx-1">1</div>
             <div className="text-md font-bold text-white rounded-full bg-basic h-8 w-8 leading-8 text-center mx-1">2</div>

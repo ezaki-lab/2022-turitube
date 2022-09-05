@@ -1,5 +1,6 @@
 // ビデオ画面
 import React, { useContext, useEffect, useState, useRef } from 'react';
+import kariImg from '../../../img/kari2.png';
 
 const RemoteVideo = ({ remoteVideo, remoteStream }) => {
   const [existRemoteVideo, setExistRemoteVideo] = useState(false);
@@ -35,7 +36,8 @@ const RemoteVideo = ({ remoteVideo, remoteStream }) => {
   if (existRemoteVideo) {
     return (
       <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-start">
-        {remoteVideo.length ? <Video video={video} /> : <></>}
+        <img src={kariImg} className="w-full h-full object-contain object-top"/>
+        {/*remoteVideo.length ? <Video video={video} /> : <></>*/}
       </div>
     )
   }

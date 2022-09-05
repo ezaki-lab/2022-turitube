@@ -17,12 +17,15 @@ const Avatar = ({ avatarData, size=100 }) => {
 
   return (
     <>
+    <Group width={size} height={size*1.5} >
       <AvatarGroup avatarImgs={foots} size={size} avatarIndex={avatarData.foot}  />
       <AvatarGroup avatarImgs={pantses} size={size} avatarIndex={avatarData.pants} />
       <AvatarGroup avatarImgs={bodies} size={size} avatarIndex={avatarData.body} />
       <AvatarGroup avatarImgs={faces} size={size} avatarIndex={avatarData.face} />
       <AvatarGroup avatarImgs={hairs} size={size} avatarIndex={avatarData.hair} />
       <AvatarGroup avatarImgs={hats} size={size} avatarIndex={avatarData.hat} />
+    </Group>
+      
     </>
   );
 };

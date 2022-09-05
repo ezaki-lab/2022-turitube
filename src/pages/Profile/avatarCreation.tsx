@@ -41,7 +41,7 @@ const AvatarCreate = () => {
       <SelectParts setAvatarData={setAvatarData} imgs={hairs} type={"hair"} text={"髪"} key={2} />
       <SelectParts setAvatarData={setAvatarData} imgs={faces} type={"face"} text={"顔"} key={3} />
       <SelectParts setAvatarData={setAvatarData} imgs={bodies} type={"body"} text={"体"} key={4} />
-      <SelectParts setAvatarData={setAvatarData} imgs={pantses} type={"pants"} text={"ズボン"} key={5} />
+      <SelectParts setAvatarData={setAvatarData} imgs={pantses} type={"pants"} text={"腰"} key={5} />
       <SelectParts setAvatarData={setAvatarData} imgs={foots} type={"foot"} text={"足"} key={6} />
     </>
   )
