@@ -5,7 +5,8 @@ import * as atom from '../common/atom';
 
 interface MyStream {
   cam: boolean,
-  is_leader: boolean,
+  is_host: boolean,
+  is_streamer: boolean,
   mic: boolean,
   pos_x: number,
   pos_y: number,
@@ -30,7 +31,8 @@ const useMyStream = (room_id, socket) => {
   const [myStream, setMyStream] = useState<MyStream>(
     {
       cam: false,
-      is_leader: false,
+      is_host: false,
+      is_streamer: false,
       mic: false,
       pos_x: 0.5,
       pos_y: 0.5,
@@ -56,6 +58,10 @@ const useMyStream = (room_id, socket) => {
         user: myStream
       });
     }
+  }, [myStream]);
+
+  useEffect(() => {
+    console.log(myStream);
   }, [myStream]);
 
   return { myStream, setMyStream };

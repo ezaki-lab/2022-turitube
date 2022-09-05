@@ -26,7 +26,7 @@ const useRemoteStream = (socket) => {
   }, [socket])
 
   useEffect(() => {
-    // console.log(remoteStream);
+    console.log(remoteStream);
   }, [remoteStream])
 
   return { remoteStream };

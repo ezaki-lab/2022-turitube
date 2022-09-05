@@ -5,7 +5,7 @@ import { RoomIdCreate } from '../../utils/roomIdCreate';
 import axios from 'axios';
 
 // 配信中設定モーダル
-const Modal = ({ localStream, cam }) => {
+const settingModal = ({ localStream, cam }) => {
   return (
     <>
       <input type="checkbox" id="setting-modal" className="modal-toggle" />
@@ -46,4 +46,4 @@ const LocalVideo = ({ localStream, cam }) => {
   return <video ref={videoRef} className="w-full object-contain object-top" muted playsInline />
 }
 
-export default Modal;
+export default settingModal;

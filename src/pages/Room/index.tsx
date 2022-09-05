@@ -3,7 +3,7 @@ import React, { useEffect, useState, createContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import RemoteVideo from './Video';
 import Metaverse from './Metaverse';
-import Modal from './modal';
+import settingModal from './optionModal';
 import Audio from './audio';
 
 import LeaveStream from "../../img/icons/leave_stream.png";
@@ -53,7 +53,7 @@ const Room = () => {
         ...rev,
         loading: false
       }));
-    }, 2000);
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -83,9 +83,24 @@ const Room = () => {
         }))
       });
 
+      // is_hostとis_streamerを受け取る
+      socket.on('init_user_setting', (data) => {
+        setMyStream((rev) => ({
+          ...rev,
+          is_host: data.is_host,
+          is_streamer: data.is_streamer,
+        }))
+      })
+
       // 誰かが抜けたときの処理
       socket.on("disconnect_others", (data) => {
         // 表示上の削除を行う(というか再レンダリング)
+      })
+
+      socket.on("deleted_room", () => {
+        socket.disconnect();
+        localStream.current.getTracks().forEach(track => track.stop());
+        navigate("/")
       })
 
       return (() => {
@@ -125,7 +140,7 @@ const Room = () => {
 
   return (
     <>
-      <Modal localStream={localStream} cam={myStream.cam} />
+      <settingModal localStream={localStream} cam={myStream.cam} />
 
       <button className="aspect-square h-12 mr-4 mt-4 fixed z-50 top-0 right-0" onClick={leaveRoom}>
         <img src={LeaveStream} className="h-full object-cover" />
@@ -139,14 +154,21 @@ const Room = () => {
         <div className="w-full px-2">
           <Send socket={socket} />
         </div>
+        {
+          myStream.is_streamer
+            ? (<>
+              <button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-75 mx-1" onClick={MuteSwitch}>
+                <img src={myStream.mic ? Mic : MicInactive} className="h-full object-cover h-5/6 w-5/6" />
+              </button>
 
-        <button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-75 mx-1" onClick={MuteSwitch}>
-          <img src={myStream.mic ? Mic : MicInactive} className="h-full object-cover h-5/6 w-5/6" />
-        </button>
-
-        <button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-75 mx-1" onClick={CameraSwitch}>
-          <img src={myStream.cam ? Cam : CamInactive} className="h-full object-contain h-3/4 w-3/4" />
-        </button>
+              <button className="aspect-square h-full flex items-center justify-center rounded-full bg-white bg-opacity-75 mx-1" onClick={CameraSwitch}>
+                <img src={myStream.cam ? Cam : CamInactive} className="h-full object-contain h-3/4 w-3/4" />
+              </button>
+            </>)
+            : (<>
+              <button className="btn bg-basic border-basic">配信者になる</button>
+            </>)
+        }
       </div>
 
       <div className="h-40 sm:h-2/5 mb-4 sm:mx-4 fixed z-50 bottom-16 w-full sm:w-64 xl:w-96 right-0 sm:bg-yellow-100 sm:bg-opacity-50 rounded-xl">
@@ -160,7 +182,7 @@ const Room = () => {
 
       <Audio remoteVideo={remoteVideo} />
 
-      {screen == "video" ? <RemoteVideo remoteVideo={remoteVideo} remoteStream={remoteStream} /> : <Metaverse setMyStream={setMyStream} myStream={myStream}  remoteStream={remoteStream} />}
+      {screen == "video" ? <RemoteVideo remoteVideo={remoteVideo} remoteStream={remoteStream} /> : <Metaverse setMyStream={setMyStream} myStream={myStream} remoteStream={remoteStream} />}
 
     </>
   );
