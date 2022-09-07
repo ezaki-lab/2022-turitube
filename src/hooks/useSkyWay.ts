@@ -13,7 +13,6 @@ type VideoStream = {
 const peer = new Peer({ key: process.env.SKYWAY_KEY })
 
 export const useSkyWay = (roomId: string, setMyStream, myStream) => {
-  // const [localStream, setLocalStream] = useRef<MediaStream>();
   const localStream = useRef<MediaStream>();
   const [remoteVideo, setRemoteVideo] = useState<VideoStream[]>([]);
   const [room, setRoom] = useState<SfuRoom>();
@@ -29,6 +28,9 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
         localStream.current = stream;
         setReadyCam(true);
       })
+    return (() => {
+      localStream.current.getTracks().forEach(track => track.stop());
+    })
   }, []);
 
   // カメラの準備ができていれば実行される。

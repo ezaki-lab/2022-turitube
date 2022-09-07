@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import urlJoin from 'url-join';
 
 // socket.ioに接続する。namespaceでsocket先を分ける。
-const useSocketIo = (namespace:string = '') => {
+const useSocketIo = (namespace: string = '') => {
   const [socket, setSocket] = useState<Socket>();
 
   const uri = urlJoin(
@@ -17,10 +17,19 @@ const useSocketIo = (namespace:string = '') => {
   );
 
   useEffect(() => {
-        setSocket(io(uri, { path: path, transports: ["polling"]})); // pollingにしないとエラー吐くよ
+    setSocket(io(uri, { path: path, transports: ["polling"] })); // pollingにしないとエラー吐くよ
   }, [namespace]);
 
-return socket;
+  /*
+  useEffect(() => {
+    if (socket) {
+      return (() => {
+        socket.disconnect();
+      })
+    }
+  }, [socket])
+*/
+  return socket;
 };
 
 export default useSocketIo;

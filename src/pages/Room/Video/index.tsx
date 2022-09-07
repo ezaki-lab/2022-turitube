@@ -36,8 +36,8 @@ const RemoteVideo = ({ remoteVideo, remoteStream }) => {
   if (existRemoteVideo) {
     return (
       <div className="w-full h-full bg-basic bg-opacity-50 flex flex-col justify-start">
-        <img src={kariImg} className="w-full h-full object-contain object-top"/>
-        {/*remoteVideo.length ? <Video video={video} /> : <></>*/}
+        {/*<img src={kariImg} className="w-full h-full object-contain object-top"/>*/}
+        {remoteVideo.length ? <Video video={video} /> : <></>}
       </div>
     )
   }

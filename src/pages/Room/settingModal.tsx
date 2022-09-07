@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import SelectImage from '../../img/select_img.png';
-import { useNavigate } from 'react-router-dom';
-import { RoomIdCreate } from '../../utils/roomIdCreate';
-import axios from 'axios';
 
 // 配信中設定モーダル
-const settingModal = ({ localStream, cam }) => {
+const SettingModal = ({ localStream, cam }) => {
   return (
     <>
       <input type="checkbox" id="setting-modal" className="modal-toggle" />
@@ -46,4 +42,4 @@ const LocalVideo = ({ localStream, cam }) => {
   return <video ref={videoRef} className="w-full object-contain object-top" muted playsInline />
 }
 
-export default settingModal;
+export default SettingModal;

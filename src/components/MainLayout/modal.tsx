@@ -83,7 +83,7 @@ const Modal = () => {
               <input type="checkbox" checked={friendOnlyChecked} className="checkbox my-2" onChange={(e) => { setFriendOnlyChecked(friendOnlyChecked ? false : true) }} />
             </label>
           </div>
-          <div className="flex justify-end my-4">
+          <div className="flex justify-end mt-4">
             <button className="btn btn-active border-basic text-white bg-basic tracking-wide" onClick={startStream}>配信開始!</button>
           </div>
 

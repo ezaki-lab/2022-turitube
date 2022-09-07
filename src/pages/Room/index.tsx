@@ -1,9 +1,13 @@
 /*  Room/stream */
 import React, { useEffect, useState, createContext } from 'react';
+import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom';
 import RemoteVideo from './Video';
 import Metaverse from './Metaverse';
-import settingModal from './optionModal';
+
+import SettingModal from './settingModal';
+import CloseModal from './closeModal';
+
 import Audio from './audio';
 
 import LeaveStream from "../../img/icons/leave_stream.png";
@@ -13,12 +17,15 @@ import Chat from './chat';
 import useSocketIo from '../../hooks/useSocketIo';
 import useMyStream from '../../hooks/useMyStream';
 import useRemoteStream from '../../hooks/useRemoteStream';
+import { UseRecognitionCamera } from '../../hooks/useRecognitionCamera';
+import { useGetPosition } from '../../hooks/useGetPosition';
 
 import Mic from '../../img/icons/mic.active.png';
 import MicInactive from '../../img/icons/mic.inactive.png';
 import Cam from '../../img/icons/camera.active.png';
 import CamInactive from '../../img/icons/camera.inactive.png';
 import Setting from '../../img/icons/setting.png';
+import Photograph from './photograph';
 
 import toggleMetaverseImg from '../../img/metaverse_background.png';
 import kariImg from '../../img/kari.jpg';
@@ -35,15 +42,19 @@ const Room = () => {
   const [ready, setReady] = useState<boolean>(false);
   const [screen, setScreen] = useState<string>("metaverse"); // デフォルトではmetaverse
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
+  const {lat, lng} = useGetPosition();
 
   const { room_id } = useParams();
   const socket = useSocketIo('stream');
 
   // 自分自身のストリーム管理
   const { myStream, setMyStream } = useMyStream(room_id, socket);
-  const { remoteStream } = useRemoteStream(socket)
+  const { remoteStream } = useRemoteStream(socket);
+
+  const { setImg, img, imgStrings, photographFlag } = UseRecognitionCamera()
 
   const { remoteVideo, localStream, room } = useSkyWay(room_id, setMyStream, myStream);
+  const base_url = "https://ezaki-lab.cloud/~turitube/api/stream_photo";
 
 
   useEffect(() => {
@@ -97,18 +108,32 @@ const Room = () => {
         // 表示上の削除を行う(というか再レンダリング)
       })
 
+      // 強制終了
       socket.on("deleted_room", () => {
         socket.disconnect();
-        localStream.current.getTracks().forEach(track => track.stop());
-        navigate("/")
+        console.log("?")
+        navigate("/coercion");
       })
-
-      return (() => {
-        socket.disconnect();
-      });
     }
   }, [socket]);
 
+  
+  // 画像送信
+  useEffect(() => {
+    if (img) {
+      axios.post(base_url, {
+        room_id: room_id,
+        user_id: userInfo.user_id,
+        user_name: userInfo.user_name,
+        lat: lat,
+        lng: lng,
+        base64img: img
+      }).then((res) => {
+        // console.log(res); //レスポンスいれて記録完了！とかやってもいいかも。
+      })
+    }
+  }, [img]);
+  
   // ミュートとかカメラオフとかを管理する
   const MuteSwitch = () => {
     setMyStream({ ...myStream, mic: !myStream.mic });
@@ -126,9 +151,8 @@ const Room = () => {
   }, [myStream.mic, myStream.cam]);
 
   const leaveRoom = () => {
-    navigate("/")
-    room.close();
-    localStream.current.getTracks().forEach(track => track.stop());
+    socket.disconnect();
+    navigate("/result")
   }
 
   // メタバースかカメラ映像かを選択する
@@ -140,11 +164,15 @@ const Room = () => {
 
   return (
     <>
-      <settingModal localStream={localStream} cam={myStream.cam} />
+      {/* */}
+      <SettingModal localStream={localStream} cam={myStream.cam} />
+      <CloseModal myStream={myStream} leaveRoom={leaveRoom} />
+      {/*<Photograph setImg={setImg} photographFlag={photographFlag} />*/}
 
-      <button className="aspect-square h-12 mr-4 mt-4 fixed z-50 top-0 right-0" onClick={leaveRoom}>
+
+      <label htmlFor="close-modal" className="aspect-square h-12 mr-4 mt-4 fixed z-50 top-0 right-0">
         <img src={LeaveStream} className="h-full object-cover" />
-      </button>
+      </label>
 
       <div className="h-10 mb-4 px-2 w-full fixed z-50 bottom-0 flex flex-row justify-around">
         <label htmlFor="setting-modal" className="aspect-square h-full flex items-center rounded-full justify-center bg-white bg-opacity-75 mx-1">
@@ -166,7 +194,7 @@ const Room = () => {
               </button>
             </>)
             : (<>
-              <button className="btn bg-basic border-basic">配信者になる</button>
+              <button className="btn bg-basic border-basic h-full">配信者になる</button>
             </>)
         }
       </div>
@@ -184,6 +212,7 @@ const Room = () => {
 
       {screen == "video" ? <RemoteVideo remoteVideo={remoteVideo} remoteStream={remoteStream} /> : <Metaverse setMyStream={setMyStream} myStream={myStream} remoteStream={remoteStream} />}
 
+      {/*imgStrings.length ? <img src={imgStrings[0]} className="z-100 fixed h-32 object-contain" /> : <></>*/}
     </>
   );
 };
