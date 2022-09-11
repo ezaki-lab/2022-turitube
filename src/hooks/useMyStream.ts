@@ -61,7 +61,7 @@ const useMyStream = (room_id, socket) => {
   }, [myStream]);
 
   useEffect(() => {
-    console.log(myStream);
+    //console.log(myStream);
   }, [myStream]);
 
   return { myStream, setMyStream };

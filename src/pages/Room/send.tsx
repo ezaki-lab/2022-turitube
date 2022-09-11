@@ -24,7 +24,6 @@ const Send = ({socket}) => {
 
     const onClickSend = (e) => {
         if (message.match(/\S/g)) {
-            console.log("sl")
             socket.emit('chat_update',
                 {
                     'text': message,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import useCamera from './useCamera';
 import * as atom from '../common/atom';
 import Peer, { SfuRoom } from "skyway-js";
 import Video from '../pages/Room/Video';
@@ -12,34 +13,13 @@ type VideoStream = {
 
 const peer = new Peer({ key: process.env.SKYWAY_KEY })
 
-export const useSkyWay = (roomId: string, setMyStream, myStream) => {
-  const localStream = useRef<MediaStream>();
+export const useSkyWay = (roomId: string, setMyStream, myStream, localStream, readyCam) => {
   const [remoteVideo, setRemoteVideo] = useState<VideoStream[]>([]);
   const [room, setRoom] = useState<SfuRoom>();
-
-  const [readyCam, setReadyCam] = useState<boolean>(false);
-
-  // 外カメにしたいけどよくわからなくなってるので今は無視
-  // カメラとマイクのデフォルトはオフだが、設定上trueにする必要がある
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true/*{facingMode: "environment"}*/, audio: true })
-      .then((stream) => {
-        localStream.current = stream;
-        setReadyCam(true);
-      })
-    return (() => {
-      localStream.current.getTracks().forEach(track => track.stop());
-    })
-  }, []);
 
   // カメラの準備ができていれば実行される。
   useEffect(() => {
     if (peer.open && readyCam) {
-      // カメラとマイクはデフォルトではオフにする
-      localStream.current.getAudioTracks().forEach((track) => (track.enabled=false))
-      localStream.current.getVideoTracks().forEach((track) => (track.enabled=false))
-
       setMyStream({...myStream, peer_id: peer.id})
 
       // SFUルームを利用する。
@@ -82,13 +62,13 @@ export const useSkyWay = (roomId: string, setMyStream, myStream) => {
         console.log(`=== ${peerId} left ===\n`);
       });
       setRoom(tmpRoom);
+
+      return (() => {
+        console.log("teisi")
+        tmpRoom.close();
+      })
     }
   }, [readyCam]);
 
-
-  useEffect(() => {
-    console.log(remoteVideo);
-  }, [remoteVideo])
-
-  return { remoteVideo, localStream, room };
+  return { remoteVideo, room };
 };

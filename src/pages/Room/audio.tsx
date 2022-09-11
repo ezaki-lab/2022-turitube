@@ -22,7 +22,6 @@ const Audio = ({ remoteVideo }) => {
 const Output = ({ video }) => {
   const audioRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
-    console.log(video);
     if (video) {
       audioRef.current.srcObject = video.stream;
       audioRef.current.play();

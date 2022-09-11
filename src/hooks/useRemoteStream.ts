@@ -8,25 +8,24 @@ import * as atom from '../common/atom';
 const useRemoteStream = (socket) => {
   const [remoteStream, setRemoteStream] = useState<{}>({});
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
-  const user_name = userInfo.user_name
 
   useEffect(() => {
-    if (socket) {
+    if (socket && userInfo.user_name) {
       // roomの環境が変化したときに実行(streamは自分以外を保存する)
       socket.on("update_room", (data) => {
         let tmpUserData = [];
         data.users.forEach((elem, index) => {
-          if (elem.user_name !== user_name) {
+          if (elem.user_name !== userInfo.user_name) {
             tmpUserData.push(elem);
           }
         })
         setRemoteStream({ ...data, users: tmpUserData });
       });
     }
-  }, [socket])
+  }, [socket, userInfo])
 
   useEffect(() => {
-    console.log(remoteStream);
+    // console.log(remoteStream);
   }, [remoteStream])
 
   return { remoteStream };

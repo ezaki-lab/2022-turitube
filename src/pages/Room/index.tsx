@@ -1,12 +1,16 @@
 /*  Room/stream */
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useEffect, useState, createContext, useRef } from 'react';
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom';
 import RemoteVideo from './Video';
 import Metaverse from './Metaverse';
 
-import SettingModal from './settingModal';
-import CloseModal from './closeModal';
+import SettingModal from './Modal/settingModal';
+import CloseModal from './Modal/closeModal';
+import PhotographModal from './Modal/photographModal';
+import UsersModal from './Modal/usersModal';
+
+import RecordFish from './recordFish';
 
 import Audio from './audio';
 
@@ -14,9 +18,13 @@ import LeaveStream from "../../img/icons/leave_stream.png";
 import Send from './send';
 import Chat from './chat';
 
+import QuestBoard from '../../components/QuestBoard';
+import Menu from './menu';
+
 import useSocketIo from '../../hooks/useSocketIo';
 import useMyStream from '../../hooks/useMyStream';
 import useRemoteStream from '../../hooks/useRemoteStream';
+import useCamera from '../../hooks/useCamera';
 import { UseRecognitionCamera } from '../../hooks/useRecognitionCamera';
 import { useGetPosition } from '../../hooks/useGetPosition';
 
@@ -25,7 +33,8 @@ import MicInactive from '../../img/icons/mic.inactive.png';
 import Cam from '../../img/icons/camera.active.png';
 import CamInactive from '../../img/icons/camera.inactive.png';
 import Setting from '../../img/icons/setting.png';
-import Photograph from './photograph';
+import Hamburger from '../../img/icons/hamburger.png';
+import QuestOpen from '../../img/icons/quest_fish_open.png';
 
 import toggleMetaverseImg from '../../img/metaverse_background.png';
 import kariImg from '../../img/kari.jpg';
@@ -42,7 +51,10 @@ const Room = () => {
   const [ready, setReady] = useState<boolean>(false);
   const [screen, setScreen] = useState<string>("metaverse"); // デフォルトではmetaverse
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
-  const {lat, lng} = useGetPosition();
+  const [photographFlag, setPhotographFlag] = useState<boolean>(false);
+  const [detectionResult, setDetectionResult] = useState<null|{}>(null);
+  const [menuVisible, setMenuVisible] = useState<boolean>(false);
+  const { localStream, readyCam, setConstraints } = useCamera({ audio: false, video: false });
 
   const { room_id } = useParams();
   const socket = useSocketIo('stream');
@@ -51,11 +63,7 @@ const Room = () => {
   const { myStream, setMyStream } = useMyStream(room_id, socket);
   const { remoteStream } = useRemoteStream(socket);
 
-  const { setImg, img, imgStrings, photographFlag } = UseRecognitionCamera()
-
-  const { remoteVideo, localStream, room } = useSkyWay(room_id, setMyStream, myStream);
-  const base_url = "https://ezaki-lab.cloud/~turitube/api/stream_photo";
-
+  const { remoteVideo, room } = useSkyWay(room_id, setMyStream, myStream, localStream, readyCam);
 
   useEffect(() => {
     setTimeout(() => {
@@ -74,7 +82,13 @@ const Room = () => {
       user_name: userInfo.user_name,
       avatar: userInfo.avatar
     }));
-  }, [userInfo])
+  }, [userInfo]);
+
+  // 再読み込み対策
+  window.addEventListener('beforeunload', (e) => {
+    socket.disconnect();
+    room.close();
+  });
 
   // socket.io関連
   useEffect(() => {
@@ -110,30 +124,11 @@ const Room = () => {
 
       // 強制終了
       socket.on("deleted_room", () => {
-        socket.disconnect();
-        console.log("?")
         navigate("/coercion");
       })
     }
   }, [socket]);
 
-  
-  // 画像送信
-  useEffect(() => {
-    if (img) {
-      axios.post(base_url, {
-        room_id: room_id,
-        user_id: userInfo.user_id,
-        user_name: userInfo.user_name,
-        lat: lat,
-        lng: lng,
-        base64img: img
-      }).then((res) => {
-        // console.log(res); //レスポンスいれて記録完了！とかやってもいいかも。
-      })
-    }
-  }, [img]);
-  
   // ミュートとかカメラオフとかを管理する
   const MuteSwitch = () => {
     setMyStream({ ...myStream, mic: !myStream.mic });
@@ -144,14 +139,10 @@ const Room = () => {
   };
 
   useEffect(() => {
-    if (localStream.current) {
-      localStream.current.getAudioTracks().forEach((track) => (track.enabled = myStream.mic));
-      localStream.current.getVideoTracks().forEach((track) => (track.enabled = myStream.cam));
-    }
+    setConstraints({ video: myStream.cam, audio: myStream.mic });
   }, [myStream.mic, myStream.cam]);
 
   const leaveRoom = () => {
-    socket.disconnect();
     navigate("/result")
   }
 
@@ -165,18 +156,28 @@ const Room = () => {
   return (
     <>
       {/* */}
-      <SettingModal localStream={localStream} cam={myStream.cam} />
+      <SettingModal cam={myStream.cam} localStream={localStream} readyCam={readyCam} />
       <CloseModal myStream={myStream} leaveRoom={leaveRoom} />
-      {/*<Photograph setImg={setImg} photographFlag={photographFlag} />*/}
+      <PhotographModal setPhotoGraphFlag={setPhotographFlag} photoGraphFlag={photographFlag} room_id={room_id} localStream={localStream} readyCam={readyCam} setDetectionResult={setDetectionResult} />
+      <UsersModal myStream={myStream} remoteStream={remoteStream} />
+      <QuestBoard can_order_quest={false} />
+      <RecordFish detectionResult={detectionResult} />
+      <Menu visible={menuVisible} />
 
+      {/* 撮影フラグはこれで立てる */}
+      {/*<button className="btn fixed z-100" onClick={() => { setPhotographFlag(true) }}>撮影</button>*/}
 
       <label htmlFor="close-modal" className="aspect-square h-12 mr-4 mt-4 fixed z-50 top-0 right-0">
         <img src={LeaveStream} className="h-full object-cover" />
       </label>
 
       <div className="h-10 mb-4 px-2 w-full fixed z-50 bottom-0 flex flex-row justify-around">
-        <label htmlFor="setting-modal" className="aspect-square h-full flex items-center rounded-full justify-center bg-white bg-opacity-75 mx-1">
-          <img src={Setting} className="h-full object-cover h-2/3 w-2/3" />
+        <button className="aspect-square h-full flex items-center rounded-full justify-center bg-white bg-opacity-75 mx-1" onClick={() => {setMenuVisible((rev) => (!rev))}} key={100}>
+          <img src={Hamburger} className="h-full object-cover aspect-square h-2/3 w-2/3" />
+        </button>
+        
+        <label htmlFor="questboard-modal" className="aspect-square h-full flex items-center rounded-full justify-center bg-white bg-opacity-75 mx-1">
+          <img src={QuestOpen} className="h-full object-cover h-5/6 w-5/6" />
         </label>
 
         <div className="w-full px-2">
@@ -194,7 +195,7 @@ const Room = () => {
               </button>
             </>)
             : (<>
-              <button className="btn bg-basic border-basic h-full">配信者になる</button>
+              <button className="btn bg-basic border-basic h-full" onClick={() => { setMyStream((rev) => ({ ...rev, is_streamer: true })) }}>配信者になる</button>
             </>)
         }
       </div>

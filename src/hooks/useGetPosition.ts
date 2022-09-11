@@ -16,7 +16,6 @@ export const useGetPosition = () => {
                 setLng(pos.coords.longitude);
             }
         );
-        console.log("重たいです");
     }, 5000)
 
     // 初期値セット

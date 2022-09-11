@@ -15,7 +15,10 @@ import Diary from './pages/Diary';
 import Book from './pages/Book';
 import DiaryContent from "./pages/Diary/Content";
 import BookContent from './pages/Book/Content';
+import Result from './pages/Result';
 import Coercion from './pages/Coercion';
+
+import QuestBoard from './components/QuestBoard';
 
 import Signin from './pages/Signin';
 import { useRecoilState } from 'recoil';
@@ -36,7 +39,7 @@ export const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setReady(true);
-    }, 1000);
+    }, 1);
   }, []);
 
   // ブラウザルートの指定
@@ -68,6 +71,8 @@ export const App = () => {
               <Route path="/diary/:diary_id" element={<DiaryContent />} />
               <Route path="/book/:book_id" element={<BookContent />} />
               <Route path="/coercion" element={<Coercion />} />
+              <Route path="/result" element={<Result />} />
+              <Route path="/questboard" element={<QuestBoard can_order_quest={true} />} />
 
               <Route path="/room/:room_id" element={<Room />} />
             </>)

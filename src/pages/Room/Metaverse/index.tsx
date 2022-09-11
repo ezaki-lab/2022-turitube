@@ -14,10 +14,13 @@ import * as atom from '../../../common/atom';
 // 座標系について - 横をx,縦をyとし、0~1の範囲で座標情報を正規化する
 const Metaverse = ({ setMyStream, myStream, remoteStream }) => {
   // 画面幅の小さいほうをrangeとする
-  const range = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth;
-  const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
+  const [range, setRange] = useState(window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth);
   const [backgroundImage] = useImage(BackGround);
 
+  // 画面サイズ(縦横)変化時に自動で画面補正される
+  useEffect(() => {
+    setRange(window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth);
+  }, [window.innerWidth, window.innerHeight])
 
   return (
     <>
@@ -33,7 +36,7 @@ const Metaverse = ({ setMyStream, myStream, remoteStream }) => {
             {/*他の参加者全員のアバターを表示する */}
             {remoteStream.users.map((user, index) => {
               return (
-                <Group x={user.pos_x * range} y={user.pos_y * range} height={(range / 10) * 2.7} width={(range / 10 * 2)}>
+                <Group x={user.pos_x * range} y={user.pos_y * range} height={(range / 10) * 2.7} width={(range / 10 * 2)} key={index*user.pos_x}>
                   {/*<Rect x={0} y={0} height={(range / 10) * 2.2} width={(range / 10 * 2)} stroke="green" />*/}
                   <MetaUser range={range} user={user} />
                 </Group>
