@@ -2,16 +2,18 @@
 import { useRecoilState } from 'recoil';
 import React, {useEffect} from 'react';
 
-// Home - index.tsx
+// 強制終了時の画面
 const Coercion = () => {
 
   useEffect(() => {
     ;
-  }, [])
+  }, []);
   
   return (
     <>
-      a
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        <p className="text-xl font-bold text-basic py-1">配信が終了しました</p>
+      </div>
     </>
   );
 };

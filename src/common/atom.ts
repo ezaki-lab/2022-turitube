@@ -31,3 +31,8 @@ export const user_info = atom({
     }
   }
 });
+
+export const current_room_id = atom({
+  key: 'current_room_id',
+  default: ""
+})

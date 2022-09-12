@@ -15,8 +15,8 @@ import Diary from './pages/Diary';
 import Book from './pages/Book';
 import DiaryContent from "./pages/Diary/Content";
 import BookContent from './pages/Book/Content';
-import Result from './pages/Result';
-import Coercion from './pages/Coercion';
+import Result from './pages/StreamResult/Result';
+import Coercion from './pages/StreamResult/Coercion';
 
 import QuestBoard from './components/QuestBoard';
 

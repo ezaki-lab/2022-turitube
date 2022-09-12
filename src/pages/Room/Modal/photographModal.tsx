@@ -46,6 +46,7 @@ const PhotographModal = ({ setPhotoGraphFlag, photoGraphFlag, room_id, localStre
           if (res.data.status == 404) setImg("")
           else {
             setPhotoGraphFlag(false);
+            res.data.img = img;
             setDetectionResult(res.data)
           }
         })
@@ -77,7 +78,7 @@ const PhotographModal = ({ setPhotoGraphFlag, photoGraphFlag, room_id, localStre
       <input type="checkbox" id="photograph-modal" className="modal-toggle" checked={photoGraphFlag} onChange={(e) => { e.target.checked ? setPhotoGraphFlag(true) : setPhotoGraphFlag(false) }} />
       <div className="modal w-screen">
         <div className="modal-box w-3/4 max-w-6xl">
-          <h2 className="text-xl font-bold text-basic">魚のAI判別</h2>
+          <h2 className="text-xl font-bold text-basic">魚種のAI判別</h2>
           <label htmlFor="photograph-modal" className="btn btn-md btn-circle bg-basic text-xl font-bold border-basic absolute right-2 top-2">✕</label>
           <h1 className="text-black text-md font-bold pt-5">魚を映すと自動で撮影します！</h1>
           <video ref={videoRef} className={`h-1/2 object-contain object-top py-4`} playsInline muted />

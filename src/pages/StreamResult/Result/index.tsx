@@ -1,28 +1,34 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
-import * as atom from '../../common/atom';
+import * as atom from '../../../common/atom';
 import axios from 'axios';
 
 interface ImgName {
   img_name: string
 }
 
-// Result - index.tsx
+// Result - index.tsx 配信終了後の記録画面
 const Result = () => {
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
-  const [imgNameList, setImgNameList] = useState<ImgName[]>([])
+  const [imgNameList, setImgNameList] = useState<ImgName[]>([]);
+  const [roomId, setRoomId] = useRecoilState(atom.current_room_id);
   const base_url = "https://ezaki-lab.cloud/~turitube/api/stream_photo";
 
   useEffect(() => {
     axios.get(base_url, {
       params: {
-        user_id: userInfo.user_id
+        user_id: userInfo.user_id,
+        room_id: roomId
       }
     }).then((res) => {
       console.log(res.data.img_name_list)
       setImgNameList(res.data.img_name_list);
     })
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    console.log(roomId);
+  }, [roomId]);
 
   return (
     <>

@@ -51,6 +51,7 @@ const Room = () => {
   const [ready, setReady] = useState<boolean>(false);
   const [screen, setScreen] = useState<string>("metaverse"); // デフォルトではmetaverse
   const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
+  const [roomId, setRoomId] = useRecoilState(atom.current_room_id);
   const [photographFlag, setPhotographFlag] = useState<boolean>(false);
   const [detectionResult, setDetectionResult] = useState<null|{}>(null);
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
@@ -72,6 +73,7 @@ const Room = () => {
         ...rev,
         loading: false
       }));
+      setRoomId(room_id);
     }, 500);
   }, []);
 
