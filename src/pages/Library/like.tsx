@@ -68,7 +68,7 @@ const Like = () => {
     return (
         <>
             <div className="flex flex-col w-full">
-                <Title title="いいねした日誌" />
+                <p>いいねした日誌</p>
                 {diary.map((data, index) => {
                     return (
                         <LikeDiary key={index} img={data.img} title={data.title} author={data.author} id={data.diary_id} />

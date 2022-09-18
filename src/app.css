@@ -19,6 +19,12 @@
   }
   
 ::-webkit-scrollbar-track { /* 上下に余白を付ける */
-    overflow: hidden
+    overflow: hidden;
   }
-  
+
+body {
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+  overflow: hidden;
+}

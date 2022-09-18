@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProgressBar from "../progressBar";
+import ProgressBar from "../../ProgressBar";
 import StickyNote from "../stickyNote";
 import QuestFishActiveAqua from '../../../img/icons/quest_fish_aqua.active.png';
 import QuestFishInactiveAqua from '../../../img/icons/quest_fish_aqua.inactive.png';

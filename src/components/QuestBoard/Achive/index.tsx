@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import ProgressBar from "../progressBar";
+import ProgressBar from "../../ProgressBar";
 import StickyNote from "../stickyNote";
 import AchiveFishActiveGreen from '../../../img/icons/achive_fish_green.active.png';
 import AchiveFishInactiveGreen from '../../../img/icons/achive_fish_green.inactive.png';

@@ -1,4 +1,6 @@
 const path = require('path');
+const {GenerateSW} = require('workbox-webpack-plugin');
+
 const Dotenv = require('dotenv-webpack');
 
 const environment = process.env.NODE_ENV || 'development';
@@ -58,7 +60,7 @@ module.exports = {
           publicPath: img_publicPath 
         }
       }
-    ],
+    ]
   },
   devServer: {
     static: {
@@ -73,10 +75,19 @@ module.exports = {
   },
   target: 'web',
 
-  plugins: [
+  plugins: environment=="production"
+   ? [
     new Dotenv({
       path: path.resolve(__dirname, `.env.${environment}`),
+    }),
+    new GenerateSW({
+      maximumFileSizeToCacheInBytes: 1024 * 1024 * 10,
     })
+  ]
+  : [
+    new Dotenv({
+      path: path.resolve(__dirname, `.env.${environment}`),
+    }),
   ]
 
 };
