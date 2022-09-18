@@ -13,6 +13,7 @@
 /dist/bundle.js
 /dist/img
 /dist/index.html
+/dist
 
 # misc
 .DS_Store
