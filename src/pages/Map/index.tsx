@@ -47,7 +47,7 @@ const Map = () => {
 };
 
 const Cam = () => {
-  const {videoRef} = useCamera({audio: false, video: true});
+  const {videoRef} = useCamera({audio: false, video: true}, "enviroment");
   return (
     <video ref={videoRef} playsInline />
   )

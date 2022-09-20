@@ -10,8 +10,11 @@ import Achive from './pages/SPA/Achive';
 import Quest from './pages/SPA/Quest';
 import PictureBookContent from "./pages/SPA/PictureBook/Content";
 import DiaryContent from './pages/SPA/Diary/Content';
+import Debug from "./pages/SPA/Debug";
+import Room from './pages/SPA/Room';
 
 import Hamburger from './components/Layout/hamburger';
+import HeaderShadow from './components/Layout/headerShadow';
 
 import Map from "./pages/Map";
 import Library from "./pages/Library";
@@ -19,7 +22,7 @@ import Notification from "./pages/Notification";
 import Profile from "./pages/Profile";
 import NotFound from "./NotFound";
 import User from "./pages/User";
-import Room from './pages/Room/index';
+// import Room from './pages/Room/index';
 import Book from './pages/Book';
 import BookContent from './pages/Book/Content';
 import Result from './pages/StreamResult/Result';
@@ -65,17 +68,22 @@ export const App = () => {
               ?
               (<>
                 <Route element={<Hamburger />}>
-                  <Route element={<BottomLayout />}>
-                    <Route element={<TopLayout />}>
-                      <Route index element={<Home />} />
+                  <Route element={<HeaderShadow />}>
+                    <Route element={<BottomLayout />}>
+                      <Route element={<TopLayout />}>
+                        <Route index element={<Home />} />
+                      </Route>
+                      <Route path="/picture_book" element={<PictureBook />} />
+                      <Route path="/diary" element={<Diary />} />
+                      <Route path="/quest" element={<Quest />} />
+                      <Route path="/achive" element={<Achive />} />
+                      <Route path="/debug" element={<Debug />} />
                     </Route>
-                    <Route path="/picture_book" element={<PictureBook />} />
-                    <Route path="/diary" element={<Diary />} />
-                    <Route path="/quest" element={<Quest />} />
-                    <Route path="/achive" element={<Achive />} />
+                    <Route path="picture_book/:fishId" element={<PictureBookContent />} />
+                    <Route path="diary/:diaryId" element={<DiaryContent />} />
                   </Route>
-                  <Route path="picture_book/:fishId" element={<PictureBookContent />} />
-                  <Route path="diary/:diaryId" element={<DiaryContent />} />
+
+                  <Route path="room/:room_id" element={<Room />} />
                 </Route>
 
                 <Route element={<MainLayout />}>
@@ -97,7 +105,7 @@ export const App = () => {
                 <Route path="/result" element={<Result />} />
                 <Route path="/questboard" element={<QuestBoard can_order_quest={true} />} />
 
-                <Route path="/room/:room_id" element={<Room />} />
+                {/*<Route path="/room/:room_id" element={<Room />} />*/}
               </>)
               :
               (<>

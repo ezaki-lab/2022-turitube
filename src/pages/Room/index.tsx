@@ -55,7 +55,7 @@ const Room = () => {
   const [photographFlag, setPhotographFlag] = useState<boolean>(false);
   const [detectionResult, setDetectionResult] = useState<null|{}>(null);
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
-  const { localStream, readyCam, setConstraints } = useCamera({ audio: false, video: false });
+  const { localStream, readyCam, setConstraints } = useCamera({ audio: false, video: false }, "enviroment");
 
   const { room_id } = useParams();
   const socket = useSocketIo('stream');

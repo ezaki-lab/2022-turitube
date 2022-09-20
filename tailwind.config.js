@@ -49,11 +49,11 @@ module.exports = {
         'tcolor': '#333333',
         'gray-dark': '#333333',
         'gray': '#999999',
-        'lv1':'#2ADADE',
-        'lv2':'#14F414',
-        'lv3':'#E0D728',
-        'lv4':'#FF8A09',
-        'lv5':'#F62212',
+        'lv1': '#2ADADE',
+        'lv2': '#14F414',
+        'lv3': '#E0D728',
+        'lv4': '#FF8A09',
+        'lv5': '#F62212',
 
       },
       zIndex: {
@@ -90,7 +90,7 @@ module.exports = {
           "0%": {
             transform: "scale(0.6)"
           },
-          "100%":{
+          "100%": {
             transform: "scale(1)"
           }
         },
@@ -101,7 +101,7 @@ module.exports = {
           },
           "100%": {
             transform: "scale(1)",
-            opacity:1
+            opacity: 1
           }
         }
       },
@@ -112,9 +112,12 @@ module.exports = {
         "button-push": "push 0.05s alternate forwards",
         popin: "popin 0.25s alternate forwards",
         fadein: "fadein 0.25s alternate forwards"
-        
+
       },
     }
   },
-  plugins: [require("daisyui")]
+  plugins: [
+    require("daisyui"),
+    require('@tailwindcss/line-clamp')
+  ]
 };

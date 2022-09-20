@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const useCamera = (initialConstraints) => {
+const useCamera = (initialConstraints, mode) => {
   const videoRef = useRef<HTMLVideoElement>();
   const localStream = useRef<MediaStream>();
   const [readyCam, setReadyCam] = useState<boolean>(false);
   const [constraints, setConstraints] = useState(initialConstraints);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment"}, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: {facingMode: mode}, audio: true })
       .then((stream) => {
         stream.getAudioTracks().forEach((track) => (track.enabled = initialConstraints.audio));
         stream.getVideoTracks().forEach((track) => (track.enabled = initialConstraints.video));

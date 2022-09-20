@@ -27,7 +27,7 @@ const Home = () => {
       <div className="h-full w-full flex flex-col justify-center items-center pt-14 sm:pb-12">
         <div className="h-full w-full bg-white bg-opacity-50 overflow-y-auto">
           <div className="w-full h-full flex flex-col justify-start items-center px-4 ">
-            <div className="w-10/11 max-w-96 h-xs-max:w-full h-xs-max:h-full mx-3 sm-max:pb-56">
+            <div className="w-11/12 sm-max:w-full mx-3 sm-max:pb-56 sm:flex sm:flex-col sm:items-center">
               <StreamCard />
               <StreamCard />
               <StreamCard />
@@ -43,7 +43,7 @@ const Home = () => {
 const StreamCard = () => {
   return (
     <>
-      <div className="card w-full bg-base-100 rounded-xl shadow-xl my-3 h-xs-max:hidden">
+      <div className="card w-full bg-base-100 rounded-xl shadow-xl my-3 sm:hidden">
         <img src="https://pics.prcm.jp/e68f8de691258/37384182/jpeg/37384182.jpeg" className="object-cover h-64 aspect-video rounded-t-xl mt-1.5 mx-1.5" />
         <div className="m-2 mx-3">
           <h2 className="text-tcolor font-bold text-xl">タイトルだよa</h2>
@@ -55,7 +55,7 @@ const StreamCard = () => {
 
         </div>
       </div>
-      <div className="h-56 w-full flex flex-row justify-center items-start my-3 mb-6 pr-10 h-xs:hidden">
+      <div className="h-56 w-full max-w-5xl flex flex-row justify-center items-start my-3 mb-6 pr-10 sm-max:hidden">
         <div className="flex flex-col h-full w-1/2">
           <img src="https://pics.prcm.jp/e68f8de691258/37384182/jpeg/37384182.jpeg" className="object-cover h-full w-full rounded-xl w-full aspect-video rounded-t-xl" />
         </div>

@@ -41,9 +41,9 @@ const HamburgerModal = () => {
               <div className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={QuestModalButton} className="h-full" onClick={() => setModalId(1)} />
               </div>
-              <div className="mx-2 my-1 h-10 active:animate-button-push">
+              <Link to="/room/dev_room" className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
-              </div>
+              </Link>
             </div>
             <div className="h-full w-1/2 flex flex-col justify-around items-start">
               <div className="mx-2 my-1 h-10 active:animate-button-push">
@@ -52,9 +52,9 @@ const HamburgerModal = () => {
               <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(0)}>
                 <img src={AchiveModalButton} className="h-full" />
               </button>
-              <div className="mx-2 my-1 h-10 active:animate-button-push">
+              <Link to="/debug" className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
-              </div>
+              </Link>
             </div>
           </div>
 
