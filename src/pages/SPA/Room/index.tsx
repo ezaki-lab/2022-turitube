@@ -77,14 +77,19 @@ const Room = () => {
   else return (
     <>
       <div className={`flex flex-${width > height ? "row" : "col"} h-full w-full`}>
+        {/*退出ボタン */}
         <button className="fixed top-1 left-2 bg-yellow-200 w-12 h-12">
 
         </button>
+
+        {/*メタバース画面 */}
         <div className={`aspect-square ${width > height ? "h-full max-w-[50%]" : "w-full max-h-[50%]"} bg-white flex justify-center items-center`}>
           <div className={`aspect-square ${width > height ? "w-full" : "h-full"} bg-blue-200`}>
 
           </div>
         </div>
+
+        {/*チャット欄 */}
         <div className={`bg-yellow-200 flex-auto flex flex-col items-center ${width > height ? "w-2 h-full pt-12" : "h-2 w-full"}`}>
           <div className="h-2 flex-auto w-full">
             <ScrollToBottom>
