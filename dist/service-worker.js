@@ -94,7 +94,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/bundle.js",
-    "revision": "5aad05367b0b8aae860747c9ff5bccaf"
+    "revision": "6bbdfaa2f04085e9bcf1299f9af5bd58"
   }, {
     "url": "/img/1.04a0c03b8712989862ab7f36a966563d.png",
     "revision": null
@@ -183,18 +183,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/calendar.1b75e4913e68c1230643e4b6cb1aaf1a.png",
     "revision": null
   }, {
-    "url": "/img/camera.3e6741fe262a4970c42cc57866148723.png",
-    "revision": null
-  }, {
-    "url": "/img/camera.active.f52a482e37b9fe8854762d7237ebb815.png",
-    "revision": null
-  }, {
-    "url": "/img/camera.inactive.a9aad84a0c884af8ddd83d3442f32e10.png",
-    "revision": null
-  }, {
-    "url": "/img/camera.red.b36ac6f5e12231d01fffacd5b4fa0a6e.png",
-    "revision": null
-  }, {
     "url": "/img/close.da5a8b1ecb5076b571956ed182ee41ed.png",
     "revision": null
   }, {
@@ -210,6 +198,9 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/entered_sum.c548713702b96e614299bf62ebaa2c37.png",
     "revision": null
   }, {
+    "url": "/img/exit.2f26d9b075f8c2be4d178211af73739f.png",
+    "revision": null
+  }, {
     "url": "/img/eye.ac8deee211b600e20ef15553262e9e56.png",
     "revision": null
   }, {
@@ -217,9 +208,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/group.5b5934ef1292685c65111ef3c308b66c.png",
-    "revision": null
-  }, {
-    "url": "/img/hamburger.69203198f7493bb3f99a8204292f1602.png",
     "revision": null
   }, {
     "url": "/img/hamburger.ca2d1eba4a06b0f772c98030549ccad2.png",
@@ -237,9 +225,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/home_2.a8497429e54ad6bfc1bc1a309a65e5c3.png",
     "revision": null
   }, {
-    "url": "/img/host.22a0ecd16c8893953eb19442c3514ccf.png",
-    "revision": null
-  }, {
     "url": "/img/item0.d8b8304b4309fe7233fd09549f198906.png",
     "revision": null
   }, {
@@ -249,13 +234,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/item2.e3d3a0906ad2b1a3fed34bf85f6b6100.png",
     "revision": null
   }, {
-    "url": "/img/kari.49429758f8cc1450cf26a661bc02bb75.jpg",
-    "revision": null
-  }, {
     "url": "/img/kari4.244bb9c13d3570fd0e9365cf6c16e183.png",
-    "revision": null
-  }, {
-    "url": "/img/leave_stream.0ec083de23a5fc2a2cff55841b049fd4.png",
     "revision": null
   }, {
     "url": "/img/level.d8b8304b4309fe7233fd09549f198906.png",
@@ -279,15 +258,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/measure.1915132da8211cfccc3f0a27e0f48d56.png",
     "revision": null
   }, {
-    "url": "/img/metaverse_background.e33c7c69fcf6ce68d3fa850e4b6b89ea.png",
-    "revision": null
-  }, {
-    "url": "/img/mic.active.6c608f28f6dce82e468112d41fd0060f.png",
-    "revision": null
-  }, {
-    "url": "/img/mic.inactive.00daa9a09f546353e699544cbd9bd338.png",
-    "revision": null
-  }, {
     "url": "/img/name.43f3e7052d2d1b5451f9a2939b6533e4.png",
     "revision": null
   }, {
@@ -298,9 +268,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/option_modal.9759141a6912260d1a275d1a62ac85cc.png",
-    "revision": null
-  }, {
-    "url": "/img/person.1d3c5f927b856fc9a3b8cb594be6d160.png",
     "revision": null
   }, {
     "url": "/img/picture_book.deadc6d6563c084e91e21d7a2ebeaa73.png",
@@ -330,9 +297,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/quest_fish_aqua.inactive.38331143b1123710397141f4a7a521c1.png",
     "revision": null
   }, {
-    "url": "/img/quest_fish_open.3ccd8adcbf6839697c9524a75870e89f.png",
-    "revision": null
-  }, {
     "url": "/img/quest_modal.c3af51e7e71e3eeaad212001ac9505aa.png",
     "revision": null
   }, {
@@ -342,13 +306,10 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/select_img.fe4cfdc61ef4fe3feff93fd87d6cd34b.png",
     "revision": null
   }, {
-    "url": "/img/setting.2e1b3054092887e01cf8cb65c7ba2cc6.png",
+    "url": "/img/send.f30a1bfd4ccb451cbf9ed275a1cfc39c.png",
     "revision": null
   }, {
     "url": "/img/share.05989fb8af5c0f132ddee71f7e140d39.png",
-    "revision": null
-  }, {
-    "url": "/img/speaker.red.cca89eb7d0911d289ef49e149dadf79d.png",
     "revision": null
   }, {
     "url": "/img/stabbed_pin.bed3a4def6e0550dc24fb6b8687b823a.png",

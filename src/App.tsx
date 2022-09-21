@@ -82,9 +82,8 @@ export const App = () => {
                     <Route path="picture_book/:fishId" element={<PictureBookContent />} />
                     <Route path="diary/:diaryId" element={<DiaryContent />} />
                   </Route>
-
-                  <Route path="room/:room_id" element={<Room />} />
                 </Route>
+                <Route path="room/:room_id" element={<Room />} />
 
                 <Route element={<MainLayout />}>
                   <Route path="/map" element={<Map />} />

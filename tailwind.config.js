@@ -94,6 +94,7 @@ module.exports = {
             transform: "scale(1)"
           }
         },
+
         fadein: {
           "0%": {
             transform: "scale(0.8)",
@@ -103,6 +104,17 @@ module.exports = {
             transform: "scale(1)",
             opacity: 1
           }
+        },
+
+        fadeout: {
+          "0%": {
+            opacity: 1,
+            display: "block"
+          },
+          "100%": {
+            opacity: 0,
+            display:"none"
+          }
         }
       },
 
@@ -111,7 +123,8 @@ module.exports = {
         popup: "popup 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards",
         "button-push": "push 0.05s alternate forwards",
         popin: "popin 0.25s alternate forwards",
-        fadein: "fadein 0.25s alternate forwards"
+        fadein: "fadein 0.25s alternate forwards",
+        fadeout: "fadeout 0.25s ease-in-out"
 
       },
     }

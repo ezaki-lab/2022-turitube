@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useWindowSize from '../../../hooks/useWindowSize';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Chat from './chat';
+import Metaverse from './metaverse';
 
 // Room 配信者視点の画面
 const Streamer = () => {
@@ -41,9 +42,7 @@ const Streamer = () => {
 
         {/*メタバース画面 */}
         <div className={`aspect-square ${width > height ? "h-full max-w-[55%]" : "w-full max-h-[55%]"} bg-white flex justify-center items-center`}>
-          <div className={`aspect-square ${width > height ? "w-full" : "h-full"} bg-blue-200`}>
-
-          </div>
+          <Metaverse />
         </div>
 
         {/*チャット欄 */}

@@ -18,7 +18,26 @@ const Chat = () => {
     screen_name: "kosakae",
     lv: 20,
     text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
+  },
+  {
+    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
+    screen_name: "kosakae",
+    lv: 20,
+    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
+  },
+  {
+    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
+    screen_name: "kosakae",
+    lv: 20,
+    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
+  },
+  {
+    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
+    screen_name: "kosakae",
+    lv: 20,
+    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
   },]
+  
 
   // 視聴者ならこっち
   return (
@@ -27,7 +46,7 @@ const Chat = () => {
         <ul className="w-full p-2 space-y-2">
           {messageList.map((data, index) => {
             return (
-              <li className="h-10 w-full bg-white rounded-full flex items-center" key={index}>
+              <li className="h-10 w-full bg-white bg-opacity-75 rounded-full flex items-center drop-shadow-md" key={index}>
                 <img src={data.icon} className="h-full aspect-square object-cover rounded-full" />
                 <div className="flex flex-col justify-center px-2">
                   <p className="text-tcolor text-xs">{data.screen_name}</p>
