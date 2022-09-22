@@ -6,18 +6,25 @@ import useWindowSize from '../../../hooks/useWindowSize';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Chat from './chat';
 
-// Room メタバース画面
-const Metaverse = () => {
+// Room 視聴者視点の画面
+const Listener = () => {
   const [user, setUser] = useRecoilState(atom.user_info);
   const [width, height] = useWindowSize();
   const [isStreamer, setIsStreamer] = useState<boolean>(true);
 
+  useEffect(() => {
+    ;
+  }, []);
+
   // メタバース画面
   return (
-    <div className={`aspect-square ${width > height ? "w-full" : "h-full"} bg-blue-200 flex justify-center items-center`}>
-        メタバース
-    </div>
+    <>
+      {/*メタバース画面 */}
+      <div className={`aspect-square ${width > height ? "w-full" : "h-full"} bg-blue-200`}>
+
+      </div>
+    </>
   );
 };
 
-export default Metaverse;
+export default Listener;

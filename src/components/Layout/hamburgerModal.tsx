@@ -10,10 +10,11 @@ import AchiveModalButton from "../../img/buttons/achive_modal.png";
 
 import AchiveComponent from './Modals/achive';
 import QuestComponent from './Modals/quest';
+import ProfileComponent from './Modals/profile';
 
 const HamburgerModal = () => {
 
-  const [modalId, setModalId] = useState<number | null>(null);
+  const [modalId, setModalId] = useState<number | null>(2);
   return (
     <>
       <div className="fixed z-10000">
@@ -22,6 +23,9 @@ const HamburgerModal = () => {
         </div> : <></>}
         {modalId == 1 ? <div className="h-full w-full flex flex-col fixed items-center justify-center px-4 py-4 bg-black bg-opacity-40">
           <QuestComponent setModalId={setModalId} enable={false} />
+        </div> : <></>}
+        {modalId == 2 ? <div className="h-full w-full flex flex-col fixed items-center justify-center px-4 py-4 bg-black bg-opacity-40">
+          <ProfileComponent setModalId={setModalId} enable={false} />
         </div> : <></>}
 
       </div>
@@ -46,7 +50,7 @@ const HamburgerModal = () => {
               </Link>
             </div>
             <div className="h-full w-1/2 flex flex-col justify-around items-start">
-              <div className="mx-2 my-1 h-10 active:animate-button-push">
+              <div className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(2)}>
                 <img src={ProfileModalButton} className="h-full" />
               </div>
               <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(0)}>
