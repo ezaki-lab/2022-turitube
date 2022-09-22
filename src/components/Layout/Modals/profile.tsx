@@ -65,7 +65,7 @@ const User = () => {
           <div className="flex flex-col bg-white drop-shadow-md pb-2 mb-2 flex-auto">
             <Label text="自己紹介" />
             <div className="w-full flex items-center justify-center">
-              <textarea placeholder="自己紹介" className="border-2 border-gray rounded-md w-full h-16 mx-2 px-1 resize-none" />
+              <textarea placeholder="自己紹介a" className="border-2 border-gray rounded-md w-full h-16 mx-2 px-1 resize-none" />
             </div>
           </div>
 

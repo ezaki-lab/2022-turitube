@@ -94,7 +94,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/bundle.js",
-    "revision": "648855c4465198676edbb448488fee10"
+    "revision": "2490d669245549466c812cfbff380a4d"
   }, {
     "url": "/img/1.04a0c03b8712989862ab7f36a966563d.png",
     "revision": null
