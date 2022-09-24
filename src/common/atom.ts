@@ -2,16 +2,6 @@ import { atom } from 'recoil';
 
 interface UserData {
   user_id: string,
-  user_name: string,
-  screen_name: string,
-  avatar: {
-    hat: number,
-    hair: number,
-    face: number,
-    body: number,
-    pants: number,
-    foot: number
-  }
 }
 
 interface ExplainModalInfo {
@@ -26,16 +16,6 @@ export const user_info = atom({
   key: 'user_info',
   default: <UserData|null>{
     user_id: localStorage.getItem('userId'),
-    user_name: "",
-    screen_name: "",
-    avatar: {
-      hat: 0,
-      hair: 0,
-      face: 0,
-      body: 0,
-      pants: 0,
-      foot: 0
-    }
   }
 });
 

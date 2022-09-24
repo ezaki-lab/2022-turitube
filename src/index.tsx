@@ -16,4 +16,4 @@ root.render(
     </RecoilRoot>);
 
 // jsじゃないとエラー吐くのでそのままにしておく、本番環境のみ
-if (node_env=="production") serviceWorkerRegistration.register();
+if (node_env == "production") serviceWorkerRegistration.register();

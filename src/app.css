@@ -4,30 +4,43 @@
 
 /* スクロールバー2 */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-::-webkit-scrollbar-thumb {
-    background: #606060;
-    border-radius: 9999px;
-  }
+  width: 8px;
+  height: 8px;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #909090;
-    border-radius: 9999px;
-  }
-  
-::-webkit-scrollbar-track { /* 上下に余白を付ける */
-    overflow: hidden;
-  }
+::-webkit-scrollbar-thumb {
+  background: #606060;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #909090;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+  /* 上下に余白を付ける */
+  overflow: hidden;
+}
 
 body {
   overscroll-behavior: none !important;
   touch-action: none !important;
   -webkit-overflow-scrolling: none !important;
   overflow: hidden !important;
-  position:fixed;
-  height:100%;
-  width:100%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  pointer-events: auto;
+}
+
+html {
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: none !important;
+  overflow: hidden !important;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
 }

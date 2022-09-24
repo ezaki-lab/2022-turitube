@@ -51,9 +51,9 @@ const User = () => {
   return (
     <>
       <div className="h-full w-full flex flex-col items-center sm:flex-row rounded-2xl bg-white drop-shadow-lg p-2">
-        <div className="sm-max:h-[300px] sm-max:w-full sm:w-72 sm:h-full flex flex-col items-center justify-center p-2">
-          <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-2 flex-auto sm:max-h-64 max-w-sm aspect-square sm-max:flex-auto rounded-full object-cover" />
-          <input ref={userNameRef} type="text" maxLength={10} className="h-6 text-xl text-tcolor font-bold text-center" />
+        <div className="sm-max:h-[150px] sm-max:w-full sm:w-56 sm:h-full flex flex-col items-center justify-center p-2">
+          <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-2 flex-auto sm:max-h-48 max-w-sm aspect-square sm-max:flex-auto rounded-full object-cover" />
+          <input ref={userNameRef} type="text" maxLength={10} className="h-6 text-xl text-tcolor font-bold text-center w-full max-w-[200px]" />
           <h3 className="h-4 text-sm text-gray">@uoooooooo</h3>
         </div>
         <div className="sm-max:h-2 sm-max:w-full sm:w-2 sm:h-full flex-auto flex flex-col p-2 overflow-y-auto">

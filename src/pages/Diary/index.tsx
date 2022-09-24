@@ -1,43 +1,43 @@
-/*  Diary/index */
-import React from 'react';
-import Title from "../../components/Title";
+import { useRecoilState } from 'recoil';
+import React, { useEffect } from 'react';
+import TitleHeader from '../../components/TitleHeader';
 import { Link } from 'react-router-dom';
 
-// ユーザーページ
-const DiaryList = () => {
-  const c = [1, 1, 1, 1, 1, 1, 1,1,1,1,1,1,1,1]
+// 日誌 - index
+const Diary = () => {
+
+  useEffect(() => {
+    ;
+  }, []);
+
   return (
     <>
-    <div className="bg-white w-full ml-2 mt-4">
-      <h1 className="text-2xl font-bold">釣り日誌</h1>
-      <p className="font-bold text-sm">39件の記録</p>
-    </div>
-      <ul className="flex flex-col w-full p-2">
-        {c.map(() => {
-          return (
-            <Diary/>
-          )
-        })}
-      </ul>
+      <TitleHeader title="日誌" />
+      <div className="h-full w-full flex flex-col items-center pt-16 sm:pb-16 sm-max:pb-60 overflow-y-auto">
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+        <Content />
+      </div>
     </>
   );
 };
 
-const Diary = () => {
-
+const Content = () => {
   return (
-    <Link to="/diary/1">
-      <li className="h-16 flex flex-row my-3 w-full pr-32">
-        <img src="https://monusco.unmissions.org/sites/default/files/styles/full_width_image/public/field/image/20201023_120152.jpg?itok=LkjrZ3rj" className="mr-2 h-16 aspect-ratio" />
-
-        <div className="flex flex-col w-full h-18 pl-2">
-            <p className="truncate font-bold">タイトルは長くなると...になるよ</p>
-            <p className="text-xs font-semibold text-gray-600 truncate">アジ20cm サバ4cm</p>
-            <p className="text-xs text-gray-600 truncate">3日前</p>
-        </div>
-    </li>
+    <Link to="/diary/1234567890" className="w-full flex flex-row h-24 md:h-28 lg:h-36 xl:h-48 border-b border-gray p-2 max-w-5xl">
+      <img src="https://www.bepal.net/wp-content/uploads/2021/07/Amane_turigirl02.jpg" className="h-full aspect-video object-cover" />
+      <div className="h-full w-12 flex-auto flex flex-col justify-start px-2 pt-2">
+        <h3 className="text-lg sm:text-xl lg:text-2xl text-tcolor truncate">日誌のタイトルああああああ</h3>
+        <h3 className="text-md sm:text-xl lg:text-2xl text-tcolor">2022/02/08</h3>
+      </div>
     </Link>
-)
-}
+  )
+};
 
-export default DiaryList;
+export default Diary;
