@@ -9,7 +9,7 @@ import Metaverse from './metaverse';
 
 // Room 配信者視点の画面
 const Streamer = () => {
-  const [user, setUser] = useRecoilState(atom.user_info);
+  const [userId, setUserId] = useRecoilState(atom.user_id);
   const [width, height] = useWindowSize();
   const [isStreamer, setIsStreamer] = useState<boolean>(true);
 

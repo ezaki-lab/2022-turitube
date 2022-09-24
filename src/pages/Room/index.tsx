@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Room 配信部屋
 const Room = () => {
-  const [user, setUser] = useRecoilState(atom.user_info);
+  const [userId, setUserId] = useRecoilState(atom.user_id);
   const [width, height] = useWindowSize();
   const [isStreamer, setIsStreamer] = useState<boolean>(false);
   const [isHost, setIsHost] = useState<boolean>(false);

@@ -1,12 +1,15 @@
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
 import { Outlet, Link } from "react-router-dom";
+import * as atom from '../../common/atom';
+
 import HamburgerButton from "../../img/buttons/hamburger.png";
 import CloseButton from "../../img/buttons/close.png";
 import OptionModalButton from "../../img/buttons/option_modal.png";
 import ProfileModalButton from "../../img/buttons/profile_modal.png";
 import QuestModalButton from "../../img/buttons/quest_modal.png";
 import AchiveModalButton from "../../img/buttons/achive_modal.png";
+import LogoutButton from "../../img/buttons/logout.png";
 
 import AchiveComponent from './Modals/achive';
 import QuestComponent from './Modals/quest';
@@ -14,7 +17,16 @@ import ProfileComponent from './Modals/profile';
 
 const HamburgerModal = () => {
 
-  const [modalId, setModalId] = useState<number | null>(2);
+  const [userId, setUserId] = useRecoilState(atom.user_id);
+  const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
+
+  const Logout = () => {
+    setUserId("");
+    localStorage.setItem("userId", "");
+    setIsLogin(false);
+  };
+
+  const [modalId, setModalId] = useState<number | null>(null);
   return (
     <>
       <div className="fixed z-10000">
@@ -48,6 +60,9 @@ const HamburgerModal = () => {
               <Link to="/room/dev_room" className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
               </Link>
+              <div className="mx-2 my-1 h-10 active:animate-button-push">
+                <img src={OptionModalButton} className="h-full" />
+              </div>
             </div>
             <div className="h-full w-1/2 flex flex-col justify-around items-start">
               <div className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(2)}>
@@ -59,11 +74,14 @@ const HamburgerModal = () => {
               <Link to="/debug" className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
               </Link>
+              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => {Logout()}}>
+                <img src={LogoutButton} className="h-full" />
+              </button>
             </div>
           </div>
 
-          <div className="flex justify-center items-center w-full h-20">
-            <label htmlFor="hamburger" className="h-12 active:animate-button-push">
+          <div className="flex justify-center items-center w-full h-12 pb-2">
+            <label htmlFor="hamburger" className="h-10 active:animate-button-push">
               <img src={CloseButton} className="h-full" />
             </label>
           </div>

@@ -6,22 +6,24 @@ import useCamera from '../../hooks/useCamera';
 
 // Home - index.tsx
 const Debug = () => {
-  const [user, setUser] = useRecoilState(atom.user_info);
-
+  const [userId, setUserId] = useRecoilState(atom.user_id);
+  const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
   useEffect(() => {
     ;
   }, []);
+
+  const Logout = () => {
+    setUserId("");
+    localStorage.setItem("userId", "");
+    setIsLogin(false);
+  };
 
 
   // 将来的にはスライドショー流します
   return (
     <>
       <div className="pt-28 pb-28 h-full overflow-y-auto">
-        <Video mode={{exact: "environment"}} />
-        <Video mode={{exact: "environment"}} />
-        <Video mode={{exact: "environment"}} />
-        <Video mode={{exact: "environment"}} />
-        <Video mode={{exact: "user"}} />
+        <button className="btn" onClick={(() => {Logout()})}>logout</button>
       </div>
     </>
   );

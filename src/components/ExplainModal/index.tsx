@@ -31,6 +31,7 @@ const ExplainModal = () => {
           <button className="w-full flex justify-center pt-4 active:animate-button-push" onClick={() => { closeModal(); }}>
             <img src={CloseButton} className="h-12" />
           </button>
+
         </div>
       </div>
       <Outlet />

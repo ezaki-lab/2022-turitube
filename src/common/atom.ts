@@ -1,23 +1,47 @@
 import { atom } from 'recoil';
 
-interface UserData {
-  user_id: string,
+interface ExplainModalInfo {
+  title: null | string,
+  text: null | string,
+  caption: null | string,
+  is_open: boolean,
+  action? :Function
 }
 
-interface ExplainModalInfo {
-  title: null|string,
-  text: null|string,
-  caption: null|string,
-  is_open: boolean
+interface Me {
+  user_id: string,
+  user_name: string,
+  screen_name: string,
+  icon: string,
+  introduction: string,
+  point: number,
+  exp: number,
+  lv: number,
+  title: string,
+  avatar: {
+    hat: string,
+    head: string,
+    body: string,
+    waist: string,
+    fishing_rod: string
+  }
 }
 
 // グローバルstate
-export const user_info = atom({
-  key: 'user_info',
-  default: <UserData|null>{
-    user_id: localStorage.getItem('userId'),
-  }
+export const user_id = atom({
+  key: 'user_id',
+  default: <string>""
 });
+
+export const is_login = atom({
+  key: 'is_login',
+  default: <boolean>false
+})
+
+export const me = atom({
+  key: 'me',
+  default: <Me>{}
+})
 
 export const current_room_id = atom({
   key: 'current_room_id',

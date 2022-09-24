@@ -4,10 +4,12 @@ import * as atom from '../../../common/atom';
 import ProgressBar from '../../ProgressBar';
 import Title from '../../Title';
 import CloseButton from "../../../img/buttons/close.png";
+import useWindowSize from '../../../hooks/useWindowSize';
+import useGetItems from '../../../hooks/useGetItems';
 
 // 実績モーダル
 const AchiveComponent = ({ enable = true, setModalId = null }) => {
-  const [tab, setTab] = useState<number>(0);
+  const [tab, setTab] = useState<number>(1);
 
   const received_data = [
     {
@@ -52,63 +54,6 @@ const AchiveComponent = ({ enable = true, setModalId = null }) => {
     },
   ]
 
-  const titles = [
-    {
-      text: "釣り初心者",
-      background: "lv1",
-      caption: "初めて図鑑に登録する"
-    },
-    {
-      text: "配信初心者",
-      background: "lv1",
-      caption: "初めて配信する"
-    },
-    {
-      text: "タイ好き",
-      background: "lv2",
-      caption: "タイを5匹釣り上げる"
-    },
-    {
-      text: "アジ好き",
-      background: "lv2",
-      caption: "アジを5匹釣り上げる"
-    },
-    {
-      text: "カサゴ好き",
-      background: "lv2",
-      caption: "カサゴを5匹釣り上げる"
-    },
-    {
-      text: "釣りベテラン",
-      background: "lv3",
-      caption: "魚を30匹釣り上げる"
-    },
-    {
-      text: "配信ベテラン",
-      background: "lv3",
-      caption: "配信を20時間行う"
-    },
-    {
-      text: "釣りマスター",
-      background: "lv4",
-      caption: "魚を200匹釣り上げる"
-    },
-    {
-      text: "配信マスター",
-      background: "lv4",
-      caption: "配信を50時間行う"
-    },
-    {
-      text: "釣りちゅーばー",
-      background: "basic",
-      caption: "釣りちゅーぶへようこそ！"
-    },
-  ]
-
-  useEffect(() => {
-    ;
-  }, []);
-
   return (
     <>
       <div className={`mx-4 h-full w-full max-w-4xl bg-white drop-shadow-2xl rounded-2xl flex flex-col ${!enable ? "animate-fadein" : ""}`}>
@@ -124,7 +69,7 @@ const AchiveComponent = ({ enable = true, setModalId = null }) => {
 
         <div className="h-20 flex-auto mx-4 my-1 mb-4 flex sm-max:flex-col sm:flex-row rounded-2xl drop-shadow-2xl bg-white border-gray">
           {tab == 0 ? <Progress data={received_data} /> : <></>}
-          {tab == 1 ? <TitleList data={titles} /> : <></>}
+          {tab == 1 ? <TitleList /> : <></>}
         </div>
 
         {!enable
@@ -168,27 +113,19 @@ const Progress = ({ data }) => {
   )
 }
 
-const TitleList = ({ data }) => {
-  const [explainModalInfo, setExplainModalInfo] = useRecoilState(atom.explain_modal_info);
-
-  const openModal = (text, caption) => {
-    setExplainModalInfo({
-      title: "称号の詳細",
-      text: text,
-      caption: "入手条件: " + caption,
-      is_open: true,
-    });
-  }
+const TitleList = () => {
+  const [width, height] = useWindowSize();
+  const titles = useGetItems("title");
 
   return (
     <>
       <div className="w-full h-full items-center overflow-y-auto flex flex-col p-3 pb-40">
         <div className="flex flex-wrap items-start justify-center w-full">
-          {data.map((v, i) => {
+          {titles.map((v, i) => {
             return (
-              <button className="w-28 sm:w-48 h-12 px-1 py-2 flex flex-col justify-center items-center" onClick={() => { openModal(v.text, v.caption) }} key={v.text}>
-                <Title text={v.text} bgcolor={v.background} textcolor="white" w="full" h="" textsize={"xxs"} />
-              </button>
+              <div className="w-28 sm:w-48 h-12 px-1 py-2 flex flex-col justify-center items-center">
+                <Title title_id={v.item_id} scale={width<640 ? "mini" : "normal"} />
+              </div>
             )
           })}
 

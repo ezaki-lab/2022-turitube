@@ -12,7 +12,7 @@ import WatchNg from '../../img/icons/watch_ng.png';
 
 // Home - index.tsx
 const Home = () => {
-  const [user, setUser] = useRecoilState(atom.user_info);
+  const [userId, setUserId] = useRecoilState(atom.user_id);
 
   useEffect(() => {
     ;

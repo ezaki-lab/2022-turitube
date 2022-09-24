@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import * as atom from './common/atom';
+import Url from './utils/url';
 
 import { Loading } from './loading';
 import Signin from './Signin';
@@ -26,31 +27,48 @@ import ExplainModal from './components/ExplainModal';
 export const App = () => {
   const basename = process.env.BASENAME;
   const [ready, setReady] = useState(false);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useRecoilState(atom.user_info);
+  const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
+  const [userId, setUserId] = useRecoilState(atom.user_id);
+  const [me, setMe] = useRecoilState(atom.me);
 
-  // ログインしますよ～
+  // ログインする！！！！！
   useEffect(() => {
-    axios.get("https://ezaki-lab.cloud/~turitube/api/login", {
+    axios.get(Url("/login"), {
       params: {
         user_id: localStorage.getItem("userId")
       }
     }).then((res) => {
-      // ユーザー(id準拠)が存在したらuserInfoに情報を書き込む
+      // ユーザー(id準拠)がDBに存在したらuserInfoに情報を書き込む
       if (res.data.status) {
-        setUserInfo({ user_id: res.data.user_id });
+        setUserId(localStorage.getItem("userId"));
         setIsLogin(true);
       }
+
       // ユーザーが存在しなかったらuserInfoとlocalStorageの情報を抹消
       else {
         localStorage.setItem("userId", "");
-        setUserInfo({ user_id: "" });
       }
       setReady(true);
     })
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      axios.get(Url("/user"), {
+        params: {
+          user_id: localStorage.getItem("userId")
+        }
+      }).then((res) => {
+        console.log(res);
+        setMe(res.data);
+        setIsLogin(true);
+      })
+    }
+
+  }, [userId]);
+
   if (ready) {
+    // オートログインできなかったらサインインページに飛ばす
     if (!isLogin) return (
       <BrowserRouter basename={basename}>
         <Signin />
@@ -82,6 +100,7 @@ export const App = () => {
       </BrowserRouter>
     )
   }
+
   else return (<Loading />)
 
 }

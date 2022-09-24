@@ -54,7 +54,26 @@ module.exports = {
         'lv3': '#E0D728',
         'lv4': '#FF8A09',
         'lv5': '#F62212',
-
+        'achive-000': '#3ABFF8',
+        'achive-001': '#3ABFF8',
+        'achive-002': '#3ABFF8',
+        'achive-003': '#3ABFF8',
+        'achive-004': '#3ABFF8',
+        'achive-005': '#3ABFF8',
+        'achive-006': '#3ABFF8',
+        'achive-007': '#3ABFF8',
+        'achive-008': '#3ABFF8',
+        'achive-009': '#3ABFF8',
+        'achive-010': '#3ABFF8',
+        'achive-011': '#3ABFF8',
+        'achive-012': '#3ABFF8',
+        'achive-013': '#3ABFF8',
+        'achive-014': '#3ABFF8',
+        'achive-015': '#3ABFF8',
+        'achive-016': '#3ABFF8',
+        'achive-017': '#3ABFF8',
+        'achive-018': '#3ABFF8',
+        'achive-019': '#3ABFF8',
       },
       zIndex: {
         '100': '100',
@@ -64,6 +83,9 @@ module.exports = {
       },
       minHeight: {
         '1/2': '50%'
+      },
+      scale: {
+        '150': '1.50'
       },
 
       keyframes: {
