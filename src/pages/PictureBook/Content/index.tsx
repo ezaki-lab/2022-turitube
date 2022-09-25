@@ -1,5 +1,9 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect } from 'react';
+import * as atom from '../../../common/atom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Url from '../../../utils/url';
+
 import UndeFined from "../../../img/icons/picture_book_undefined.png";
 import { useParams } from 'react-router-dom';
 import BackHeader from '../../../components/BackHeader';
@@ -14,12 +18,29 @@ import StabbedPin2 from "../../../img/icons/stabbed_pin2.png";
 // 図鑑 - index
 const PictureBookContent = () => {
   const { fishId } = useParams();
+  const [userId, setUserId] = useRecoilState(atom.user_id);
   const t = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const [book, setBook] = useState(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-
+    axios.get(Url("/picture_book"), {
+      params:{
+        user_id: userId,
+        fish_id: fishId
+      }
+    }).then((res) => {
+      setBook(res.data.book);
+    })
   }, []);
 
+  useEffect(() => {
+    if (book) {
+      setReady(true);
+    }
+  }, [book]);
+
+  if (!ready) return(<></>)
   return (
     <>
       <BackHeader title="図鑑" path="/picture_book" />
@@ -28,7 +49,7 @@ const PictureBookContent = () => {
 
         <div className="sm-max:h-32 sm-max:w-full sm:h-full sm:w-32 flex-auto flex flex-col items-center max-w-4xl">
           <img src={UndeFined} className="h-16 flex-auto w-full object-contain bg-gray-dark mb-2 rounded-2xl md:rounded-3xl lg:roundex-5xl" />
-          <h2 className="h-8 text-2xl lg:text-3xl text-tcolor font-bold">アジ</h2>
+          <h2 className="h-8 text-2xl lg:text-3xl text-tcolor font-bold">{book.name}</h2>
           <div className="w-full h-12 flex items-center justify-center">
             <div className="h-full flex flex-row space-x-2 items-center pl-2 overflow-x-auto border-l-4 border-gray">
               {t.map((value, index) => {
@@ -42,7 +63,7 @@ const PictureBookContent = () => {
           </div>
 
         </div>
-
+            
         <div className="sm-max:h-72 sm-max:w-full sm-max:py-3 sm:pb-2 sm:h-full sm:pl-3 sm:w-80 md:w-96 relative">
           <div className="h-1/2 bg-white drop-shadow-xl mb-3 pl-1 flex flex-col">
             <h3 className="mx-auto text-xl sm:text-lg text-tcolor font-bold">魚の情報</h3>

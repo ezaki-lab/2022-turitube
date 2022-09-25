@@ -6,6 +6,8 @@ import Title from '../../Title';
 import CloseButton from "../../../img/buttons/close.png";
 import useWindowSize from '../../../hooks/useWindowSize';
 import useGetItems from '../../../hooks/useGetItems';
+import axios from 'axios';
+import Url from '../../../utils/url';
 
 // 実績モーダル
 const AchiveComponent = ({ enable = true, setModalId = null }) => {
@@ -68,7 +70,7 @@ const AchiveComponent = ({ enable = true, setModalId = null }) => {
         </div>
 
         <div className="h-20 flex-auto mx-4 my-1 mb-4 flex sm-max:flex-col sm:flex-row rounded-2xl drop-shadow-2xl bg-white border-gray">
-          {tab == 0 ? <Progress data={received_data} /> : <></>}
+          {tab == 0 ? <Progress /> : <></>}
           {tab == 1 ? <TitleList /> : <></>}
         </div>
 
@@ -82,7 +84,20 @@ const AchiveComponent = ({ enable = true, setModalId = null }) => {
   );
 };
 
-const Progress = ({ data }) => {
+const Progress = () => {
+  const [data, setData] = useState({});
+  const [userId, setUserId] = useRecoilState(atom.user_id);
+
+  useEffect(() => {
+    axios.get(Url("/achive"), {
+      params:{
+        user_id: userId
+      }
+    }).then((res) => {
+      setData(res.data)
+    })
+  }, []);
+
   const [explainModalInfo, setExplainModalInfo] = useRecoilState(atom.explain_modal_info);
 
   const openModal = (text, reword) => {
@@ -97,12 +112,13 @@ const Progress = ({ data }) => {
   return (
     <>
       <ul className="h-full w-full flex-auto overflow-y-auto flex flex-col p-3 space-y-2 pb-40">
-        {data.map((d, index) => {
+        {Object.keys(data).map((key, index) => {
+
           return (
-            <li className="border border-b-2 border-gray rounded-lg h-16 w-full flex items-center pl-2" key={d.id}>
-              <button className="my-auto h-16 w-full flex flex-col justify-center" onClick={() => { openModal(d.text, d.reword) }}>
-                <p className="text-tcolor text-sm text-lg truncate w-full text-left">{d.text}</p>
-                <ProgressBar value="1" max="5" color="tcolor" />
+            <li className="border border-b-2 border-gray rounded-lg h-16 w-full flex items-center pl-2" key={index}>
+              <button className="my-auto h-16 w-full flex flex-col justify-center" onClick={() => { openModal(data[key].title, data[key].rewords_text.join(' ')) }}>
+                <p className="text-tcolor text-sm text-lg truncate w-full text-left">{data[key].title}</p>
+                <ProgressBar value={data[key].progress} max={data[key].max_progress} color="tcolor" />
               </button>
 
             </li>

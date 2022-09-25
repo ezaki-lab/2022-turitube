@@ -137,6 +137,31 @@ module.exports = {
             opacity: 0,
             display:"none"
           }
+        },
+        selected: {
+          "0%": {
+            "background-color": "#ffffff",
+          },
+          "50%": {
+            "background-color": "LemonChiffon"
+          },
+          "100%": {
+            "background-color": "#ffffff"
+          }
+        },
+        stamp: {
+          "0%": {
+            transform: "scale(2.0)",
+          },
+          "50%": {
+            transform: "scale(1.8)"
+          },
+          "80%": {
+            transform: "scale(0.8)"
+          },
+          "100%": {
+            transform: "scale(1)"
+          }
         }
       },
 
@@ -146,8 +171,9 @@ module.exports = {
         "button-push": "push 0.05s alternate forwards",
         popin: "popin 0.25s alternate forwards",
         fadein: "fadein 0.25s alternate forwards",
-        fadeout: "fadeout 0.25s ease-in-out"
-
+        fadeout: "fadeout 0.25s ease-in-out",
+        selected: "selected 2s linear infinite",
+        stamp: "stamp 0.3s alternate forwards"
       },
     }
   },

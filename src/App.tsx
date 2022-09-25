@@ -59,7 +59,6 @@ export const App = () => {
           user_id: localStorage.getItem("userId")
         }
       }).then((res) => {
-        console.log(res);
         setMe(res.data);
         setIsLogin(true);
       })

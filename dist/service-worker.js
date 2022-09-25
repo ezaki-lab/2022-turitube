@@ -94,72 +94,12 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/bundle.js",
-    "revision": "8a8eb0a8ffbd11e459d8c6aa2b042f4f"
-  }, {
-    "url": "/img/1.04a0c03b8712989862ab7f36a966563d.png",
-    "revision": null
-  }, {
-    "url": "/img/1.24e3af34c4edacd361a0fdf28ce83f80.png",
-    "revision": null
-  }, {
-    "url": "/img/1.6c089389ef92f5b037542b22a4ac22a9.png",
-    "revision": null
-  }, {
-    "url": "/img/1.88f4de6dcf774a062cda348cd989ec97.png",
-    "revision": null
-  }, {
-    "url": "/img/1.e43b70392d87b2515842f9a0b0c7c8b3.png",
-    "revision": null
-  }, {
-    "url": "/img/1.e7780ad5a489fe12b48eaaaa7b155758.png",
-    "revision": null
-  }, {
-    "url": "/img/2.2ea991208d173e44f560d0fae47f11b2.png",
-    "revision": null
-  }, {
-    "url": "/img/2.444966f7b1848cfae0f498f88f5d41c0.png",
-    "revision": null
-  }, {
-    "url": "/img/2.470e9ec0137bb11733afeb83a871e701.png",
-    "revision": null
-  }, {
-    "url": "/img/2.5f0e4d1406f4fa54936217f53982590e.png",
-    "revision": null
-  }, {
-    "url": "/img/2.9f89261de68522340b5d7d98256f9f09.png",
-    "revision": null
-  }, {
-    "url": "/img/2.ba53374160de52e7fcb34f1ade16522f.png",
-    "revision": null
-  }, {
-    "url": "/img/3.68cc066be3524981cbf469a35556aa9b.png",
-    "revision": null
-  }, {
-    "url": "/img/3.ab625414fe1250ec00e3fdc20f6009e2.png",
-    "revision": null
-  }, {
-    "url": "/img/3.ad0c0f70dde4667a73dccf7030a39e31.png",
-    "revision": null
-  }, {
-    "url": "/img/3.c03b358c57bb6ec52aa28d23fb4df802.png",
-    "revision": null
-  }, {
-    "url": "/img/3.d0119a7948158f3be46accc1bb770407.png",
-    "revision": null
-  }, {
-    "url": "/img/3.efb1bdc662b4f37c2b18d4712c5acec3.png",
-    "revision": null
+    "revision": "ad1e9452f9a46d56e53620ae0ad18de4"
   }, {
     "url": "/img/Footprints.cab536d8b7760a2ecddaedf3edebde4f.png",
     "revision": null
   }, {
     "url": "/img/achive.6aaad058b05202803ae2bc1336419421.png",
-    "revision": null
-  }, {
-    "url": "/img/achive_fish_green.active.8238f4158b3ce2b7d50b9c40a214a61c.png",
-    "revision": null
-  }, {
-    "url": "/img/achive_fish_green.inactive.b04efaf3f945f500781f5f394dc3e936.png",
     "revision": null
   }, {
     "url": "/img/achive_modal.04d3f0754e3354bc8af4d55cc59a9ce7.png",
@@ -168,19 +108,16 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/achive_small.c2e480ba0cac06a31b43f3382148b931.png",
     "revision": null
   }, {
-    "url": "/img/back.0a6f1e73ab021ac4219d31722070baa4.png",
-    "revision": null
-  }, {
     "url": "/img/back.f67931482eea21cf227569cce73cec11.png",
-    "revision": null
-  }, {
-    "url": "/img/back_blue.f7ea54cc6bb4421372ff11cb5d5202bb.png",
     "revision": null
   }, {
     "url": "/img/beacon.5fef39b1467d57c3fa357c2b44e86402.png",
     "revision": null
   }, {
     "url": "/img/calendar.1b75e4913e68c1230643e4b6cb1aaf1a.png",
+    "revision": null
+  }, {
+    "url": "/img/change_img.76adab88dfaf84118c74b2c06654474b.png",
     "revision": null
   }, {
     "url": "/img/close.da5a8b1ecb5076b571956ed182ee41ed.png",
@@ -204,9 +141,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/eye.ac8deee211b600e20ef15553262e9e56.png",
     "revision": null
   }, {
-    "url": "/img/fish.1f395609f8a3a8c8bf7e647f9415aa45.png",
-    "revision": null
-  }, {
     "url": "/img/group.5b5934ef1292685c65111ef3c308b66c.png",
     "revision": null
   }, {
@@ -216,40 +150,22 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/home.55ff927cc7dbe6e501643b82601271ca.png",
     "revision": null
   }, {
-    "url": "/img/home.active.305a5d538a1b53f6e798e2acfc0fd56d.png",
-    "revision": null
-  }, {
-    "url": "/img/home.inactive.94de2dfbc92d466ad6fcd2d1d7b8c46b.png",
-    "revision": null
-  }, {
     "url": "/img/home_2.a8497429e54ad6bfc1bc1a309a65e5c3.png",
     "revision": null
   }, {
-    "url": "/img/item0.d8b8304b4309fe7233fd09549f198906.png",
+    "url": "/img/item900.d8b8304b4309fe7233fd09549f198906.png",
     "revision": null
   }, {
-    "url": "/img/item1.e3d3a0906ad2b1a3fed34bf85f6b6100.png",
-    "revision": null
-  }, {
-    "url": "/img/item2.e3d3a0906ad2b1a3fed34bf85f6b6100.png",
-    "revision": null
-  }, {
-    "url": "/img/kari4.244bb9c13d3570fd0e9365cf6c16e183.png",
+    "url": "/img/item901.e3d3a0906ad2b1a3fed34bf85f6b6100.png",
     "revision": null
   }, {
     "url": "/img/level.d8b8304b4309fe7233fd09549f198906.png",
     "revision": null
   }, {
-    "url": "/img/library.active.8304240e27ad65818c006117e07a21d3.png",
-    "revision": null
-  }, {
-    "url": "/img/library.inactive.e862726188bb2e8dd6c918052d23f425.png",
+    "url": "/img/logout.3202d5967adbc1a0120468597717d554.png",
     "revision": null
   }, {
     "url": "/img/mainlogo.8b55aba31884564a7616c0d4fcc0a7fd.png",
-    "revision": null
-  }, {
-    "url": "/img/map.c537ef2e78d0767da2cce4336240e287.png",
     "revision": null
   }, {
     "url": "/img/max_size.30d5be76e334e45f460c4dc258442182.png",
@@ -261,13 +177,13 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/name.43f3e7052d2d1b5451f9a2939b6533e4.png",
     "revision": null
   }, {
-    "url": "/img/notification.active.1a82dea17fa438b92b83e9a5ca8a2539.png",
-    "revision": null
-  }, {
-    "url": "/img/notification.inactive.4ed2223ead1ade69135fc362c66956d5.png",
-    "revision": null
-  }, {
     "url": "/img/option_modal.9759141a6912260d1a275d1a62ac85cc.png",
+    "revision": null
+  }, {
+    "url": "/img/order.4c3cdb2c183b1dc4aacd67efa9f5d805.png",
+    "revision": null
+  }, {
+    "url": "/img/ordered.38bca2c2cc4c67138301886648530a83.png",
     "revision": null
   }, {
     "url": "/img/picture_book.deadc6d6563c084e91e21d7a2ebeaa73.png",
@@ -282,19 +198,10 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/pin.c172f3e9905dee5340770149e43e3151.png",
     "revision": null
   }, {
-    "url": "/img/profile.b7d713afd6ab303ac8d2157b4a3dcd7c.png",
-    "revision": null
-  }, {
     "url": "/img/profile_modal.6d4ef353a96dd289ce633546c2c32d46.png",
     "revision": null
   }, {
     "url": "/img/quest.5ace294d6cc7af357cc11ea0abdc9753.png",
-    "revision": null
-  }, {
-    "url": "/img/quest_fish_aqua.active.4bc91609c0ae03a8e33163c384ba244b.png",
-    "revision": null
-  }, {
-    "url": "/img/quest_fish_aqua.inactive.38331143b1123710397141f4a7a521c1.png",
     "revision": null
   }, {
     "url": "/img/quest_modal.c3af51e7e71e3eeaad212001ac9505aa.png",
@@ -303,13 +210,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/quest_old.aad2dd8a930dc9e616167791609d1c30.png",
     "revision": null
   }, {
-    "url": "/img/select_img.fe4cfdc61ef4fe3feff93fd87d6cd34b.png",
-    "revision": null
-  }, {
     "url": "/img/send.f30a1bfd4ccb451cbf9ed275a1cfc39c.png",
-    "revision": null
-  }, {
-    "url": "/img/share.05989fb8af5c0f132ddee71f7e140d39.png",
     "revision": null
   }, {
     "url": "/img/stabbed_pin.bed3a4def6e0550dc24fb6b8687b823a.png",
@@ -321,9 +222,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/stream.4e95753db8192462df6d6d46fe9a5545.png",
     "revision": null
   }, {
-    "url": "/img/stream.d85eb6ffb0567224d5cb0d2ea5f6cfc9.png",
-    "revision": null
-  }, {
     "url": "/img/stream_ng.cc211f59eebf020ac1eea70614692ca0.png",
     "revision": null
   }, {
@@ -331,9 +229,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/time.4045418e11e645068fef1c4ac58f6353.png",
-    "revision": null
-  }, {
-    "url": "/img/unregistered.aa7ec316d81f162f13e5ba389d661c5b.png",
     "revision": null
   }, {
     "url": "/img/watch_ok.668410930fb762dfda6ceb54c39bdad5.png",

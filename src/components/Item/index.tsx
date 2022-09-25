@@ -2,31 +2,23 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
 import Item0 from "../../img/items/item0.png";
-import Item1 from "../../img/items/item1.png";
-import Item2 from "../../img/items/item2.png";
+import Item900 from "../../img/items/item900.png";
+import Item901 from "../../img/items/item901.png";
 
-const items = [
-  {
-    id: 0,
+const items = {
+  "900": {
     name: "経験値",
     content: "レベルアップに必要。様々なシチュエーションで手に入る。",
-    image: Item0
+    image: Item900,
   },
-  {
-    id: 1,
+  "901": {
     name: "ポイント",
-    content: "各種アイテムの購入に必要。現実の釣り具のクーポンにもできるぞ！",
-    image: Item1
-  },
-  {
-    id: 2,
-    name: "タイガシラ",
-    content: "<アバターの頭アイテム>使わないにはもったいない頭だ",
-    image: Item2
-  },
-]
+    content: "各種アイテムの購入に必要",
+    image: Item901,
+  }
+}
 
-const Item = ({ item_id, size = 8, caption = false, text=null, textsize="xxs" }) => {
+const Item = ({ item_id="900", size = 8, caption = false, text=null, textsize="xxs" }) => {
   const [explainModalInfo, setExplainModalInfo] = useRecoilState(atom.explain_modal_info);
   const item = items[item_id];
 
