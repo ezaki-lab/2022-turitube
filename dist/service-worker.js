@@ -94,7 +94,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/bundle.js",
-    "revision": "ad1e9452f9a46d56e53620ae0ad18de4"
+    "revision": "8ba537f6b4207e54009dc57ece8a819f"
   }, {
     "url": "/img/Footprints.cab536d8b7760a2ecddaedf3edebde4f.png",
     "revision": null
@@ -159,6 +159,18 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "url": "/img/item901.e3d3a0906ad2b1a3fed34bf85f6b6100.png",
     "revision": null
   }, {
+    "url": "/img/kari.49429758f8cc1450cf26a661bc02bb75.jpg",
+    "revision": null
+  }, {
+    "url": "/img/kari2.1445d07711ca14862da9fcbddb7cf2ba.png",
+    "revision": null
+  }, {
+    "url": "/img/kari4.244bb9c13d3570fd0e9365cf6c16e183.png",
+    "revision": null
+  }, {
+    "url": "/img/kari5.a1b6232723c03b5db173521a64475d6a.png",
+    "revision": null
+  }, {
     "url": "/img/level.d8b8304b4309fe7233fd09549f198906.png",
     "revision": null
   }, {
@@ -211,9 +223,6 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/send.f30a1bfd4ccb451cbf9ed275a1cfc39c.png",
-    "revision": null
-  }, {
-    "url": "/img/stabbed_pin.bed3a4def6e0550dc24fb6b8687b823a.png",
     "revision": null
   }, {
     "url": "/img/stabbed_pin2.333422d21d8b20c46421a91195131aad.png",

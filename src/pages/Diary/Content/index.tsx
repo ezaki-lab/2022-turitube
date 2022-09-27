@@ -25,7 +25,7 @@ const DiaryContent = () => {
     <>
       <BackHeader title="日誌" path="/diary" />
       <div className="h-full w-full flex flex-col items-center pt-16 overflow-y-auto">
-        <div className="max-h-[400px] h-1/2 w-full max-w-5xl flex flex-col">
+        <div className="max-h-[400px] h-1/2 w-full max-w-5xl flex flex-col pb-3 px-2">
           <DiaryCarousel />
         </div>
         <div className="w-full h-20 flex-auto overflow-y-auto max-w-5xl px-8">

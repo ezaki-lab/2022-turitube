@@ -8,7 +8,7 @@ import Url from '../../../utils/url';
 import useGetItems from '../../../hooks/useGetItems';
 import ChangeImgButton from "../../../img/buttons/change_img.png";
 
-// クエストモーダル - index
+// プロフィールモーダル
 const ProfileComponent = ({ setModalId = null, enable = true }) => {
   const [tab, setTab] = useState<number>(0);
   const [me, setMe] = useRecoilState(atom.me);
@@ -87,7 +87,7 @@ const User = () => {
           <div className="h-2 flex-auto sm:max-h-48 max-w-sm aspect-square rounded-full border-2 border-gray-dark relative">
             <img src={Url(`/img/icon/${me.icon}`)} className="h-full w-full max-w-sm aspect-square rounded-full object-cover border border-gray-dark" />
             <input id={"img_select"} type="file" accept="image/*,.png,.jpg,.jpeg,.gif" className="hidden" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleOnAddImage(e)} />
-            <label htmlFor={"img_select"} className="absolute h-2/5 top-0 right-0 bg-whiterounded-full">
+            <label htmlFor={"img_select"} className="absolute h-[40px] top-0 right-0">
               <img src={ChangeImgButton} className="h-full" />
             </label>
           </div>
