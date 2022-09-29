@@ -5,7 +5,7 @@ interface ExplainModalInfo {
   text: null | string,
   caption: null | string,
   is_open: boolean,
-  action? :Function
+  action?: Function
 }
 
 interface Me {
@@ -17,6 +17,19 @@ interface Me {
   point: number,
   exp: number,
   lv: number,
+  title: string,
+  avatar: {
+
+  }
+}
+
+interface ProfileData {
+  user_name: string,
+  screen_name: string,
+  icon: string,
+  introduction: string,
+  lv: number,
+  exp: number,
   title: string,
   avatar: {
     hat: string,
@@ -33,6 +46,11 @@ export const user_id = atom({
   default: <string>""
 });
 
+export const profileData = atom({
+  key: 'profileData',
+  default: <ProfileData> null
+})
+
 export const is_login = atom({
   key: 'is_login',
   default: <boolean>false
@@ -42,6 +60,11 @@ export const me = atom({
   key: 'me',
   default: <Me>{}
 })
+
+export const user_type = atom({
+  key: 'user_type',
+  default: "listener"
+});
 
 export const current_room_id = atom({
   key: 'current_room_id',

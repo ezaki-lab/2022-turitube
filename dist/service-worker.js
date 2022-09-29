@@ -94,7 +94,7 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/bundle.js",
-    "revision": "8ba537f6b4207e54009dc57ece8a819f"
+    "revision": "602ebfba597751324eec37c271425faf"
   }, {
     "url": "/img/Footprints.cab536d8b7760a2ecddaedf3edebde4f.png",
     "revision": null
@@ -115,6 +115,12 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/calendar.1b75e4913e68c1230643e4b6cb1aaf1a.png",
+    "revision": null
+  }, {
+    "url": "/img/camera.active.f52a482e37b9fe8854762d7237ebb815.png",
+    "revision": null
+  }, {
+    "url": "/img/camera.inactive.a9aad84a0c884af8ddd83d3442f32e10.png",
     "revision": null
   }, {
     "url": "/img/change_img.76adab88dfaf84118c74b2c06654474b.png",
@@ -184,6 +190,12 @@ define(['./workbox-f09d4406'], (function (workbox) { 'use strict';
     "revision": null
   }, {
     "url": "/img/measure.1915132da8211cfccc3f0a27e0f48d56.png",
+    "revision": null
+  }, {
+    "url": "/img/mic.active.6c608f28f6dce82e468112d41fd0060f.png",
+    "revision": null
+  }, {
+    "url": "/img/mic.inactive.00daa9a09f546353e699544cbd9bd338.png",
     "revision": null
   }, {
     "url": "/img/name.43f3e7052d2d1b5451f9a2939b6533e4.png",

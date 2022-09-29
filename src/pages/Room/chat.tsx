@@ -3,65 +3,59 @@ import React, { useEffect, useState } from 'react';
 import * as atom from '../../common/atom';
 import { Link } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
+import Icon from '../../components/Icon';
+import useUserData from '../../hooks/useUserData';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
+interface Message {
+  user_name: string,
+  text: string
+}
+
 // Room チャット管理コンポーネント
-const Chat = () => {
-  const messageList = [{
-    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
-    screen_name: "kosakae",
-    lv: 20,
-    text: "こんにちは",
-  },
-  {
-    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
-    screen_name: "kosakae",
-    lv: 20,
-    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
-  },
-  {
-    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
-    screen_name: "kosakae",
-    lv: 20,
-    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
-  },
-  {
-    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
-    screen_name: "kosakae",
-    lv: 20,
-    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
-  },
-  {
-    icon: "https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg",
-    screen_name: "kosakae",
-    lv: 20,
-    text: "こんにちはｄｓｌｋｊｆｋｌｊｄさｊｋｌｆ；ｓだｌｋ；ｆｌｊｋ；あｓｄｆｌｊｋ；さｄｊｌｋｆｊｋｌｄ；さｆｊｌ；ｋｄさｆ",
-  },]
-  
+const Chat = ({ socket }) => {
+  const [data, setData] = useState<Message[]>([]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('chat', (data) => {
+        setData((rev) => ([...rev, {
+          user_name: data.user_name,
+          text: data.text
+        },]))
+      })
+    }
+  }, [socket]);
 
   // 視聴者ならこっち
   return (
     <div className="h-2 flex-auto w-full">
       <ScrollToBottom>
         <ul className="w-full p-2 space-y-2">
-          {messageList.map((data, index) => {
-            return (
-              <li className="h-10 w-full bg-white bg-opacity-75 rounded-full flex items-center drop-shadow-md" key={index}>
-                <img src={data.icon} className="h-full aspect-square object-cover rounded-full" />
-                <div className="flex flex-col justify-center px-2">
-                  <p className="text-tcolor text-xs">{data.screen_name}</p>
-                  <p className="text-tcolor text-xs">Lv.{data.lv}</p>
-                </div>
-                <p className="text-sm text-tcolor line-clamp-2 pr-1">{data.text}</p>
-
-              </li>
-            )
-          })}
+          {data.map((d, index) => (
+            <Message data={d} key={index} />
+          ))}
         </ul>
       </ScrollToBottom>
     </div>
 
   );
 };
+
+const Message = ({ data }) => {
+  const userData = useUserData(data.user_name);
+  if (!userData) return (<></>)
+  return (
+    <li className="h-10 w-full bg-white bg-opacity-75 rounded-full flex items-center drop-shadow-md">
+      <Icon data={userData} />
+      <div className="flex flex-col justify-center px-2 w-20">
+        <p className="text-tcolor text-xs line-clamp-2">{userData.screen_name}</p>
+        <p className="text-tcolor text-xs line-clamp-2">Lv.{userData.lv}</p>
+      </div>
+      <p className="text-sm text-tcolor pr-1 w-2 flex-auto truncate">{data.text}</p>
+
+    </li>
+  )
+}
 
 export default Chat;

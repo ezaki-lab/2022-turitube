@@ -14,17 +14,31 @@ import LogoutButton from "../../img/buttons/logout.png";
 import AchiveComponent from './Modals/achive';
 import QuestComponent from './Modals/quest';
 import ProfileComponent from './Modals/profile';
+import { useNavigate } from 'react-router-dom';
 
 const HamburgerModal = () => {
-
+  const navigate = useNavigate();
   const [userId, setUserId] = useRecoilState(atom.user_id);
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
+  const [userType, setUserType] = useRecoilState(atom.user_type);
+
+  const listener = () => {
+    setUserType("listener")
+    navigate("/room/dev_room")
+  }
+
+  const streamer = () => {
+    setUserType("streamer")
+    navigate("/room/dev_room")
+  }
 
   const Logout = () => {
     setUserId("");
     localStorage.setItem("userId", "");
     setIsLogin(false);
   };
+
+
 
   const [modalId, setModalId] = useState<number | null>(null);
   return (
@@ -57,12 +71,12 @@ const HamburgerModal = () => {
               <div className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={QuestModalButton} className="h-full" onClick={() => setModalId(1)} />
               </div>
-              <Link to="/room/dev_room" className="mx-2 my-1 h-10 active:animate-button-push">
+              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => listener()}>
                 <img src={OptionModalButton} className="h-full" />
-              </Link>
-              <div className="mx-2 my-1 h-10 active:animate-button-push">
+              </button>
+              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => streamer()}>
                 <img src={OptionModalButton} className="h-full" />
-              </div>
+              </button>
             </div>
             <div className="h-full w-1/2 flex flex-col justify-around items-start">
               <div className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(2)}>

@@ -20,14 +20,17 @@ const useSocketIo = (namespace: string = '') => {
     setSocket(io(uri, { path: path, transports: ["polling"] })); // pollingにしないとエラー吐くよ
   }, [namespace]);
 
-  
   useEffect(() => {
     if (socket) {
       return (() => {
         socket.disconnect();
       })
     }
-  }, [socket])
+  }, [socket]);
+
+  window.addEventListener('beforeunload', (e) => {
+    socket.disconnect();
+  });
 
   return socket;
 };
