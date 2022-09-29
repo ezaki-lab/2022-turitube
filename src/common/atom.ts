@@ -63,7 +63,7 @@ export const me = atom({
 
 export const user_type = atom({
   key: 'user_type',
-  default: "listener"
+  default: null
 });
 
 export const current_room_id = atom({

@@ -23,45 +23,13 @@ import HomeButton2 from "../../img/buttons/home_2.png";
 
 import QuestBig from "../../img/buttons/quest_old.png";
 
+import StreamStartComponent from './Modals/streamStart';
+
 const BottomLayout = () => {
   return (
     <>
+      <StreamStartComponent />
       <div className="fixed z-100">
-
-        {/*画面が小さい時
-        <div className="w-full fixed h-14 flex flex-row justify-center items-center bottom-0 sm:px-2 sm:hidden bg-white shadow-[0_-4px_4px_rgba(0,0,0,0.2)]">
-          <Link to="/quest" className="w-32 h-12 flex items-center mx-1 justify-center active:animate-button-push">
-            <img src={QuestButton} />
-          </Link>
-          <Link to="/stream" className="w-32 h-12 flex items-center mx-1 justify-center active:animate-button-push">
-            <img src={StreamButton} />
-          </Link>
-        </div>
-  */}
-
-        {/*
-    <div className="w-full fixed h-10 flex flex-row justify-center items-center bottom-0 space-x-1 sm:px-2 sm:hidden bg-white shadow-[0_-4px_4px_rgba(0,0,0,0.2)]">
-          <Link to="/" className="w-14 max-w-xs -mt-6 active:animate-button-push">
-            <img src={HomeSmallButton} />
-          </Link>
-          <Link to="/picture_book" className="w-14 -mt-6 active:animate-button-push">
-            <img src={PictureBookSmallButton} />
-          </Link>
-          <Link to="/diary" className="w-14 -mt-6 active:animate-button-push">
-            <img src={DiarySmallButton} />
-          </Link>
-          <Link to="/achive" className="w-14 -mt-6 active:animate-button-push">
-            <img src={AchiveSmallButton} />
-          </Link>
-          <Link to="/quest" className="w-14 -mt-6 active:animate-button-push">
-            <img src={QuestSmallButton} />
-          </Link>
-          <Link to="/" className="w-14 -mt-6 active:animate-button-push">
-            <img src={StreamSmallButton} />
-          </Link>
-
-        </div>
-  */}
         <div className="w-full h-0 fixed flex flex-row justify-between px-1 mb-1 items-end bottom-0 sm:hidden">
           <Link to="/" className="w-28 flex-auto max-w-[180px] active:animate-button-push">
             <img src={HomeButton2} />
@@ -69,9 +37,9 @@ const BottomLayout = () => {
           <Link to="/quest" className="w-20 flex-auto mb-1 max-w-[160px] active:animate-button-push">
             <img src={QuestBig} />
           </Link>
-          <Link to="/" className="w-28 flex-auto max-w-[180px] active:animate-button-push">
+          <label htmlFor="start_stream" className="w-28 flex-auto max-w-[180px] active:animate-button-push">
             <img src={StreamButton} />
-          </Link>
+          </label>
           <div className="flex flex-col w-14 flex-auto max-w-[80px]">
             <Link to="/picture_book" className="w-full active:animate-button-push">
               <img src={PictureBookSmallButton} />
