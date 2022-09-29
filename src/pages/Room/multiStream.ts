@@ -16,7 +16,7 @@ const multiStreamManager = (socket) => {
   }, [socket]);
 
   useEffect(() => {
-    console.log(multiStream)
+    //console.log(multiStream)
   }, [multiStream]);
   return multiStream
 };

@@ -33,9 +33,9 @@ const Modal = () => {
       <label htmlFor="profile" className="modal cursor-pointer">
         <label className="modal-box relative flex sm-max:flex-col space-y-2" htmlFor="">
           <div className="sm:w-32 flex flex-col justify-center items-center">
-            <img src={Url(`/img/icon/${profileData.icon}`)} className="h-28 w-28 mx-auto rounded-full border-2 border-gray-dark " />
-            <h3 className='text-lg text-tcolor'>{profileData.screen_name}</h3>
-            <p className="text-sm text-gray">@{profileData.user_name}</p>
+            <img src={Url(`/img/icon/${profileData.icon}`)} className="h-28 w-28 mx-auto rounded-full border-2 border-gray-dark object-cover" />
+            <h3 className='text-xl h-6 text-tcolor'>{profileData.screen_name}</h3>
+            <p className="text-sm h-6 text-gray">@{profileData.user_name}</p>
             <Title title_id={profileData.title} scale="mini" />
           </div>
           <div className="sm:w-2 flex-auto">

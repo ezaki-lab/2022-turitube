@@ -71,7 +71,6 @@ const Listener = () => {
   }, [isMetaverse]);
 
   useEffect(() => {
-    console.log(touch)
     if (touch) { setDelay(null); setHiddenLayerCount(3); }
     else { setDelay(1000); setHiddenLayerCount(3); }
   }, [touch]);

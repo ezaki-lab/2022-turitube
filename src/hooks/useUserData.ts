@@ -31,11 +31,6 @@ const useUserData = (user_name) => {
       setUserData(res.data);
     })
   }, [])
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   return userData
 };
 
