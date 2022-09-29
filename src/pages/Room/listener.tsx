@@ -13,6 +13,7 @@ import Send from "../../img/buttons/send.png";
 import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
+import { useParams } from 'react-router-dom';
 
 // Room 視聴者視点の画面
 const Listener = () => {
@@ -27,6 +28,7 @@ const Listener = () => {
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
   const multiStream = multiStreamManager(socket);
   const [me, setMe] = useRecoilState(atom.me);
+  const {room_id} = useParams();
 
   useInterval(() => {
     if (HiddenLayerCount && !isMetaverse && !isInput) setHiddenLayerCount((rev) => (rev - 1));
@@ -40,7 +42,7 @@ const Listener = () => {
     if (socket) {
       socket.on('connect', () => {
         socket.emit("join", {
-          room_id: "dev_room",
+          room_id: room_id,
           user_name: me.user_name,
           user_type: "listener"
         })
@@ -51,7 +53,7 @@ const Listener = () => {
   const send = () => {
     if (textRef.current.value.match(/\S/g)) {
       socket.emit("chat", {
-        room_id: "dev_room",
+        room_id: room_id,
         user_name: me.user_name,
         text: textRef.current.value
       })

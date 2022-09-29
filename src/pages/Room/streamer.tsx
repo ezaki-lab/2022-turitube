@@ -17,7 +17,7 @@ import AudioInactive from "../../img/icons/mic.inactive.png";
 import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
-
+import { useParams } from 'react-router-dom';
 
 
 // Room 視聴者視点の画面
@@ -33,6 +33,7 @@ const Streamer = () => {
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
   const multiStream = multiStreamManager(socket);
   const [me, setMe] = useRecoilState(atom.me);
+  const {room_id} = useParams();
 
   useInterval(() => {
     if (HiddenLayerCount && !isMetaverse && !isInput) setHiddenLayerCount((rev) => (rev - 1));
@@ -46,7 +47,7 @@ const Streamer = () => {
     if (socket) {
       socket.on('connect', () => {
         socket.emit("join", {
-          room_id: "dev_room",
+          room_id: room_id,
           user_name: me.user_name,
           user_type: "streamer"
         })

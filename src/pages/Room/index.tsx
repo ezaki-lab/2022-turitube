@@ -40,7 +40,7 @@ const Room = () => {
           {isHost ? <p className="py-2 text-red-500 font-bold">あなたは配信のホストです！退出すると全員終了します！</p> : <></>}
 
           <div className="flex justify-end mt-4">
-            <button className="btn btn-active border-basic text-white bg-basic tracking-wide" onClick={() => navigate("/")}>配信から退出</button>
+            <button className="btn btn-active border-basic text-white bg-basic tracking-wide" onClick={() => {setUserType(null); navigate("/");}}>配信から退出</button>
           </div>
         </label>
       </label>

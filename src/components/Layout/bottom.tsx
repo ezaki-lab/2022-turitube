@@ -71,9 +71,9 @@ const BottomLayout = () => {
           <Link to="/quest" className="w-28 max-w-[160px] flex-auto flex items-center justify-center active:animate-button-push -mt-6 ">
             <img src={QuestButton} />
           </Link>
-          <Link to="/" className="w-28 max-w-[160px] flex-auto flex items-center justify-center active:animate-button-push -mt-6 ">
+          <label htmlFor="start_stream" className="w-28 max-w-[160px] flex-auto flex items-center justify-center active:animate-button-push -mt-6 ">
             <img src={StreamButton} />
-          </Link>
+          </label>
         </div>
 
       </div>

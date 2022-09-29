@@ -8,7 +8,7 @@ import Modal from './modal';
 // Icon 押したらユーザー情報が出てくる丸型のアイコンを提供
 const Icon = ({ data }) => {
   const [profileData, setProfileData] = useRecoilState(atom.profileData);
-  if (!data.icon) {
+  if (!data) {
     return (<div className="h-full aspect-square object-cover rounded-full bg-white"></div>)
   }
 

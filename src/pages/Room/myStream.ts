@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
 
@@ -11,6 +12,7 @@ interface MyStream {
 
 const myStreamManager = (socket) => {
   const [ready, setReady] = useState(false);
+  const {room_id} = useParams();
   const [me, setMe] = useRecoilState(atom.me);
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const [audio, setAudio] = useState<boolean>(false);
@@ -28,7 +30,7 @@ const myStreamManager = (socket) => {
   useEffect(() => {
     if(socket && ready) {
       socket.emit("update_user", {
-        room_id: "dev_room",
+        room_id: room_id,
         user_name: me.user_name,
         user_type: userType,
         user: myStream
