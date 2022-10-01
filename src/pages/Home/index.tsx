@@ -17,7 +17,6 @@ import WatchOk from '../../img/icons/watch_ok.png';
 import WatchNg from '../../img/icons/watch_ng.png';
 import Kari from "../../img/kari4.png";
 
-
 interface Room {
   host_name: string,
   is_open: number,
@@ -43,10 +42,6 @@ const Home = () => {
       setRoomList(res.data);
     })
   }, []);
-
-  useEffect(() => {
-    console.log(selectIndex)
-  }, [selectIndex]);
 
   return (
     <>
@@ -102,9 +97,6 @@ const RoomModal = ({ roomList, index }) => {
 
 const StreamCard = ({ data }) => {
   const userData = useUserData(data.host_name);
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   if (!data) {
     return (
@@ -152,7 +144,6 @@ const StreamCard = ({ data }) => {
           </div>
         </div>
       </div>
-
 
     </>
   )

@@ -18,12 +18,12 @@ import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
-
+import Video from './video';
 
 // Room 視聴者視点の画面
 const Streamer = () => {
   const [width, height] = useWindowSize();
-  const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
+  const [isMetaverse, setIsMetaverse] = useState<boolean>(false); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
   const [delay, setDelay] = useState<null | number>(null);
   const [touch, setTouch] = useState(false);
@@ -95,13 +95,13 @@ const Streamer = () => {
       <div className={`flex flex-${width > height ? "row" : "col"} h-full w-full items-center`} onTouchStart={() => { setTouch(true); }} onTouchEnd={() => { setTouch(false); }} onMouseMove={() => { setHiddenLayerCount(5); setDelay(1000) }}>
 
         {/*メタバース画面 */}
-        <div className={`aspect-square bg-black flex justify-center items-center ${width > height ? "h-full max-w-[60%]" : "w-full max-h-[calc(100%-320px)]"} ${isMetaverse ? "" : "hidden"}`}>
+        <div className={`aspect-square bg-black flex justify-center items-center ${width > height ? "h-full max-w-3/5" : "w-full max-h-[calc(100%-320px)]"} ${isMetaverse ? "" : "hidden"}`}>
           <Metaverse />
         </div>
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <img src="https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg" className="object-contain w-full h-full" />
+          <Video myStream={myStream} socket={socket} />
         </div>
 
         <div className={`aspect-square ${width > height ? "h-full w-20 flex-auto" : "w-full max-h-[50%]"} bg-white flex justify-center items-center ${isMetaverse ? "hidden" : ""}`} />

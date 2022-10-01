@@ -14,6 +14,7 @@ import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
+import Video from './video';
 
 // Room 視聴者視点の画面
 const Listener = () => {
@@ -28,7 +29,7 @@ const Listener = () => {
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
   const multiStream = multiStreamManager(socket);
   const [me, setMe] = useRecoilState(atom.me);
-  const {room_id} = useParams();
+  const { room_id } = useParams();
 
   useInterval(() => {
     if (HiddenLayerCount && !isMetaverse && !isInput) setHiddenLayerCount((rev) => (rev - 1));
@@ -92,13 +93,13 @@ const Listener = () => {
       <div className={`flex flex-${width > height ? "row" : "col"} h-full w-full items-center`} onTouchStart={() => { setTouch(true); }} onTouchEnd={() => { setTouch(false); }} onMouseMove={() => { setHiddenLayerCount(5); setDelay(1000) }}>
 
         {/*メタバース画面 */}
-        <div className={`aspect-square bg-black flex justify-center items-center ${width > height ? "h-full max-w-[60%]" : "w-full max-h-[calc(100%-320px)]"} ${isMetaverse ? "" : "hidden"}`}>
+        <div className={`aspect-square bg-black flex justify-center items-center ${width > height ? "h-full max-w-3/5" : "w-full max-h-[calc(100%-320px)]"} ${isMetaverse ? "" : "hidden"}`}>
           <Metaverse />
         </div>
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <img src="https://magazine.coconala.com/wp-content/uploads/2019/09/shutterstock_116146678.jpg" className="object-contain w-full h-full" />
+          <Video myStream={myStream} socket={socket} />
         </div>
 
         <div className={`aspect-square ${width > height ? "h-full w-20 flex-auto" : "w-full max-h-[50%]"} bg-white flex justify-center items-center ${isMetaverse ? "hidden" : ""}`} />
@@ -107,16 +108,16 @@ const Listener = () => {
         <div className={`flex-auto flex flex-col-reverse items-center z-10 px-2 pb-1 pointer-events-none ${HiddenLayerCount ? "" : "hidden"} ${width > height ? "w-2 h-full pt-12" : "h-2 w-full"}`}>
           <div className="h-12 w-full flex items-center p-1 pointer-events-auto" onMouseDown={() => { setHiddenLayerCount(5); setDelay(null) }}>
             <input ref={textRef}
-              type="text" 
-              placeholder="コメントを入力" 
-              className="w-10 h-full rounded-full text-white bg-basic bg-opacity-50 border-2 border-basic-dark placeholder-white px-2 flex-auto" 
-              onClick={() => setIsInput(true)} 
+              type="text"
+              placeholder="コメントを入力"
+              className="w-10 h-full rounded-full text-white bg-basic bg-opacity-50 border-2 border-basic-dark placeholder-white px-2 flex-auto"
+              onClick={() => setIsInput(true)}
               onBlur={() => setIsInput(false)}
               onKeyPress={e => {
                 if (e.key == "Enter") {
-                    send();
+                  send();
                 }
-            }} />
+              }} />
             <button className="h-full active:animate-button-push w-12" onClick={() => { send() }}>
               <img src={Send} className="h-full w-12 px-1" />
             </button>

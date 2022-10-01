@@ -84,6 +84,9 @@ module.exports = {
       minHeight: {
         '1/2': '50%'
       },
+      maxWidth: {
+        '3/5': '60%',
+      },
       scale: {
         '150': '1.50'
       },
