@@ -14,7 +14,7 @@ import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
-import Video from './video';
+import ListenerVideo from './listenerVideo';
 
 // Room 視聴者視点の画面
 const Listener = () => {
@@ -99,7 +99,7 @@ const Listener = () => {
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <Video myStream={myStream} socket={socket} />
+          <ListenerVideo multiStream={multiStream} setIsMetaverse={setIsMetaverse} />
         </div>
 
         <div className={`aspect-square ${width > height ? "h-full w-20 flex-auto" : "w-full max-h-[50%]"} bg-white flex justify-center items-center ${isMetaverse ? "hidden" : ""}`} />

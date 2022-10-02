@@ -6,12 +6,12 @@ const useWindowSize = (): number[] => {
     const updateSize = (): void => {
       let ua = navigator.userAgent;
       if ((ua.indexOf('iPhone') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
-        
+
       }
       else setSize([window.innerWidth, window.innerHeight]);
     };
 
-    const orientationChange = () : void => {
+    const orientationChange = (): void => {
       setSize([window.innerWidth, window.innerHeight]);
     }
 

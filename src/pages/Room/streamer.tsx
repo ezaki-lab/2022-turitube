@@ -18,12 +18,13 @@ import myStreamManager from './myStream';
 import multiStreamManager from './multiStream';
 import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
-import Video from './video';
+import StreamerVideo from './streamerVideo';
+import isSmartPhone from '../../utils/isSmartPhone';
 
 // Room 視聴者視点の画面
 const Streamer = () => {
   const [width, height] = useWindowSize();
-  const [isMetaverse, setIsMetaverse] = useState<boolean>(false); // メタバース画面であるか
+  const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
   const [delay, setDelay] = useState<null | number>(null);
   const [touch, setTouch] = useState(false);
@@ -78,11 +79,14 @@ const Streamer = () => {
         <Hamburger />
       </div>
 
-      <div className="fixed z-50 top-1 right-16 flex flex-row w-28 h-12 justify-around">
-        <div className={`w-12 h-12 rounded-full ${myStream.camera ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
+      <div className="fixed z-50 top-1 right-16 flex flex-row h-12 justify-around">
+        {isSmartPhone() 
+        ?<div className={`w-12 h-12 rounded-full mx-1 ${myStream.camera ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
           <img src={myStream.camera ? CameraActive : CameraInactive} className="w-8 h-8 m-auto" onClick={() => { setCamera((rev) => (!rev)); }} />
         </div>
-        <div className={`w-12 h-12 rounded-full ${myStream.audio ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
+        :<></>}
+        
+        <div className={`w-12 h-12 rounded-full mx-1 ${myStream.audio ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
           <img src={myStream.audio ? AudioActive : AudioInactive} className="w-8 h-8 m-auto" onClick={() => setAudio((rev) => (!rev))} />
         </div>
       </div>
@@ -101,7 +105,7 @@ const Streamer = () => {
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <Video myStream={myStream} socket={socket} />
+          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse}/>
         </div>
 
         <div className={`aspect-square ${width > height ? "h-full w-20 flex-auto" : "w-full max-h-[50%]"} bg-white flex justify-center items-center ${isMetaverse ? "hidden" : ""}`} />

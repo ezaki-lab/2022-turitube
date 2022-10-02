@@ -12,16 +12,15 @@ const useCamera = (initialConstraints) => {
   const localStream = useRef<MediaStream>(null);
   const [readyCam, setReadyCam] = useState<boolean>(false);
   const [constraints, setConstraints] = useState<Constraints>(initialConstraints);
-  const [changeCamera, setChangeCamera] = useState<number>(0);
+  const [change, setChange] = useState<number>(1);
 
   useEffect(() => {
-    console.log("change camera", changeCamera);
     navigator.mediaDevices.getUserMedia({ ...constraints, audio: true })
       .then((stream) => {
         stream.getAudioTracks().forEach((track) => (track.enabled = constraints.audio));
         localStream.current = stream;
         setReadyCam(true);
-        setChangeCamera((rev) => (rev+1))
+        setChange((rev) => (rev + 1))
         if (videoRef.current) {
           videoRef.current!.srcObject = localStream.current;
           videoRef.current.play().catch((e) => console.log(e));
@@ -30,13 +29,12 @@ const useCamera = (initialConstraints) => {
 
     return (() => {
       if (localStream.current !== null) {
-        localStream.current.getVideoTracks().forEach((camera) => { camera.stop(); });
-        localStream.current.getAudioTracks().forEach((audio) => { audio.stop(); });
+        localStream.current.getTracks().forEach((track) => { track.stop(); });
       }
     })
   }, [constraints]);
 
-  return { videoRef, localStream, readyCam, setConstraints, constraints, changeCamera};
+  return { videoRef, localStream, readyCam, setConstraints, constraints, change };
 }
 
 export default useCamera

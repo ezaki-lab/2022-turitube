@@ -12,7 +12,7 @@ interface MyStream {
 
 const myStreamManager = (socket) => {
   const [ready, setReady] = useState(false);
-  const {room_id} = useParams();
+  const { room_id } = useParams();
   const [me, setMe] = useRecoilState(atom.me);
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const [audio, setAudio] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const myStreamManager = (socket) => {
   );
 
   useEffect(() => {
-    if(socket && ready) {
+    if (socket && ready) {
       socket.emit("update_user", {
         room_id: room_id,
         user_name: me.user_name,
@@ -42,6 +42,10 @@ const myStreamManager = (socket) => {
     if (socket) {
       socket.on("connect", () => {
         setReady(true);
+      })
+      socket.on("camera", (data) => {
+        if (me.user_name !== data.user_name) setCamera(false);
+        else setCamera(true);
       })
     }
   }, [socket]);
