@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import ListenerVideo from './listenerVideo';
 
 // Room 視聴者視点の画面
-const Listener = ({socket}) => {
+const Listener = ({socket, multiStream}) => {
   const [width, height] = useWindowSize();
   const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
@@ -26,7 +26,6 @@ const Listener = ({socket}) => {
   const [isInput, setIsInput] = useState(false);
   const textRef = useRef(null);
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
-  const multiStream = multiStreamManager(socket);
   const [me, setMe] = useRecoilState(atom.me);
   const { room_id } = useParams();
 
@@ -80,7 +79,7 @@ const Listener = ({socket}) => {
 
         {/*メタバース画面 */}
         <div className="bg-yellow-200 sm-max:w-[400px] sm-max:mx-auto sm-max:max-w-full sm:h-[400px] sm:max-h-[100%] sm:my-auto md:h-[500px] lg:h-[650px] xl:h-[800px] aspect-square">
-          {isMetaverse ? <Metaverse /> : <></>}
+          {isMetaverse ? <Metaverse multiStream={multiStream} /> : <></>}
         </div>
 
         {/*映像 */}

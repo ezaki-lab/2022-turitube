@@ -4,7 +4,6 @@ import { Link, Navigate } from 'react-router-dom';
 import * as atom from '../../common/atom';
 import { useNavigate } from 'react-router-dom';
 import Url from '../../utils/url';
-import axios from 'axios';
 import Time from "../../img/icons/time.png";
 import Group from "../../img/icons/group.png";
 import EnteredSum from "../../img/icons/entered_sum.png";
@@ -13,33 +12,9 @@ import Icon from '../../components/Icon';
 import Modal from '../../components/Icon/modal';
 import TitleHeader from '../../components/TitleHeader';
 
-interface Stream {
-  thumbnail: string,
-  title: string,
-  tag: string,
-  time: string,
-  start_datetime: string,
-  count: number,
-  host_name: string
-}
-
-const First = ({ setNext, room_id }) => {
+const First = ({ setNext, stream }) => {
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const navigate = useNavigate();
-  const [stream, setStream] = useState<Stream>();
-  const [ready, setReady] = useState<boolean>(false);
-
-  useEffect(() => {
-    axios.get(Url("/room"), {
-      params: {
-        room_id: room_id,
-      }
-    }).then((res) => {
-      console.log(res.data)
-      setStream(res.data);
-      setReady(true);
-    });
-  }, []);
 
   const clickEvent = () => {
     if (userType == "listener") navigate("/");
@@ -48,7 +23,6 @@ const First = ({ setNext, room_id }) => {
     setUserType(null);
   }
 
-  if (!ready) return (<></>);
   return (
     <>
       <TitleHeader title="配信終了" />

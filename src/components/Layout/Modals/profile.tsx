@@ -7,6 +7,16 @@ import axios from 'axios';
 import Url from '../../../utils/url';
 import useGetItems from '../../../hooks/useGetItems';
 import ChangeImgButton from "../../../img/buttons/change_img.png";
+import Avatar from '../../Avatar';
+import { Stage, Layer, Rect, Circle, Image } from 'react-konva';
+import useResizeObserver from '../../../hooks/useResizeObserver';
+import * as img from "../../Avatar/avatarLoad"
+import BottomsIcon from "../../../img/icons/bottoms.PNG";
+import TopsIcon from "../../../img/icons/tops.PNG";
+import HatIcon from "../../../img/icons/hat.PNG";
+import FishingRodIcon from "../../../img/icons/fishing_rod.PNG";
+import HairIcon from "../../../img/icons/hair.PNG";
+
 
 // プロフィールモーダル
 const ProfileComponent = ({ setModalId = null, enable = true }) => {
@@ -35,7 +45,7 @@ const ProfileComponent = ({ setModalId = null, enable = true }) => {
 
         <div className="h-20 flex-auto mx-4 my-1 mb-2 flex sm-max:flex-col sm:flex-row rounded-2xl drop-shadow-2xl bg-white border-gray">
           {tab == 0 ? <User /> : <></>}
-          {tab == 1 ? <Avatar /> : <></>}
+          {tab == 1 ? <AvatarSelect /> : <></>}
         </div>
 
         {!enable
@@ -129,36 +139,81 @@ const User = () => {
   )
 }
 
-const Avatar = () => {
+interface AvatarData {
+  hat: number,
+  hair: number,
+  fishing_rod: number,
+  tops: number,
+  bottoms: number
+}
+
+const AvatarSelect = () => {
+  const avatarSizeRef = useRef<HTMLDivElement>(null);
+  const [range, setRange] = useState(0);
+  const [selectType, setSelectType] = useState<string>("hat");
+  const [me, setMe] = useRecoilState(atom.me)
+  const [avatar, setAvatar] = useState<AvatarData>();
+
+  useEffect(() => {
+    setAvatar(me.avatar);
+  }, []);
+
+  useEffect(() => {
+    if (avatar) setMe((rev) => ({...rev, avatar: avatar}));
+  }, [avatar]);
+
+  const handleResize = (entries) => {
+    const width = entries[0].contentRect.width;
+    setRange(Math.floor(width));
+  }
+
+  useResizeObserver([avatarSizeRef], handleResize);
   return (
     <>
       <div className="h-full w-full flex h-xs:flex-col h-xs-max:flex-row items-center rounded-2xl bg-white drop-shadow-lg">
         <div className="flex items-center justify-center h-xs:w-full h-xs:h-24 h-xs:flex-auto h-xs-max:w-64 h-xs-max:h-full">
-          <div className="bg-blue-200 h-5/6 aspect-[2/3]">
-
+          <div ref={avatarSizeRef} className="h-5/6 aspect-[2/3]">
+            {range
+              ? <Stage width={range} height={range * 1.5}>
+                <Layer>
+                  <Avatar avatarData={me.avatar} size={range} type="normal" />
+                </Layer>
+              </Stage> : <></>}
           </div>
         </div>
         <div className="h-xs:h-48 h-xs:w-full h-xs-max:h-full h-xs-max:flex-auto h-xs-max:w-12 p-2 flex flex-col justify-end space-y-1">
-          <div className="h-36 w-full overflow-x-auto flex flex-row items-center space-x-2">
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-          </div>
+          <AvatarSelecter imgs={img.normal_hat} setState={setAvatar} selectType={selectType} myType="hat" />
+          <AvatarSelecter imgs={img.normal_hair} setState={setAvatar} selectType={selectType} myType="hair" />
+          <AvatarSelecter imgs={img.normal_tops} setState={setAvatar} selectType={selectType} myType="tops" />
+          <AvatarSelecter imgs={img.normal_bottoms} setState={setAvatar} selectType={selectType} myType="bottoms" />
+          <AvatarSelecter imgs={img.normal_fishing_rod} setState={setAvatar} selectType={selectType} myType="fishing_rod" />
           <div className="h-12 w-full overflow-x-auto flex flex-row items-center border-t border-gray-dark space-x-2">
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
-            <img src="https://www.ana.co.jp/www2/travelandlife/article/id000001/000919/images/img_head_pc.jpg" className="h-full flex-none" />
+            <img src={HatIcon} className="h-full flex-none" onClick={() => {setSelectType("hat")}} />
+            <img src={HairIcon} className="h-full flex-none" onClick={() => {setSelectType("hair")}} />
+            <img src={TopsIcon} className="h-full flex-none" onClick={() => {setSelectType("tops")}} />
+            <img src={BottomsIcon} className="h-full flex-none" onClick={() => {setSelectType("bottoms")}} />
+            <img src={FishingRodIcon} className="h-full flex-none" onClick={() => {setSelectType("fishing_rod")}} />
           </div>
         </div>
       </div>
     </>
+  )
+}
+
+const AvatarSelecter = ({ imgs, setState, selectType, myType }) => {
+
+  if (selectType !== myType) return (<></>)
+  return (
+    <ul className="h-36 w-full overflow-x-auto flex flex-row items-center space-x-2">
+      {imgs.map((v, index) => {
+        return (
+          <li className="h-full flex-none p-2 bg-basic bg-opacity-25 rounded-2xl" onClick={() => { setState((rev) => ({ ...rev, [selectType]: index })) }}>
+            <img src={v} className="h-full" />
+          </li>
+        )
+      })}
+    </ul>
+
   )
 }
 

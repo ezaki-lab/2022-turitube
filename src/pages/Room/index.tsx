@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../../components/Icon/modal';
 import { useParams } from 'react-router-dom';
 import useSocketIo from '../../hooks/useSocketIo';
+import multiStreamManager from './multiStream';
 
 // Room 配信部屋
 const Room = () => {
@@ -19,6 +20,7 @@ const Room = () => {
   const [isHost, setIsHost] = useState<boolean>(false);
   const { room_id } = useParams();
   const socket = useSocketIo("stream");
+  const multiStream = multiStreamManager(socket);
   const navigate = useNavigate();
 
   const navigateEndStream = () => {
@@ -57,7 +59,7 @@ const Room = () => {
     return (<></>)
   }
 
-  if (!ready) return (<></>);
+  if (!ready && !multiStream) return (<></>);
   return (
     <>
       <Modal />
@@ -73,8 +75,8 @@ const Room = () => {
           </div>
         </label>
       </label>
-      {userType == "streamer" ? <Streamer socket={socket} /> : <></>}
-      {userType == "listener" ? <Listener socket={socket} /> : <></>}
+      {userType == "streamer" ? <Streamer socket={socket} multiStream={multiStream} /> : <></>}
+      {userType == "listener" ? <Listener socket={socket} multiStream={multiStream} /> : <></>}
     </>
 
   )

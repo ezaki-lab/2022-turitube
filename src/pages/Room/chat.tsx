@@ -52,7 +52,7 @@ const Chat = ({ socket }) => {
     }
   }, [socket]);
 
-  // 視聴者ならこっち
+  // チャット
   return (
     <div className="h-2 flex-auto w-full">
       <ScrollToBottom>

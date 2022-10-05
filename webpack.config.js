@@ -52,7 +52,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|PNG|jpg|gif)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[hash].[ext]',

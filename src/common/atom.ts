@@ -19,7 +19,11 @@ interface Me {
   lv: number,
   title: string,
   avatar: {
-
+    hat: number,
+    hair: number,
+    tops: number,
+    bottoms: number,
+    fishing_rod: number
   }
 }
 
@@ -32,11 +36,11 @@ interface ProfileData {
   exp: number,
   title: string,
   avatar: {
-    hat: string,
-    head: string,
-    body: string,
-    waist: string,
-    fishing_rod: string
+    hat: number,
+    hair: number,
+    tops: number,
+    bottoms: number,
+    fishing_rod: number
   }
 }
 

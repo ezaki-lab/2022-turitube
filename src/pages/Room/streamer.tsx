@@ -20,16 +20,18 @@ import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
 import StreamerVideo from './streamerVideo';
 import isSmartPhone from '../../utils/isSmartPhone';
+import VideoChat from './videoChat';
+import Notification from '../../components/Notification';
 
 // Room 視聴者視点の画面
-const Streamer = ({socket}) => {
+const Streamer = ({ socket, multiStream }) => {
   const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
   const [delay, setDelay] = useState<null | number>(null);
   const [touch, setTouch] = useState(false);
   const [isInput, setIsInput] = useState(false);
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
-  const multiStream = multiStreamManager(socket);
+  const [notification, setNotification] = useState<string>("");
   const [me, setMe] = useRecoilState(atom.me);
   const { room_id } = useParams();
 
@@ -49,13 +51,13 @@ const Streamer = ({socket}) => {
   }, [isMetaverse]);
 
   useEffect(() => {
-    console.log(touch)
     if (touch) { setDelay(null); setHiddenLayerCount(3); }
     else { setDelay(1000); setHiddenLayerCount(3); }
   }, [touch]);
 
   return (
     <>
+      <Notification text={notification} setText={setNotification} />
       <div className={`${HiddenLayerCount ? "" : "hidden"}`} onClick={() => setDelay(null)}>
         <Hamburger />
       </div>
@@ -81,22 +83,25 @@ const Streamer = ({socket}) => {
 
         {/*メタバース画面 */}
         <div className="sm-max:w-[350px] sm-max:max-h-[350px] sm-max:mx-auto sm-max:max-w-full sm:h-[400px] sm:max-h-[100%] sm:my-auto md:h-[500px] lg:h-[650px] xl:h-[800px] aspect-square">
-          {isMetaverse ? <Metaverse /> : <></>}
+          {isMetaverse ? <Metaverse multiStream={multiStream} /> : <></>}
         </div>
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse} />
+          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse} setNotification={setNotification} />
         </div>
 
-        <div className={`${isMetaverse ? "bg-white" : ""} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16 ${HiddenLayerCount ? "" : "hidden"}`}>
-          <div className={`w-full h-24 flex-auto flex flex-col pointer-events-auto ${isMetaverse ? "bg-white border-y border-gray-light" : ""}`}>
+        <div className={`${isMetaverse ? "bg-white" : "hidden"} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16`}>
+          <div className={`w-full h-24 flex-auto flex flex-col pointer-events-auto bg-white border-y border-gray-light`}>
             <Chat socket={socket} />
           </div>
         </div>
       </div>
+      {!isMetaverse
+        ? <VideoChat socket={socket} /> : <></>}
     </>
   )
 };
+
 
 export default Streamer;

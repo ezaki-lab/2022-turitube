@@ -80,7 +80,8 @@ module.exports = {
         '100': '100',
         '200': '200',
         '10000': '10000', // これ右上で出てくるモーダルの内包領域なのでこれ以上上げてはいけない 
-        '99999': '99999' // これ説明モーダルなのでこれより上に上げてはいけない
+        '99999': '99999', // これ説明モーダルなのでこれより上に上げてはいけない
+        '100000': '100000' // 通知
       },
       minHeight: {
         '1/2': '50%'
@@ -166,7 +167,17 @@ module.exports = {
           "100%": {
             transform: "scale(1)"
           }
-        }
+        },
+        "slide-in-top": {
+          "0%": {
+            transform: "translateY(-20px)",
+            opacity: "0",
+          },
+          to: {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
       },
 
 
@@ -177,7 +188,8 @@ module.exports = {
         fadein: "fadein 0.25s alternate forwards",
         fadeout: "fadeout 0.25s ease-in-out",
         selected: "selected 2s linear infinite",
-        stamp: "stamp 0.3s alternate forwards"
+        stamp: "stamp 0.3s alternate forwards",
+        "slide-in-top": "slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940)   both",
       },
     }
   },

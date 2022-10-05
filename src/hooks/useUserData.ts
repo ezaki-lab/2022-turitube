@@ -11,11 +11,11 @@ interface UserData {
   lv: number,
   title: string,
   avatar: {
-    hat: string,
-    head: string,
-    body: string,
-    waist: string,
-    fishing_rod: string
+    hat: number,
+    hair: number,
+    bottoms: number,
+    tops: number,
+    fishing_rod: number
   }
 }
 

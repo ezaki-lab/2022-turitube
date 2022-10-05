@@ -5,26 +5,10 @@ import { Link } from 'react-router-dom';
 import Url from '../../utils/url';
 import Title from '../Title';
 
-interface ProfileData {
-  user_name: string,
-  screen_name: string,
-  icon: string,
-  introduction: string,
-  lv: number,
-  exp: number,
-  title: string,
-  avatar: {
-    hat: string,
-    head: string,
-    body: string,
-    waist: string,
-    fishing_rod: string
-  }
-}
 
 // Icon 押したらユーザー情報が出てくる丸型のアイコンを提供
 const Modal = () => {
-  const [profileData, setProfileData] = useRecoilState<ProfileData>(atom.profileData);
+  const [profileData, setProfileData] = useRecoilState(atom.profileData);
 
   if (!profileData) { return (<></>) }
   return (

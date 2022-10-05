@@ -1,31 +1,59 @@
 import useImage from 'use-image';
 
-import hat_1 from "../../img/avatar/hat/1.png"
-import hat_2 from "../../img/avatar/hat/2.png"
-import hat_3 from "../../img/avatar/hat/3.png"
-export const hats = [hat_1, hat_2, hat_3];
+import n_body from './avatar/normal/body/body.PNG';
 
-import hair_1 from "../../img/avatar/hair/1.png"
-import hair_2 from "../../img/avatar/hair/2.png"
-import hair_3 from "../../img/avatar/hair/3.png"
-export const hairs = [hair_1, hair_2, hair_3];
+import n_bottoms_1 from "./avatar/normal/bottoms/bottoms1.PNG";
+import n_bottoms_2 from "./avatar/normal/bottoms/bottoms2.PNG";
+import n_bottoms_3 from "./avatar/normal/bottoms/bottoms3.PNG";
 
-import face_1 from "../../img/avatar/face/1.png"
-import face_2 from "../../img/avatar/face/2.png"
-import face_3 from "../../img/avatar/face/3.png"
-export const faces = [face_1, face_2, face_3];
+import n_face_amazing from "./avatar/normal/face/amazing.PNG";
+import n_face_normal from "./avatar/normal/face/normal.PNG";
+import n_face_sad from "./avatar/normal/face/sad.PNG";
+import n_face_smile from "./avatar/normal/face/smile.PNG";
 
-import body_1 from "../../img/avatar/body/1.png"
-import body_2 from "../../img/avatar/body/2.png"
-import body_3 from "../../img/avatar/body/3.png"
-export const bodies = [body_1, body_2, body_3];
+import n_fishing_rod_1 from "./avatar/normal/fishing-rod/blue-fishing-rod.PNG";
+import n_fishing_rod_2 from "./avatar/normal/fishing-rod/green-fishing-rod.PNG";
+import n_fishing_rod_3 from "./avatar/normal/fishing-rod/red-fishing-rod.PNG";
 
-import pants_1 from "../../img/avatar/pants/1.png"
-import pants_2 from "../../img/avatar/pants/2.png"
-import pants_3 from "../../img/avatar/pants/3.png"
-export const pantses = [pants_1, pants_2, pants_3];
+import n_hair_1 from "./avatar/normal/hair/hair1.PNG";
+import n_hair_2 from "./avatar/normal/hair/hair2.PNG";
+import n_hair_3 from "./avatar/normal/hair/hair3.PNG";
 
-import foot_1 from "../../img/avatar/foot/1.png"
-import foot_2 from "../../img/avatar/foot/2.png"
-import foot_3 from "../../img/avatar/foot/3.png"
-export const foots = [foot_1, foot_2, foot_3];
+import n_hat_1 from "./avatar/normal/hat/hat1.PNG";
+import n_hat_2 from "./avatar/normal/hat/hat2.PNG";
+import n_hat_3 from "./avatar/normal/hat/hat3.PNG";
+
+import n_left from "./avatar/normal/left-hand/left-hand.PNG";
+import n_right from "./avatar/normal/right-hand/right-hand.PNG";
+
+import n_tops_1 from "./avatar/normal/tops/tops1.PNG";
+import n_tops_2 from "./avatar/normal/tops/tops2.PNG";
+import n_tops_3 from "./avatar/normal/tops/tops3.PNG";
+
+import f_fishing_rod_1 from "./avatar/fished/fishing-rod/blue-fishing-rod.PNG";
+import f_fishing_rod_2 from "./avatar/fished/fishing-rod/green-fishing-rod.PNG";
+import f_fishing_rod_3 from "./avatar/fished/fishing-rod/red-fishing-rod.PNG";
+
+import f_left from "./avatar/fished/left-hand/left-hand.PNG";
+import f_right from "./avatar/fished/right-hand/right-hand.PNG";
+
+import f_tops_1 from "./avatar/fished/tops/tops1.PNG";
+import f_tops_2 from "./avatar/fished/tops/tops2.PNG";
+import f_tops_3 from "./avatar/fished/tops/tops3.PNG";
+
+import f_tops_parts_1 from "./avatar/fished/tops-parts/tops1-parts.PNG";
+import f_tops_parts_2 from "./avatar/fished/tops-parts/tops2-parts.PNG";
+import f_tops_parts_3 from "./avatar/fished/tops-parts/tops3-parts.PNG";
+
+export const normal_body = [n_body];
+export const normal_bottoms = [n_bottoms_1, n_bottoms_2, n_bottoms_3];
+export const normal_face = [n_face_amazing, n_face_normal, n_face_sad, n_face_smile];
+export const normal_fishing_rod = [n_fishing_rod_1, n_fishing_rod_2, n_fishing_rod_3];
+export const normal_hair = [n_hair_1, n_hair_2, n_hair_3];
+export const normal_hat = [n_hat_1, n_hat_2, n_hat_3];
+export const normal_hand = [n_left, n_right];
+export const normal_tops = [n_tops_1, n_tops_2, n_tops_3];
+export const fished_fishing_rod = [f_fishing_rod_1, f_fishing_rod_2, f_fishing_rod_3];
+export const fished_hand = [f_left, f_right];
+export const fished_tops = [f_tops_1, f_tops_2, f_tops_3];
+export const fished_tops_parts = [f_tops_parts_1, f_tops_parts_2, f_tops_parts_3];

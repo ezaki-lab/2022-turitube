@@ -1,33 +1,36 @@
 /* アバター描画コンポーネント*/
 import React, { useState, useEffect } from 'react';
 import { Stage, Layer, Group, Rect, Circle, Image } from 'react-konva';
-import { hats, hairs, faces, bodies, pantses, foots } from './avatarLoad';
+import * as img from "./avatarLoad"
 import useImage from 'use-image';
 
-interface AvatarData {
-  hat: number,
-  hair: number,
-  face: number,
-  body: number,
-  pants: number,
-  foot: number
-}
-
-const Avatar = ({ avatarData, size=100 }) => {
-
-  return (
-    <>
-    <Group width={size} height={size*1.5} >
-      <AvatarGroup avatarImgs={foots} size={size} avatarIndex={avatarData.foot}  />
-      <AvatarGroup avatarImgs={pantses} size={size} avatarIndex={avatarData.pants} />
-      <AvatarGroup avatarImgs={bodies} size={size} avatarIndex={avatarData.body} />
-      <AvatarGroup avatarImgs={faces} size={size} avatarIndex={avatarData.face} />
-      <AvatarGroup avatarImgs={hairs} size={size} avatarIndex={avatarData.hair} />
-      <AvatarGroup avatarImgs={hats} size={size} avatarIndex={avatarData.hat} />
-    </Group>
-      
-    </>
-  );
+const Avatar = ({ avatarData, size=100, type = "normal", face=1 }) => {
+  if (type == "normal") {
+    return (
+      <Group width={size} height={size * 1.5} >
+        <AvatarGroup avatarImgs={img.normal_body} size={size} avatarIndex={0} />
+        <AvatarGroup avatarImgs={img.normal_bottoms} size={size} avatarIndex={avatarData.bottoms} />
+        <AvatarGroup avatarImgs={img.normal_tops} size={size} avatarIndex={avatarData.tops} />
+        <AvatarGroup avatarImgs={img.normal_hand} size={size} avatarIndex={1} /> 
+        <AvatarGroup avatarImgs={img.normal_fishing_rod} size={size} avatarIndex={avatarData.fishing_rod} />
+        <AvatarGroup avatarImgs={img.normal_hand} size={size} avatarIndex={0} />
+        <AvatarGroup avatarImgs={img.normal_hair} size={size} avatarIndex={avatarData.hair} />
+        <AvatarGroup avatarImgs={img.normal_hat} size={size} avatarIndex={avatarData.hat} />
+        <AvatarGroup avatarImgs={img.normal_face} size={size} avatarIndex={face} />
+      </Group>
+    )
+  }
+  else if (type == "fished") {
+    return (
+      <Group width={size} height={size * 1.5} >
+        <AvatarGroup avatarImgs={img.fished_hand} size={size} avatarIndex={0} />
+        <AvatarGroup avatarImgs={img.fished_tops} size={size} avatarIndex={avatarData.tops} />
+        <AvatarGroup avatarImgs={img.fished_fishing_rod} size={size} avatarIndex={avatarData.fishing_rod} />
+        <AvatarGroup avatarImgs={img.fished_hand} size={size} avatarIndex={1} />
+        <AvatarGroup avatarImgs={img.fished_tops_parts} size={size} avatarIndex={avatarData.tops} />
+      </Group>
+    )
+  }
 };
 
 const AvatarGroup = ({ avatarImgs, size, avatarIndex }) => {
@@ -35,7 +38,7 @@ const AvatarGroup = ({ avatarImgs, size, avatarIndex }) => {
     <Group>
       {avatarImgs.map((avatarImg, index) => {
         const [img] = useImage(avatarImg);
-        if (avatarIndex == index) return <Image image={img} x={0} y={0} key={index} width={size} height={size*1.5} />
+        if (avatarIndex == index) return <Image image={img} x={0} y={0} key={index} width={size} height={size * 1.5} />
       })}
     </Group>
   )
