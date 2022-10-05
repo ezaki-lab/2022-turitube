@@ -8,17 +8,45 @@ import Streamer from './streamer';
 import Listener from './listener';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../components/Icon/modal';
+import { useParams } from 'react-router-dom';
+import useSocketIo from '../../hooks/useSocketIo';
 
 // Room 配信部屋
 const Room = () => {
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const [me, setMe] = useRecoilState(atom.me);
+  const [ready, setReady] = useState(false);
   const [isHost, setIsHost] = useState<boolean>(false);
+  const { room_id } = useParams();
+  const socket = useSocketIo("stream");
   const navigate = useNavigate();
+
+  const navigateEndStream = () => {
+    navigate(`/end_stream/${room_id}`);
+  };
 
   useEffect(() => {
     ;
   }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('connect', () => {
+        socket.emit("join", {
+          room_id: room_id,
+          user_name: me.user_name,
+          user_type: "streamer"
+        })
+        socket.on('host', () => {
+          setIsHost(true);
+        });
+        socket.on('delete_room', () => {
+          navigateEndStream()
+        })
+      });
+      setReady(true);
+    }
+  }, [socket]);
 
   if (!userType) {
     navigate("/");
@@ -29,6 +57,7 @@ const Room = () => {
     return (<></>)
   }
 
+  if (!ready) return (<></>);
   return (
     <>
       <Modal />
@@ -40,12 +69,12 @@ const Room = () => {
           {isHost ? <p className="py-2 text-red-500 font-bold">あなたは配信のホストです！退出すると全員終了します！</p> : <></>}
 
           <div className="flex justify-end mt-4">
-            <button className="btn btn-active border-basic text-white bg-basic tracking-wide" onClick={() => {setUserType(null); navigate("/");}}>配信から退出</button>
+            <button className="btn btn-active border-basic text-white bg-basic tracking-wide" onClick={() => { navigateEndStream() }}>配信から退出</button>
           </div>
         </label>
       </label>
-      {userType == "streamer" ? <Streamer /> : <></>}
-      {userType == "listener" ? <Listener /> : <></>}
+      {userType == "streamer" ? <Streamer socket={socket} /> : <></>}
+      {userType == "listener" ? <Listener socket={socket} /> : <></>}
     </>
 
   )

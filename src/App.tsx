@@ -17,12 +17,14 @@ import PictureBookContent from "./pages/PictureBook/Content";
 import DiaryContent from './pages/Diary/Content';
 import Debug from "./pages/Debug";
 import Room from './pages/Room';
+import EndStream from './pages/EndStream';
 
 import Hamburger from './components/Layout/hamburger';
 import HeaderShadow from './components/Layout/headerShadow';
 import TopLayout from './components/Layout/top';
 import BottomLayout from './components/Layout/bottom';
 import ExplainModal from './components/ExplainModal';
+
 
 export const App = () => {
   const basename = process.env.BASENAME;
@@ -87,13 +89,14 @@ export const App = () => {
                 <Route path="/diary" element={<Diary />} />
                 <Route path="/quest" element={<Quest />} />
                 <Route path="/achive" element={<Achive />} />
-                <Route path="/debug" element={<Debug />} />
               </Route>
-              <Route path="picture_book/:fishId" element={<PictureBookContent />} />
-              <Route path="diary/:diaryId" element={<DiaryContent />} />
+              <Route path="/picture_book/:fishId" element={<PictureBookContent />} />
+              <Route path="/diary/:diaryId" element={<DiaryContent />} />
             </Route>
           </Route>
-          <Route path="room/:room_id" element={<Room />} />
+          <Route path="/room/:room_id" element={<Room />} />
+          <Route path="/debug" element={<Debug />} />
+          <Route path="/end_stream/:room_id" element={<EndStream />} />
 
         </Routes>
       </BrowserRouter>

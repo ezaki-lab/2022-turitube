@@ -114,7 +114,7 @@ const User = () => {
             <div className="w-full flex flex-wrap justify-center items-center">
               {titles.map((value, index) => {
                 return (
-                  <button className="mx-1 my-1" onClick={() => { setMe((rev) => ({ ...rev, title: value.item_id })) }}>
+                  <button className="mx-1 my-1" onClick={() => { setMe((rev) => ({ ...rev, title: value.item_id })) }} key={index}>
                     <Title title_id={value.item_id} scale="mini" explain={false} />
                   </button>
                 )

@@ -139,7 +139,7 @@ const TitleList = () => {
         <div className="flex flex-wrap items-start justify-center w-full">
           {titles.map((v, i) => {
             return (
-              <div className="w-28 sm:w-48 h-12 px-1 py-2 flex flex-col justify-center items-center">
+              <div className="w-28 sm:w-48 h-12 px-1 py-2 flex flex-col justify-center items-center" key={i}>
                 <Title title_id={v.item_id} scale={width<640 ? "mini" : "normal"} />
               </div>
             )

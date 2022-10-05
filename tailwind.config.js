@@ -49,6 +49,7 @@ module.exports = {
         'tcolor': '#333333',
         'gray-dark': '#333333',
         'gray': '#999999',
+        'gray-light': '#dddddd',
         'lv1': '#2ADADE',
         'lv2': '#14F414',
         'lv3': '#E0D728',

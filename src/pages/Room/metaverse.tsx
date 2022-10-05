@@ -1,30 +1,41 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Stage, Layer, Group, Rect, Circle, Image, Text } from 'react-konva';
 import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
+import useImage from 'use-image';
 import useWindowSize from '../../hooks/useWindowSize';
-import ScrollToBottom from 'react-scroll-to-bottom';
-import Chat from './chat';
+import useResizeObserver from '../../hooks/useResizeObserver';
 
-// Room 視聴者視点の画面
-const Listener = () => {
+import BackGround from '../../img/metaverse_background.png';
+
+// メタバース画面
+const Metaverse = () => {
   const [userId, setUserId] = useRecoilState(atom.user_id);
-  const [width, height] = useWindowSize();
-  const [isStreamer, setIsStreamer] = useState<boolean>(true);
+  const [backgroundImage] = useImage(BackGround);
+  const canvasSizeRef = useRef<HTMLDivElement>(null);
+  const [range, setRange] = useState(0);
 
-  useEffect(() => {
-    ;
-  }, []);
+  const handleResize = (entries) => {
+    const width = entries[0].contentRect.width;
+    setRange(Math.floor(width))
+  }
 
-  // メタバース画面
+  useResizeObserver([canvasSizeRef], handleResize);
+
   return (
     <>
-      {/*メタバース画面 */}
-      <div className={`aspect-square ${width > height ? "w-full" : "h-full"} bg-blue-200`}>
-
+      <div ref={canvasSizeRef} className={`h-full w-full`}>
+        {canvasSizeRef.current
+          ? <Stage width={range} height={range}>
+            {/*背景を表示するレイヤー */}
+            <Layer>
+              <Image image={backgroundImage} x={0} y={0} width={range} height={range} />
+            </Layer>
+          </Stage>
+          : <></>}
       </div>
     </>
-  );
+  )
 };
 
-export default Listener;
+export default Metaverse;

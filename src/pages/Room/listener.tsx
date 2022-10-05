@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import ListenerVideo from './listenerVideo';
 
 // Room 視聴者視点の画面
-const Listener = () => {
+const Listener = ({socket}) => {
   const [width, height] = useWindowSize();
   const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
@@ -25,7 +25,6 @@ const Listener = () => {
   const [touch, setTouch] = useState(false);
   const [isInput, setIsInput] = useState(false);
   const textRef = useRef(null);
-  const socket = useSocketIo("stream");
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
   const multiStream = multiStreamManager(socket);
   const [me, setMe] = useRecoilState(atom.me);
@@ -38,18 +37,6 @@ const Listener = () => {
   useEffect(() => {
 
   }, []);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('connect', () => {
-        socket.emit("join", {
-          room_id: room_id,
-          user_name: me.user_name,
-          user_type: "listener"
-        })
-      })
-    }
-  }, [socket]);
 
   const send = () => {
     if (textRef.current.value.match(/\S/g)) {
@@ -78,7 +65,6 @@ const Listener = () => {
     else { setDelay(1000); setHiddenLayerCount(3); }
   }, [touch]);
 
-  // メタバースレイアウト
   return (
     <>
       <div className={`${HiddenLayerCount ? "" : "hidden"}`} onClick={() => setDelay(null)}>
@@ -90,11 +76,11 @@ const Listener = () => {
         <img src={Exit} className="w-full h-full" />
       </label>
 
-      <div className={`flex flex-${width > height ? "row" : "col"} h-full w-full items-center`} onTouchStart={() => { setTouch(true); }} onTouchEnd={() => { setTouch(false); }} onMouseMove={() => { setHiddenLayerCount(5); setDelay(1000) }}>
+      <div className="w-full h-full flex sm-max:flex-col bg-black" onTouchStart={() => { setTouch(true); }} onTouchEnd={() => { setTouch(false); }} onMouseMove={() => { setHiddenLayerCount(5); setDelay(1000) }}>
 
         {/*メタバース画面 */}
-        <div className={`aspect-square bg-black flex justify-center items-center ${width > height ? "h-full max-w-3/5" : "w-full max-h-[calc(100%-320px)]"} ${isMetaverse ? "" : "hidden"}`}>
-          <Metaverse />
+        <div className="bg-yellow-200 sm-max:w-[400px] sm-max:mx-auto sm-max:max-w-full sm:h-[400px] sm:max-h-[100%] sm:my-auto md:h-[500px] lg:h-[650px] xl:h-[800px] aspect-square">
+          {isMetaverse ? <Metaverse /> : <></>}
         </div>
 
         {/*映像 */}
@@ -102,15 +88,12 @@ const Listener = () => {
           <ListenerVideo multiStream={multiStream} setIsMetaverse={setIsMetaverse} />
         </div>
 
-        <div className={`aspect-square ${width > height ? "h-full w-20 flex-auto" : "w-full max-h-[50%]"} bg-white flex justify-center items-center ${isMetaverse ? "hidden" : ""}`} />
-
-        {/*チャット欄と入力 */}
-        <div className={`flex-auto flex flex-col-reverse items-center z-10 px-2 pb-1 pointer-events-none ${HiddenLayerCount ? "" : "hidden"} ${width > height ? "w-2 h-full pt-12" : "h-2 w-full"}`}>
-          <div className="h-12 w-full flex items-center p-1 pointer-events-auto" onMouseDown={() => { setHiddenLayerCount(5); setDelay(null) }}>
+        <div className={`${isMetaverse ? "bg-white" : ""} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16 ${HiddenLayerCount ? "" : "hidden"}`}>
+          <div className="h-10 w-full flex items-center pointer-events-auto bg-white" onMouseDown={() => { setHiddenLayerCount(5); setDelay(null) }}>
             <input ref={textRef}
               type="text"
               placeholder="コメントを入力"
-              className="w-10 h-full rounded-full text-white bg-basic bg-opacity-50 border-2 border-basic-dark placeholder-white px-2 flex-auto"
+              className="w-10 h-full text-tcolor bg-white placeholder-gray px-2 flex-auto"
               onClick={() => setIsInput(true)}
               onBlur={() => setIsInput(false)}
               onKeyPress={e => {
@@ -118,19 +101,18 @@ const Listener = () => {
                   send();
                 }
               }} />
-            <button className="h-full active:animate-button-push w-12" onClick={() => { send() }}>
-              <img src={Send} className="h-full w-12 px-1" />
+            <button className="h-full active:animate-button-push px-1 w-12" onClick={() => { send() }}>
+              <img src={Send} className="h-full w-10 px-1" />
             </button>
 
           </div>
-          <div className={`w-full h-2 flex-auto flex flex-col ${width > height ? "max-h-[300px]" : isMetaverse ? "max-h-[300px]" : "max-h-[200px]"} pointer-events-auto`}>
+          <div className={`w-full h-2 flex-auto flex flex-col pointer-events-auto ${isMetaverse ? "bg-white border-y border-gray-light" : ""}`}>
             <Chat socket={socket} />
           </div>
-
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default Listener;

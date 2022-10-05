@@ -22,7 +22,20 @@ const Debug = () => {
     if (isFront) setConstraints((rev) => ({ ...rev, video: { facingMode: "user" } }));
     else setConstraints((rev) => ({ ...rev, video: { facingMode: { exact: "environment" } } }));
   }
-
+/*
+  return (
+    <>
+      <div className="bg-red-200 w-full h-full flex sm-max:flex-col">
+          <div className="bg-yellow-200 sm-max:w-[400px] sm-max:mx-auto sm-max:max-w-full sm:h-[400px] sm:max-h-[100%] sm:my-auto md:h-[500px] lg:w-[650px] xl:w-[800px] aspect-square">
+            
+          </div>
+          <div className="bg-green-200 flex-auto">
+            
+          </div>
+      </div>    
+    </>
+  )
+*/
   // 将来的にはスライドショー流します
   return (
     <>

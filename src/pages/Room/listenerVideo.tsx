@@ -12,7 +12,7 @@ const ListenerVideo = ({ multiStream, setIsMetaverse }) => {
   const { room_id } = useParams();
   const { remoteVideo, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
   const [remotePeer, setRemotePeer] = useState("");
-
+  
   useEffect(() => {
     if (multiStream.displayPeer) {
       setIsMetaverse(false);
@@ -27,17 +27,11 @@ const ListenerVideo = ({ multiStream, setIsMetaverse }) => {
   return (
     <>
       {remoteVideo.map((v, i) => {
-        if (remotePeer == v.peerId) {
-          return (
-            <Display video={v.stream} key={v.peerId} />
-          )
-        }
-        else {
-          return (
-            <Audio video={v.stream} key={v.peerId} />
-          )
-        }
-
+        return (
+          <div key={v.peerId}>
+            {remotePeer == v.peerId ? <Display video={v.stream} key={v.peerId} /> : <Audio video={v.stream} key={v.peerId} />}
+          </div>
+        )
       })}
     </>
   )

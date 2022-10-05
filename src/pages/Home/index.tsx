@@ -5,6 +5,7 @@ import axios from 'axios';
 import Url from '../../utils/url';
 import useUserData from '../../hooks/useUserData';
 import { useNavigate } from 'react-router-dom';
+import { useInterval } from '../../hooks/useInterval';
 import Icon from '../../components/Icon';
 import Modal from '../../components/Icon/modal';
 import { Link } from 'react-router-dom';
@@ -37,11 +38,11 @@ const Home = () => {
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useInterval(() => {
     axios.get(Url("/room")).then((res) => {
       setRoomList(res.data);
     })
-  }, []);
+  }, 500)
 
   return (
     <>
@@ -52,7 +53,7 @@ const Home = () => {
           <div className="w-full h-full flex flex-col justify-start items-center px-4 ">
             <div className="w-11/12 sm-max:w-full mx-3 sm-max:pb-56 sm:flex sm:flex-col sm:items-center">
               {roomList.map((v, i) => (
-                <label htmlFor="join" onClick={() => setSelectIndex(i)}>
+                <label htmlFor="join" onClick={() => setSelectIndex(i)} key={i}>
                   <StreamCard data={v} />
                 </label>
               ))}

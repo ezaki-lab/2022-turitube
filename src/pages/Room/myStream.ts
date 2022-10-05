@@ -42,7 +42,7 @@ const myStreamManager = (socket) => {
     if (socket) {
       socket.on("connect", () => {
         setReady(true);
-      })
+      });
       socket.on("camera", (data) => {
         if (me.user_name !== data.user_name) setCamera(false);
         else setCamera(true);

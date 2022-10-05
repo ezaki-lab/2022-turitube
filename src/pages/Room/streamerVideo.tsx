@@ -7,9 +7,8 @@ import { useParams } from 'react-router-dom';
 
 // 動画描画コンポーネントと音声配信
 const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse }) => {
-  const [userType] = useRecoilState(atom.user_type);
   const [me] = useRecoilState(atom.me);
-  const { localStream, setConstraints, readyCam, change } = useCamera({ video: userType == "streamer" ? { facingMode: "user" } : false, audio: false });
+  const { localStream, setConstraints, readyCam, change } = useCamera({ video: { facingMode: "user" }, audio: false });
   const { room_id } = useParams();
   const { remoteVideo, myPeer, room, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
   const [remotePeer, setRemotePeer] = useState("");
@@ -64,11 +63,11 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse }) => {
     <>
       {remoteVideo.map((v, i) => {
 
-        return (<>
+        return (<div key={v.peerId}>
           {remotePeer == v.peerId
-            ? <Display video={v} key={v.peerId} />
-            : <Audio video={v} key={v.peerId} />}
-        </>)
+            ? <Display video={v}/>
+            : <Audio video={v} />}
+        </div>)
       })}
       {remotePeer == myPeer ? <MyVideo video={localStream.current} /> : <></>}
     </>
@@ -81,6 +80,7 @@ const Display = ({ video }) => {
 
   useEffect(() => {
     if (video) {
+      console.log(video);
       viewRef.current!.srcObject = video.stream;
       viewRef.current.play().catch((e) => console.log(e));
     }

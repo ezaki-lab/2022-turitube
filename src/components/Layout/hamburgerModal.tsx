@@ -20,17 +20,6 @@ const HamburgerModal = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = useRecoilState(atom.user_id);
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
-  const [userType, setUserType] = useRecoilState(atom.user_type);
-
-  const listener = () => {
-    setUserType("listener")
-    navigate("/room/dev_room")
-  }
-
-  const streamer = () => {
-    setUserType("streamer")
-    navigate("/room/dev_room")
-  }
 
   const Logout = () => {
     setUserId("");
@@ -71,10 +60,10 @@ const HamburgerModal = () => {
               <div className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={QuestModalButton} className="h-full" onClick={() => setModalId(1)} />
               </div>
-              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => listener()}>
+              <button className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
               </button>
-              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => streamer()}>
+              <button className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={OptionModalButton} className="h-full" />
               </button>
             </div>

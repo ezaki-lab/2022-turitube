@@ -48,7 +48,7 @@ const QuestComponent = ({ enable = true, setModalId = null }) => {
     <>
       <div className={`mx-4 mt-4 h-full w-full bg-white drop-shadow-2xl rounded-2xl flex flex-col  ${!enable ? "animate-fadein" : ""}`}>
         <div className="w-full h-20 flex-auto flex flex-col sm:flex-row">
-          <div className="sm-max:h-80 sm-max:w-full sm:w-80 sm:flex-auto p-3 relative">
+          <div className="sm-max:h-80 sm-max:w-full sm:w-80 sm:flex-auto sm:h-full p-3 relative">
             <div className="rounded-xl w-full h-full p-2 overflow-y-auto shadow-lg">
               <h2 className="text-center text-tcolor font-bold text-2xl">{quest[target].title}</h2>
               <StickyNote text="内容" />
@@ -75,8 +75,7 @@ const QuestComponent = ({ enable = true, setModalId = null }) => {
             </div>
             {order == target ? <img src={Ordered} className={`top-0 right-0 absolute w-24 h-24 animate-stamp`} /> : <></>}
           </div>
-
-          <ul className="sm-max:h-20 sm-max:w-full flex-auto h-8 sm:h-full overflow-y-auto sm-max:pb-44 flex flex-col space-y-2 px-3 sm:pt-3">
+          <ul className="sm-max:h-20 sm-max:w-full flex-auto h-8 sm:h-full overflow-y-auto flex flex-col space-y-2 px-3 sm:pt-3">
             {Object.keys(quest).map((key, index) => {
               return (
                 <button key={index} className={`border-${target != key ? "gray border border-b-[3px]" : "basic border-2 animate-selected"} py-3 rounded-xl w-full flex items-center pl-2 relative`} onClick={() => { setTarget(key) }}>
