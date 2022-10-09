@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import useCamera from '../../hooks/useCamera';
 import User from '../../components/User';
 import useUserData from '../../hooks/useUserData';
+import axios from 'axios';
+import Url from '../../utils/url';
 
 // Home - index.tsx
 const Debug = () => {

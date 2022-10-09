@@ -53,6 +53,7 @@ const EndStream = () => {
       }
     }).then((res) => {
       setImgDataList(res.data.img_data);
+      console.log(res.data);
     })
   }, []);
 
@@ -61,7 +62,7 @@ const EndStream = () => {
     <>
       {next == 0 ? <First setNext={setNext} stream={stream} /> : <></>}
       {next == 1 ? <SaveDiary setNext={setNext} stream={stream} imgDataList={imgDataList} /> : <></>}
-      {next == 2 ? <SavePictureBook /> : <></>}
+      {next == 2 ? <SavePictureBook imgDataList={imgDataList}/> : <></>}
     </>
   );
 }

@@ -45,6 +45,8 @@ import f_tops_parts_1 from "./avatar/fished/tops-parts/tops1-parts.PNG";
 import f_tops_parts_2 from "./avatar/fished/tops-parts/tops2-parts.PNG";
 import f_tops_parts_3 from "./avatar/fished/tops-parts/tops3-parts.PNG";
 
+import Prepare1 from "./avatar/prepare/prepare1.png";
+
 export const normal_body = [n_body];
 export const normal_bottoms = [n_bottoms_1, n_bottoms_2, n_bottoms_3];
 export const normal_face = [n_face_amazing, n_face_normal, n_face_sad, n_face_smile];
@@ -57,3 +59,4 @@ export const fished_fishing_rod = [f_fishing_rod_1, f_fishing_rod_2, f_fishing_r
 export const fished_hand = [f_left, f_right];
 export const fished_tops = [f_tops_1, f_tops_2, f_tops_3];
 export const fished_tops_parts = [f_tops_parts_1, f_tops_parts_2, f_tops_parts_3];
+export const prepare = [Prepare1]

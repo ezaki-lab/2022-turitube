@@ -22,6 +22,7 @@ import StreamerVideo from './streamerVideo';
 import isSmartPhone from '../../utils/isSmartPhone';
 import VideoChat from './videoChat';
 import Notification from '../../components/Notification';
+import ExpressionDiscrimination from './expressionDiscrimination';
 
 // Room 視聴者視点の画面
 const Streamer = ({ socket, multiStream }) => {
@@ -88,7 +89,7 @@ const Streamer = ({ socket, multiStream }) => {
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse} setNotification={setNotification} />
+          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse} setNotification={setNotification} setCamera={setCamera} setFace={setFace} />
         </div>
 
         <div className={`${isMetaverse ? "bg-white" : "hidden"} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16`}>

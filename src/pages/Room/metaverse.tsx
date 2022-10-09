@@ -66,7 +66,7 @@ const Metaverse = ({ multiStream }) => {
             <Layer>
               {Object.keys(multiStream.streamer).map((key, index) => {
                 return (
-                  <AvatarView user_name={key} range={range} index={index} key={key} />
+                  <AvatarView user_name={key} face={multiStream.streamer[key].face} range={range} index={index} key={key} />
                 )
               })}
             </Layer>
@@ -77,7 +77,7 @@ const Metaverse = ({ multiStream }) => {
   )
 };
 
-const AvatarView = ({ user_name, range, index }) => {
+const AvatarView = ({ user_name, face, range, index }) => {
 
   useEffect(() => {
     console.log(range);
@@ -88,7 +88,7 @@ const AvatarView = ({ user_name, range, index }) => {
   return (
     <>
       <Group x={POSITION_LIST[index].x * range} y={POSITION_LIST[index].y * range} height={(range / 10) * 3} width={(range / 10 * 2)}>
-        <Avatar avatarData={userData.avatar} size={(range / 10 * 2)}/>
+        <Avatar avatarData={userData.avatar} size={(range / 10 * 2)} face={face}/>
       </Group>
     </>
   )

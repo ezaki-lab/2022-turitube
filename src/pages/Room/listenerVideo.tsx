@@ -13,7 +13,7 @@ const ListenerVideo = ({ multiStream, setIsMetaverse }) => {
   const { room_id } = useParams();
   const { remoteVideo, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
   const [remotePeer, setRemotePeer] = useState("");
-  
+
   useEffect(() => {
     if (multiStream.displayPeer) {
       setIsMetaverse(false);
@@ -51,8 +51,7 @@ const Display = ({ video }) => {
 
   return (
     <>
-    <img src={Kari100} className={`object-contain w-full h-full`} />
-    <video ref={viewRef} playsInline className={`object-contain w-full h-full hidden`} />
+      <video ref={viewRef} playsInline className={`object-contain w-full h-full`} />
     </>
   )
 }

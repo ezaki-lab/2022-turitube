@@ -4,20 +4,22 @@ import { Stage, Layer, Group, Rect, Circle, Image } from 'react-konva';
 import * as img from "./avatarLoad"
 import useImage from 'use-image';
 
-const Avatar = ({ avatarData, size=100, type = "normal", face=1 }) => {
+const Avatar = ({ avatarData, size = 100, type = "normal", face = 1 }) => {
+  
   if (type == "normal") {
-    return (
+    return (<>
       <Group width={size} height={size * 1.5} >
         <AvatarGroup avatarImgs={img.normal_body} size={size} avatarIndex={0} />
         <AvatarGroup avatarImgs={img.normal_bottoms} size={size} avatarIndex={avatarData.bottoms} />
         <AvatarGroup avatarImgs={img.normal_tops} size={size} avatarIndex={avatarData.tops} />
-        <AvatarGroup avatarImgs={img.normal_hand} size={size} avatarIndex={1} /> 
+        <AvatarGroup avatarImgs={img.normal_hand} size={size} avatarIndex={1} />
         <AvatarGroup avatarImgs={img.normal_fishing_rod} size={size} avatarIndex={avatarData.fishing_rod} />
         <AvatarGroup avatarImgs={img.normal_hand} size={size} avatarIndex={0} />
         <AvatarGroup avatarImgs={img.normal_hair} size={size} avatarIndex={avatarData.hair} />
         <AvatarGroup avatarImgs={img.normal_hat} size={size} avatarIndex={avatarData.hat} />
         <AvatarGroup avatarImgs={img.normal_face} size={size} avatarIndex={face} />
       </Group>
+    </>
     )
   }
   else if (type == "fished") {

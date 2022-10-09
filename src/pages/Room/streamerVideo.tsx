@@ -8,27 +8,54 @@ import { useGetPosition } from '../../hooks/useGetPosition';
 import axios from 'axios';
 import Url from '../../utils/url';
 import { useInterval } from '../../hooks/useInterval';
-import Kari100 from "../../img/kari100.png";
+import ProgressBar from '../../components/ProgressBar';
+import ExpressionDiscrimination from './expressionDiscrimination';
 
 // 動画描画コンポーネントと音声配信
-const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotification }) => {
+const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotification, setCamera, setFace }) => {
   const [me] = useRecoilState(atom.me);
   const { localStream, setConstraints, readyCam, change } = useCamera({ video: { facingMode: "user" }, audio: false });
   const { room_id } = useParams();
   const { remoteVideo, myPeer, room, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
   const [remotePeer, setRemotePeer] = useState("");
-  const {lat, lng} = useGetPosition();
+  const { lat, lng } = useGetPosition();
+  const [closeCount, setCloseCount] = useState(60);
+  const [delay, setDelay] = useState(null);
+  const viewRef = useRef<HTMLVideoElement>(null);
+
+  // 動画を描画 こっちのほうが安全...なはず
+  useEffect(() => {
+    if (localStream&&viewRef.current) {
+      viewRef.current!.srcObject = localStream.current;
+      viewRef.current.play();
+    }
+  }, [localStream.current, viewRef.current]);
 
   // カメラ変更(readyCamも変わるよ)
   useEffect(() => {
     if (localStream.current) {
       setConstraints({
         audio: myStream.audio,
-        // video: myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //本番用
-        video: !myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //デバッグ用
+        video: myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //本番用
+        //video: !myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //デバッグ用
       });
+      if (myStream.camera) {
+        setCloseCount(60);
+        setDelay(1000);
+        setNotification("60秒後に自動的にオフになります...")
+      }
+      else {
+        setDelay(null);
+      }
     }
   }, [myStream.camera]);
+
+  useInterval(() => {
+    if (closeCount == 0) {
+      setCamera(false);
+    }
+    else setCloseCount((rev) => (rev - 1));
+  }, delay);
 
   // replace room setting
   useEffect(() => {
@@ -76,7 +103,7 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
             : <Audio video={v} />}
         </div>)
       })}
-      {remotePeer == myPeer ? <MyVideo video={localStream.current} setNotification={setNotification} lat={lat} lng={lng}/> : <></>}
+      {remotePeer == myPeer ? <MyVideo viewRef={viewRef} setNotification={setNotification} lat={lat} lng={lng} /> : <ExpressionDiscrimination setCamera={setCamera} viewRef={viewRef} setFace={setFace} />}
     </>
   )
 }
@@ -113,70 +140,108 @@ const Audio = ({ video }) => {
   )
 }
 
-
 // 自分の映像(撮影、保存もここで行う)
-const MyVideo = ({ video, setNotification, lat, lng }) => {
-  const viewRef = useRef<HTMLVideoElement>(null);
-  const [img, setImg] = useState<string>("");
+const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
+  const [picture, setPicture] = useState<string>("");
+  const [fishImg, setFishImg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [detectionCooltime, setDetectionCooltime] = useState<number>(60);
+  const [detectionDelay, setDetectionDelay] = useState<boolean | number>(null);
   const { room_id } = useParams();
   const [me] = useRecoilState(atom.me);
-  const [coolTime, setCoolTime] = useState(0);
+  const [detectingCount, setDetectingCount] = useState<number>(0);
 
   useInterval(() => {
-    setCoolTime((rev) => (rev - 1));
-  }, 1000)
-
-  // 動画を描画
-  useEffect(() => {
-    viewRef.current.srcObject = video;
-    viewRef.current.play();
-  }, [viewRef.current]);
+    if (detectionCooltime == 0) { setDetectionDelay(null); setLoading(false); }
+    else setDetectionCooltime((rev) => (rev - 1));
+  }, detectionDelay);
 
   // 画像送信
   useEffect(() => {
-    if (img) {
+    if (picture) {
+      setNotification("写真を保存中です...")
       axios.post(Url("/stream_photo"), {
         room_id: room_id,
         user_id: me.user_id,
         user_name: me.user_name,
         lat: lat,
         lng: lng,
-        base64img: img
+        base64img: picture
       }).then((res) => {
         setNotification("写真を保存しました！")
       }).catch((e) => {
         setNotification("なんらかの問題が発生しました")
+      });
+    }
+  }, [picture]);
+
+  // 推論
+  useEffect(() => {
+    if (fishImg) {
+      axios.post(Url("/fish_detection"), {
+        room_id: room_id,
+        base64img: fishImg,
+        lat: lat,
+        lng: lng,
+        user_id: me.user_id
+      }).then((res) => {
+        // 識別中ならカウントアップする
+        if (res.data.detecting) setDetectingCount((res.data.count));
+        // 無識別ならカウントを消す
+        else setDetectingCount(0);
+        // 検出完了したらクールタイム+検出カウントを0にする。そして通知
+        if (res.data.detected) {
+          setDetectionDelay(1000);
+          setDetectingCount(0);
+          setNotification(`判別結果: ${res.data.name} 写真を保存しました！`)
+        }
+        // 検出中ならこっち
+        else {
+          setLoading(false);
+        }
       })
     }
-  }, [img]);
+  }, [fishImg])
 
-  useEffect(() => {
-    console.log(coolTime);
-  }, [coolTime])
+  // 画像をb64にする
+  const acquisitionImg = () => {
+    let canvas = document.createElement("canvas");
+    const { videoWidth, videoHeight } = viewRef.current;
+    canvas.width = videoWidth;
+    canvas.height = videoHeight;
+    const context = canvas.getContext("2d");
+    context.drawImage(viewRef.current, 0, 0, videoWidth, videoHeight)
+    let base64img = canvas.toDataURL("image/jpeg")
+    return base64img;
+  }
 
-  // 撮影ボタンまたは撮影フラグ検出時
-  const writeNewImg = () => {
-    if (coolTime < 1) {
-      let canvas = document.createElement("canvas");
-      const { videoWidth, videoHeight } = viewRef.current;
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
-      const context = canvas.getContext("2d");
-      context.drawImage(viewRef.current, 0, 0, videoWidth, videoHeight)
-      setImg(canvas.toDataURL("image/jpeg"));
-      setCoolTime(5);
-      setNotification("写真を保存中です...")
+  // 0.2秒に一回撮影する
+  useInterval(() => {
+    if (!loading) {
+      let base64img = acquisitionImg();
+      setFishImg(base64img);
+      setLoading(true);
     }
+  }, 200);
+
+  // 撮影ボタン押下時
+  const writeNewPicture = () => {
+    let base64img = acquisitionImg();
+    setPicture(base64img);
   }
 
   return (
     <>
-      <video ref={viewRef} playsInline muted className="object-contain w-full h-full hidden" />
-      <img src={Kari100} className={`object-contain w-full h-full`} />
-      <div className="fixed bottom-16 w-full h-12 flex items-center justify-center z-20">
-        <button className="bg-gray bg-opacity-50 w-16 h-16 rounded-full flex items-center justify-center active:animate-button-push" onClick={() => { writeNewImg() }}>
+      <video ref={viewRef} playsInline muted className="object-contain w-full h-full" />
+      <div className="fixed bottom-16 w-full h-24 flex items-center flex-col z-20">
+        <button className="bg-gray bg-opacity-50 w-16 h-16 rounded-full flex items-center justify-center active:animate-button-push" onClick={() => { writeNewPicture() }}>
           <div className="rounded-full w-12 h-12 bg-gray bg-opacity-75" />
         </button>
+        <div className="w-64">
+          {detectingCount
+            ? <ProgressBar value={detectingCount} max={5} /> : <></>}
+        </div>
+
       </div>
     </>
 

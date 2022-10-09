@@ -55,7 +55,7 @@ const SaveDiary = ({ setNext, stream, imgDataList }) => {
       <TitleHeader title="日誌の登録" />
       <div className="h-full w-full flex flex-col items-center pt-14 overflow-y-auto">
         <div className="max-h-[400px] h-1/2 w-full max-w-5xl flex flex-col pb-3 px-2">
-          <DiaryCarousel data={/*imgDataList*/[Kari10, Kari8]} />
+          <DiaryCarousel data={imgDataList} />
         </div>
         <div className="w-full h-20 flex-auto overflow-y-auto max-w-5xl px-8 pt-4">
 
@@ -111,7 +111,7 @@ const DiaryCarousel = ({ data }) => {
         {data.map((v, i) => {
           return (
             <div className="carousel-item h-full aspect-video max-w-[80%] rounded-xl bg-gray mx-auto" key={i}>
-              <img src={/*Url(`/img/stream_photo/${v.img_name}`)*/v} className="h-full w-full object-cover rounded-xl" />
+              <img src={Url(`/img/stream_photo/${v.img_name}`)} className="h-full w-full object-cover rounded-xl" />
             </div>
           )
         })}
