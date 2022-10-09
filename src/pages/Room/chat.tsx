@@ -17,6 +17,11 @@ interface Message {
 // Room チャット管理コンポーネント
 const Chat = ({ socket }) => {
   const [data, setData] = useState<Message[]>([]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   useEffect(() => {
     if (socket) {
       // チャット送信時
@@ -24,7 +29,7 @@ const Chat = ({ socket }) => {
         setData((rev) => ([...rev, {
           user_name: data.user_name,
           text: data.text,
-          user_type: "streamer",
+          user_type: "listener",
           type: "chat"
         },]))
       })

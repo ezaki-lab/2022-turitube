@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import * as atom from '../../common/atom';
 import { Link } from 'react-router-dom';
 import useCamera from '../../hooks/useCamera';
+import User from '../../components/User';
+import useUserData from '../../hooks/useUserData';
 
 // Home - index.tsx
 const Debug = () => {
@@ -10,6 +12,7 @@ const Debug = () => {
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
   const [isFront, setIsFront] = useState<boolean>(false);
   const { videoRef, localStream, readyCam, setConstraints } = useCamera({ video: { facingMode: "user" }, audio: true });
+  const userData = useUserData("kosakae256");
 
   const Logout = () => {
     setUserId("");
@@ -36,6 +39,13 @@ const Debug = () => {
     </>
   )
 */
+  
+  return (
+    <>
+      <User data={userData} />
+    </>
+  )
+
   // 将来的にはスライドショー流します
   return (
     <>

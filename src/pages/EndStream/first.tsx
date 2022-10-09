@@ -11,6 +11,7 @@ import useUserData from '../../hooks/useUserData';
 import Icon from '../../components/Icon';
 import Modal from '../../components/Icon/modal';
 import TitleHeader from '../../components/TitleHeader';
+import User from '../../components/User';
 
 const First = ({ setNext, stream }) => {
   const [userType, setUserType] = useRecoilState(atom.user_type);
@@ -22,7 +23,7 @@ const First = ({ setNext, stream }) => {
     else {/*navigate("/");*/ setNext(1); }
     setUserType(null);
   }
-
+  const userData = useUserData(stream.host_name)
   return (
     <>
       <TitleHeader title="配信終了" />
@@ -31,7 +32,7 @@ const First = ({ setNext, stream }) => {
         <div className="w-full max-w-4xl flex-auto mx-auto flex flex-col overflow-y-auto px-8 mt-16">
           <h2 className="text-basic text-2xl font-bold mx-auto mb-4">配信が終了しました</h2>
           <img src={Url(`/img/thumbnail/${stream.thumbnail}`)} className="object-cover w-full border-2 border-basic rounded-xl aspect-video mb-1 mx-auto" />
-          <User user_name={stream.host_name} />
+          <User data={userData} />
           <Detail Image={Group} data={stream.title} />
           <Detail Image={Time} data={stream.time} />
           <Detail Image={EnteredSum} data={`${stream.count}人`} />
@@ -51,22 +52,6 @@ const Detail = ({ Image, data }) => {
       <img src={Image} className="h-6 sm:h-8" />
       <p className="text-tcolor text-lg sm:text-xl">{data}</p>
     </div>
-  )
-}
-
-const User = ({ user_name }) => {
-  const userData = useUserData(user_name);
-  if (!userData) return (<></>)
-  return (
-    <>
-      <div className="h-10 w-full flex items-center mb-8">
-        <Icon data={userData} />
-        <div className="flex flex-col justify-center px-2">
-          <p className="text-tcolor text-lg line-clamp-2">{userData.screen_name}</p>
-        </div>
-      </div>
-    </>
-
   )
 }
 

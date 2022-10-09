@@ -37,7 +37,7 @@ const Room = () => {
         socket.emit("join", {
           room_id: room_id,
           user_name: me.user_name,
-          user_type: "streamer"
+          user_type: userType
         })
         socket.on('host', () => {
           setIsHost(true);

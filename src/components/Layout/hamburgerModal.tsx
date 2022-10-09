@@ -47,25 +47,19 @@ const HamburgerModal = () => {
 
       <input type="checkbox" id="hamburger" className="modal-toggle" />
       <div className={`modal ${modalId != null ? "hidden" : ""}`} id="hamburger">
-        <div className="rounded-2xl w-full max-w-sm max-h-96 m-4 h-5/6 bg-white flex flex-col">
+        <div className="rounded-2xl w-full max-w-sm max-h-64 m-4 h-5/6 bg-white flex flex-col">
           <div className="w-full h-12 flex justify-center items-center bg-basic rounded-t-2xl">
             <h3 className="text-white text-xl font-bold">メニュー</h3>
           </div>
 
           <div className="flex-auto h-10 w-full flex flex-row justify-center items-center">
             <div className="h-full w-1/2 flex flex-col justify-around items-end">
-              <div className="mx-2 my-1 h-10 active:animate-button-push">
-                <img src={OptionModalButton} className="h-full" />
-              </div>
+              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => {Logout();}}>
+                <img src={LogoutButton} className="h-full" />
+              </button>
               <div className="mx-2 my-1 h-10 active:animate-button-push">
                 <img src={QuestModalButton} className="h-full" onClick={() => setModalId(1)} />
               </div>
-              <button className="mx-2 my-1 h-10 active:animate-button-push">
-                <img src={OptionModalButton} className="h-full" />
-              </button>
-              <button className="mx-2 my-1 h-10 active:animate-button-push">
-                <img src={OptionModalButton} className="h-full" />
-              </button>
             </div>
             <div className="h-full w-1/2 flex flex-col justify-around items-start">
               <div className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(2)}>
@@ -73,12 +67,6 @@ const HamburgerModal = () => {
               </div>
               <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => setModalId(0)}>
                 <img src={AchiveModalButton} className="h-full" />
-              </button>
-              <Link to="/debug" className="mx-2 my-1 h-10 active:animate-button-push">
-                <img src={OptionModalButton} className="h-full" />
-              </Link>
-              <button className="mx-2 my-1 h-10 active:animate-button-push" onClick={() => {Logout()}}>
-                <img src={LogoutButton} className="h-full" />
               </button>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { useGetPosition } from '../../hooks/useGetPosition';
 import axios from 'axios';
 import Url from '../../utils/url';
 import { useInterval } from '../../hooks/useInterval';
+import Kari100 from "../../img/kari100.png";
 
 // 動画描画コンポーネントと音声配信
 const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotification }) => {
@@ -23,8 +24,8 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
     if (localStream.current) {
       setConstraints({
         audio: myStream.audio,
-        video: myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //本番用
-        // video: !myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //デバッグ用
+        // video: myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //本番用
+        video: !myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //デバッグ用
       });
     }
   }, [myStream.camera]);
@@ -170,7 +171,8 @@ const MyVideo = ({ video, setNotification, lat, lng }) => {
 
   return (
     <>
-      <video ref={viewRef} playsInline muted className="object-contain w-full h-full" />
+      <video ref={viewRef} playsInline muted className="object-contain w-full h-full hidden" />
+      <img src={Kari100} className={`object-contain w-full h-full`} />
       <div className="fixed bottom-16 w-full h-12 flex items-center justify-center z-20">
         <button className="bg-gray bg-opacity-50 w-16 h-16 rounded-full flex items-center justify-center active:animate-button-push" onClick={() => { writeNewImg() }}>
           <div className="rounded-full w-12 h-12 bg-gray bg-opacity-75" />

@@ -17,6 +17,7 @@ import StreamNg from '../../img/icons/stream_ng.png';
 import WatchOk from '../../img/icons/watch_ok.png';
 import WatchNg from '../../img/icons/watch_ng.png';
 import Kari from "../../img/kari4.png";
+import User from '../../components/User';
 
 interface Room {
   host_name: string,
@@ -35,7 +36,6 @@ interface Room {
 const Home = () => {
   const [roomList, setRoomList] = useState<Room[]>([]);
   const [selectIndex, setSelectIndex] = useState<number>(null);
-  const [userType, setUserType] = useRecoilState(atom.user_type);
   const navigate = useNavigate();
 
   useInterval(() => {
@@ -108,17 +108,24 @@ const StreamCard = ({ data }) => {
   return (
     <>
       <div className="card w-full bg-base-100 rounded-xl shadow-xl my-3 sm:hidden">
-        <img src={Kari} className="object-cover h-64 aspect-video rounded-t-xl mt-1.5 mx-1.5" />
+        <img src={Url(`/img/thumbnail/${data.thumbnail}`)} className="object-cover h-64 aspect-video rounded-t-xl mt-1.5 mx-1.5" />
         <div className="m-2 mx-3">
-          <h2 className="text-tcolor font-bold text-xl">初心者歓迎！釣り配信！</h2>
-          <p className="text-basic text-sm">#アジ #初心者</p>
-          <div className="my-4 flex flex-row h-8 items-center">
-            <img src={Kari} className="rounded-full aspect-square mr-2 h-8" />
-            <p className="text-tcolor text-sm">こさか</p>
+          <h2 className="text-tcolor font-bold text-xl">{data.title}</h2>
+          <p className="text-basic text-sm">{data.tag}</p>
+          <User data={userData} height={10} />
+          <div className="flex flex-row items-center h-7 pl-1 my-2">
+            <img src={Eye} className="h-3/4" />
+            <p className="text-tcolor text-md mx-3">{data.listener}/{data.max_listener}</p>
+            <img src={WatchOk} className="h-7 sm:h-8" />
           </div>
-
+          <div className="flex flex-row items-center h-7 pl-1 my-2">
+            <img src={Beacon} className="h-3/4" />
+            <p className="text-tcolor text-md mx-3">{data.streamer}/{data.max_streamer}</p>
+            <img src={StreamOk} className="h-7 sm:h-8" />
+          </div>
         </div>
       </div>
+
       <div className="h-56 w-full max-w-5xl flex flex-row justify-center items-start my-3 mb-6 pr-10 sm-max:hidden">
         <div className="flex flex-col h-full w-1/2">
           <img src={Url(`/img/thumbnail/${data.thumbnail}`)} className="object-cover h-full w-full rounded-xl w-full aspect-video rounded-t-xl" />
@@ -126,22 +133,16 @@ const StreamCard = ({ data }) => {
         <div className="w-1/2 h-full flex flex-col pl-3 py-3">
           <h2 className="text-tcolor text-md font-bold truncate">{data.title}</h2>
           <p className="text-basic text-md">{data.tag}</p>
-          <div className="my-1 flex flex-row h-8 items-center">
-            <Icon data={userData} />
-            <p className="text-tcolor text-md">{data.host_name}</p>
-          </div>
-          <div className="flex flex-row items-center h-7 pl-1">
+          <User data={userData} height={10} />
+          <div className="flex flex-row items-center h-7 pl-1 my-1 mt-2">
             <img src={Eye} className="h-3/4" />
-            <p className="text-tcolor text-md ml-3">{data.listener}/{data.max_listener}</p>
-          </div>
-          <div className="flex flex-row items-center h-7 pl-1">
-            <img src={Beacon} className="h-3/4" />
-            <p className="text-tcolor text-md ml-3">{data.streamer}/{data.max_streamer}</p>
-          </div>
-
-          <div className="w-full flex flex-row justify-start items-center h-16 w-2/3">
+            <p className="text-tcolor text-md mx-3">{data.listener}/{data.max_listener}</p>
             <img src={WatchOk} className="h-7 sm:h-8" />
-            <img src={StreamNg} className="h-7 sm:h-8" />
+          </div>
+          <div className="flex flex-row items-center h-7 pl-1 ">
+            <img src={Beacon} className="h-3/4" />
+            <p className="text-tcolor text-md mx-3">{data.streamer}/{data.max_streamer}</p>
+            <img src={StreamOk} className="h-7 sm:h-8" />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useCamera from '../../hooks/useCamera';
 import { useSkyWay } from '../../hooks/useSkyWay';
 import { useParams } from 'react-router-dom';
+import Kari100 from "../../img/kari100.png";
 
 // 動画描画コンポーネントと音声配信
 const ListenerVideo = ({ multiStream, setIsMetaverse }) => {
@@ -49,7 +50,10 @@ const Display = ({ video }) => {
   }, [viewRef.current]);
 
   return (
-    <video ref={viewRef} playsInline className={`object-contain w-full h-full`} />
+    <>
+    <img src={Kari100} className={`object-contain w-full h-full`} />
+    <video ref={viewRef} playsInline className={`object-contain w-full h-full hidden`} />
+    </>
   )
 }
 

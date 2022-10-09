@@ -115,7 +115,7 @@ const User = () => {
           <div className="flex flex-col bg-white drop-shadow-md pb-2 mb-2 flex-auto">
             <Label text="自己紹介" />
             <div className="w-full flex items-center justify-center">
-              <textarea ref={introductionRef} placeholder="自己紹介を書こう！" className="border-2 border-gray rounded-md w-full h-16 mx-2 px-1 resize-none" onChange={() => { setMe((rev) => ({ ...rev, introduction: introductionRef.current.value })) }} />
+              <textarea ref={introductionRef} placeholder="自己紹介を書こう！" className="border-2 border-gray rounded-md w-full h-12 mx-2 px-1 resize-none" onChange={() => { setMe((rev) => ({ ...rev, introduction: introductionRef.current.value })) }} />
             </div>
           </div>
 
@@ -188,11 +188,11 @@ const AvatarSelect = () => {
           <AvatarSelecter imgs={img.normal_bottoms} setState={setAvatar} selectType={selectType} myType="bottoms" />
           <AvatarSelecter imgs={img.normal_fishing_rod} setState={setAvatar} selectType={selectType} myType="fishing_rod" />
           <div className="h-12 w-full overflow-x-auto flex flex-row items-center border-t border-gray-dark space-x-2">
-            <img src={HatIcon} className="h-full flex-none" onClick={() => {setSelectType("hat")}} />
-            <img src={HairIcon} className="h-full flex-none" onClick={() => {setSelectType("hair")}} />
-            <img src={TopsIcon} className="h-full flex-none" onClick={() => {setSelectType("tops")}} />
-            <img src={BottomsIcon} className="h-full flex-none" onClick={() => {setSelectType("bottoms")}} />
-            <img src={FishingRodIcon} className="h-full flex-none" onClick={() => {setSelectType("fishing_rod")}} />
+            <img src={HatIcon} className="h-full flex-none active:animate-button-push" onClick={() => {setSelectType("hat")}} />
+            <img src={HairIcon} className="h-full flex-none active:animate-button-push" onClick={() => {setSelectType("hair")}} />
+            <img src={TopsIcon} className="h-full flex-none active:animate-button-push" onClick={() => {setSelectType("tops")}} />
+            <img src={BottomsIcon} className="h-full flex-none active:animate-button-push" onClick={() => {setSelectType("bottoms")}} />
+            <img src={FishingRodIcon} className="h-full flex-none active:animate-button-push" onClick={() => {setSelectType("fishing_rod")}} />
           </div>
         </div>
       </div>
@@ -207,8 +207,8 @@ const AvatarSelecter = ({ imgs, setState, selectType, myType }) => {
     <ul className="h-36 w-full overflow-x-auto flex flex-row items-center space-x-2">
       {imgs.map((v, index) => {
         return (
-          <li className="h-full flex-none p-2 bg-basic bg-opacity-25 rounded-2xl" onClick={() => { setState((rev) => ({ ...rev, [selectType]: index })) }}>
-            <img src={v} className="h-full" />
+          <li className="h-full w-24 flex-none p-2 bg-basic bg-opacity-25 rounded-2xl flex items-center justify-center active:animate-button-push" onClick={() => { setState((rev) => ({ ...rev, [selectType]: index })) }}>
+            <img src={v} className="h-full w-full" />
           </li>
         )
       })}

@@ -35,12 +35,11 @@ const StreamStartComponent = () => {
         max_listener: maxListenerRef.current.value
       };
 
-      var base64img = null;
       axios.post(Url("/room"), {
         user_name: me.user_name,
         room_id: room_id,
         setting: setting,
-        base64img: base64img
+        base64img: image
       }).then(() => {
         setUserType("streamer");
         navigate("/room/" + room_id);

@@ -27,10 +27,10 @@ const DiaryContent = () => {
           <DiaryCarousel />
         </div>
         <div className="w-full h-20 flex-auto overflow-y-auto max-w-5xl px-8">
-          <Detail Image={Calendar} data="2022/08/09" />
+          <Detail Image={Calendar} data="2022/02/08" />
           <Detail Image={Pin} data="フェリー乗り場" />
           <Detail Image={SumFish} data="アジ(1) タイ(1) カサゴ(2)" />
-          <Detail Image={Group} data="初心者歓迎！量狙いです" />
+          <Detail Image={Group} data="小坂の釣り配信！" />
           <Detail Image={EnteredSum} data="6人" />
           <Detail Image={Time} data="1時間20分" />
           <div className="flex flex-row items-start pb-2 sm:pb-3 space-x-3">

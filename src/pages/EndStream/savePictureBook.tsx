@@ -8,6 +8,8 @@ import Measure from "../../img/icons/measure.png";
 import Kari5 from "../../img/kari5.png";
 import TitleHeader from '../../components/TitleHeader';
 import { useNavigate } from 'react-router-dom';
+import Kari17 from "../../img/kari17.png";
+import Kari18 from "../../img/kari18.png";
 
 // Example - example.jsx
 const SavePictureBook = () => {
@@ -23,22 +25,29 @@ const SavePictureBook = () => {
       <div className="w-full h-full flex flex-col mt-14 pb-14">
         <h2 className="mx-auto h-8 text-basic font-bold text-xl">本日釣った魚を図鑑に記録しました！</h2>
         <ul className="w-full h-2 flex-auto sm-max:overflow-y-auto sm:overflow-x-auto flex sm-max:flex-col sm:flex-row sm-max:space-y-4 sm:space-x-4 pb-1 px-4">
-          {[1, 1, 1, 1, 1].map((v, i) => {
+          {[Kari17, Kari18, Kari17, Kari17, Kari17].map((v, i) => {
             return (
               <li className="carousel-item sm-max:w-full sm:w-96 h-96 sm:h-full carousel-item" id={`item${i}`} key={i}>
                 <div className="rounded-box w-full h-full bg-white flex flex-col drop-shadow-xl">
-                  <img src={Kari5} className="w-full h-4 flex-auto object-contain bg-black rounded-t-2xl mb-1" />
-                  <Detail Image={Fish} data="タイ" />
+                  <img src={v} className="w-full h-4 flex-auto object-contain bg-black rounded-t-2xl mb-1" />
+                  <Detail Image={Fish} data="カサゴ" />
                   <Detail Image={Calendar} data="2022/09/15 22:23" />
                   <Detail Image={Pin} data="ポンツーン号" />
-                  <Detail Image={Measure} data="12cm" />
+                  <div className="flex flex-row items-center mb-1 space-x-3 ml-2">
+                    <img src={Measure} className="h-6" />
+                    <div className="flex flex-row">
+                      <input type="text" className="w-24 rounded-md pl-2 border-2 border-gray mr-2" placeholder="--"></input>
+                      <p className="text-tcolor text-lg sm:text-lg">cm</p>
+                    </div>
+                    
+                  </div>
                 </div>
               </li>
             )
           })}
         </ul>
         <div className="h-12 w-full flex justify-center space-x-4 items-center px-8 border-t border-gray sticky bottom-0" >
-          <button className="bg-basic text-white font-bold p-2 px-4 text-md rounded-xl w-28 active:animate-button-push" onClick={() => {navigate("/")}}>終わる！</button>
+          <button className="bg-basic text-white font-bold p-2 px-4 text-md rounded-xl w-28 active:animate-button-push" onClick={() => { navigate("/") }}>終わる！</button>
         </div>
       </div>
 
