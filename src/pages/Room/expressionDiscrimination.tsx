@@ -1,8 +1,10 @@
 import { useRecoilState } from 'recoil';
+import * as atom from '../../common/atom';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from '../../utils/url';
+import time from '../../utils/time';
 import { useInterval } from '../../hooks/useInterval';
 
 // Example - example.jsx
@@ -16,6 +18,7 @@ interface emotion {
 const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
   const [expressionImg, setExpressionImg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [locus, setLocus] = useRecoilState(atom.locus);
 
   // 画像をb64にする
   const acquisitionImg = () => {
@@ -34,33 +37,45 @@ const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
     if (!loading && !expressionImg) {
       let base64img = acquisitionImg();
       setExpressionImg(base64img);
+      console.log("a");
     }
   }, 2000);
 
   useEffect(() => {
-    axios.post(Url("/expression"), {
-      base64img: expressionImg
-    }).then((res) => {
-      // 検知できていなかったら
-      if (!res.data.detect) {
-        // 準備中
-        setFace(1);
-      }
-      else {
-        // カメラ切り替え条件
-        if (res.data.face_id == 3 && res.data.score > 0.8) {
-          setCamera(true);
+    if (expressionImg) {
+      axios.post(Url("/expression"), {
+        base64img: expressionImg
+      }).then((res) => {
+        // 検知できていなかったら
+        if (!res.data.detect) {
+          // 準備中
+          setFace(1);
         }
-        // 表情切り替え
-        setFace(res.data.face_id);
-      }
-      setExpressionImg("");
-    })
+        else {
+          // カメラ切り替え条件
+          if (res.data.face_id == 3 && res.data.score > 0.8) {
+            setCamera(true);
+            setLocus((rev) => [
+              ...rev, 
+              {
+                content: "!",
+                time: time(),
+                text: "掛かった！"
+              }
+            ])
+          }
+          // 表情切り替え
+          setFace(res.data.face_id);
+        }
+        setExpressionImg("");
+      })
+    }
+
   }, [expressionImg]);
 
   return (
     <>
-      <video ref={viewRef} muted playsInline className="hidden" />
+      <video ref={viewRef} muted playsInline className="z-100000 fixed top-0" />
     </>
   );
 }

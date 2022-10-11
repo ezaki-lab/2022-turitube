@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import * as atom from '../../common/atom';
+import React, { useEffect, useState, useRef } from 'react';
 import Calendar from "../../img/icons/calendar.png";
 import Pin from "../../img/icons/pin.png";
 import SumFish from "../../img/icons/sum_fish.png";
@@ -14,6 +15,13 @@ import today from '../../utils/today';
 import Kari10 from "../../img/kari10.png";
 import Kari8 from "../../img/kari8.png";
 import TitleIcon from "../../img/icons/title.png";
+import axios from 'axios';
+
+interface Locus {
+  content: string,
+  time: string,
+  text: string
+}
 
 interface Diary {
   date: string,
@@ -22,16 +30,23 @@ interface Diary {
   group_name: string,
   entered: string,
   time: string,
-  imgs: []
+  imgs: [],
+  fishes: string
+  locus: Locus[]
 }
 
 // 日誌 - index
 const SaveDiary = ({ setNext, stream, imgDataList }) => {
-  const [diary, setDiary] = useState<Diary>(null)
+  const [diary, setDiary] = useState<Diary>(null);
+  const [locus, setLocus] = useRecoilState(atom.locus);
+  const [me] = useRecoilState(atom.me);
+  const title = useRef(null);
 
   useEffect(() => {
     var place = "記録なし";
     if (imgDataList.length) place = imgDataList[0].place_name;
+    var book = imgDataList.filter(data => data.type == "book")
+    var fishes = book.map((v, index) => v.fish).join(",")
     setDiary(
       {
         date: today(),
@@ -40,15 +55,23 @@ const SaveDiary = ({ setNext, stream, imgDataList }) => {
         group_name: stream.title,
         entered: stream.count + "人",
         time: stream.time,
-        imgs: imgDataList
+        imgs: imgDataList.map((v, i) => v.img_name),
+        fishes: fishes,
+        locus: locus,
       }
     )
   }, []);
 
   const save = () => {
-    console.log("save");
+    axios.post(Url("/diary"), {
+      title: !title.current.value ? me.screen_name + "の釣り日誌" : title.current.value,
+      user_id: me.user_id,
+      user_name: me.user_name,
+      data: diary,
+    })
     setNext(2);
   }
+
   if (!diary) return (<></>);
   return (
     <>
@@ -61,11 +84,11 @@ const SaveDiary = ({ setNext, stream, imgDataList }) => {
 
           <div className="flex flex-row items-center pb-2 sm:pb-3 space-x-3 h-10">
             <img src={TitleIcon} className="h-6 sm:h-8" />
-            <input type="text" className="text-tcolor text-lg sm:text-xl border-2 border-gray rounded-xl pl-2" placeholder="日誌のタイトルを入力"></input>
+            <input ref={title} type="text" className="text-tcolor text-lg sm:text-xl border-2 border-gray rounded-xl pl-2" placeholder="日誌のタイトルを入力"></input>
           </div>
           <Detail Image={Calendar} data={diary.date} />
           <Detail Image={Pin} data={diary.place} />
-          <Detail Image={SumFish} data="タイ(2)" />
+          <Detail Image={SumFish} data={!diary.fishes ? "釣果無し" : diary.fishes} />
           <Detail Image={Group} data={diary.group_name} />
           <Detail Image={EnteredSum} data={diary.entered} />
           <Detail Image={Time} data={diary.time} />
@@ -73,12 +96,9 @@ const SaveDiary = ({ setNext, stream, imgDataList }) => {
           <div className="flex flex-row items-start pb-2 sm:pb-3 space-x-3">
             <img src={Footprints} className="h-6 sm:h-8 mt-3" />
             <ul className="steps steps-vertical w-full">
-              <li data-content="!" className="step step-neutral text-tcolor font-bold">12:20 かかった！</li>
-              <li data-content="?" className="step step-neutral text-tcolor font-bold">12:21 逃げられた</li>
-              <li data-content="!" className="step step-neutral text-tcolor font-bold">12:40 かかった！</li>
-              <li data-content="★" className="step step-neutral text-tcolor font-bold">12:41 タイを釣り上げた！</li>
-              <li data-content="!" className="step step-neutral text-tcolor font-bold">12:43 かかった！</li>
-              <li data-content="★" className="step step-neutral text-tcolor font-bold">12:44 タイを釣り上げた！</li>
+              {diary.locus.map((v, index) => (
+                <li data-content={v.content} className="step step-neutral text-tcolor font-bold">{v.time} {v.text}</li>
+              ))}
             </ul>
           </div>
         </div>

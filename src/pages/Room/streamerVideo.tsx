@@ -10,10 +10,11 @@ import Url from '../../utils/url';
 import { useInterval } from '../../hooks/useInterval';
 import ProgressBar from '../../components/ProgressBar';
 import ExpressionDiscrimination from './expressionDiscrimination';
+import time from '../../utils/time';
 
 interface Constraints {
   video: {
-    facingMode: string | { exact: string }
+    facingMode: string
   } | false,
   audio: boolean
 }
@@ -164,7 +165,9 @@ const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
   const [detectionDelay, setDetectionDelay] = useState<boolean | number>(null);
   const { room_id } = useParams();
   const [me] = useRecoilState(atom.me);
+  const [locus, setLocus] = useRecoilState(atom.locus);
   const [detectingCount, setDetectingCount] = useState<number>(0);
+
 
   useInterval(() => {
     if (detectionCooltime == 0) { setDetectionDelay(null); setLoading(false); }
@@ -209,6 +212,14 @@ const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
           setDetectionDelay(1000);
           setDetectingCount(0);
           setNotification(`判別結果: ${res.data.name} 写真を保存しました！`)
+          setLocus((rev) => [
+            ...rev, 
+            {
+              content: "★",
+              time: time(),
+              text: `${res.data.name}を釣り上げた！`
+            }
+          ])
         }
         // 検出中ならこっち
         else {

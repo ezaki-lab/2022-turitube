@@ -64,11 +64,9 @@ const Streamer = ({ socket, multiStream }) => {
       </div>
 
       <div className={`fixed z-50 top-1 right-16 flex flex-row h-12 justify-around ${HiddenLayerCount ? "" : "hidden"}`}>
-        {isSmartPhone()
-          ? <div className={`w-12 h-12 rounded-full mx-1 ${myStream.camera ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
-            <img src={myStream.camera ? CameraActive : CameraInactive} className="w-8 h-8 m-auto" onClick={() => { setCamera((rev) => (!rev)); }} />
-          </div>
-          : <></>}
+        <div className={`w-12 h-12 rounded-full mx-1 ${myStream.camera ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
+          <img src={myStream.camera ? CameraActive : CameraInactive} className="w-8 h-8 m-auto" onClick={() => { setCamera((rev) => (!rev)); }} />
+        </div>
 
         <div className={`w-12 h-12 rounded-full mx-1 ${myStream.audio ? "bg-basic bg-opacity-75" : "bg-black bg-opacity-20"} flex`}>
           <img src={myStream.audio ? AudioActive : AudioInactive} className="w-8 h-8 m-auto" onClick={() => setAudio((rev) => (!rev))} />

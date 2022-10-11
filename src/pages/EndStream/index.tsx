@@ -7,10 +7,15 @@ import First from './first';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Url from '../../utils/url';
+import time from '../../utils/time';
 
 interface ImgData {
   img_name: string,
-  place_name: string
+  place_name: string,
+  type: string,
+  fish: string,
+  fish_id: string
+  datetime: string
 }
 
 interface Stream {
@@ -30,6 +35,7 @@ const EndStream = () => {
   const { room_id } = useParams();
   const [stream, setStream] = useState<Stream>();
   const [ready, setReady] = useState<boolean>(false);
+  const [locus, setLocus] = useRecoilState(atom.locus);
 
   const [imgDataList, setImgDataList] = useState<ImgData[]>([]);
 
@@ -43,6 +49,15 @@ const EndStream = () => {
       setStream(res.data);
       setReady(true);
     });
+
+    setLocus((rev) => [
+      ...rev, 
+      {
+        content: "■",
+        time: time(),
+        text: `配信を終了した！`
+      }
+    ])
   }, []);
 
   useEffect(() => {

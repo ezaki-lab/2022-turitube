@@ -44,6 +44,12 @@ interface ProfileData {
   }
 }
 
+interface Locus {
+  content: string,
+  time: string,
+  text: string
+}
+
 // グローバルstate
 export const user_id = atom({
   key: 'user_id',
@@ -63,6 +69,11 @@ export const is_login = atom({
 export const me = atom({
   key: 'me',
   default: <Me>{}
+})
+
+export const locus = atom({
+  key: 'locus',
+  default: <Locus[]>[]
 })
 
 export const user_type = atom({

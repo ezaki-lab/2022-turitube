@@ -11,11 +11,13 @@ import Modal from '../../components/Icon/modal';
 import { useParams } from 'react-router-dom';
 import useSocketIo from '../../hooks/useSocketIo';
 import multiStreamManager from './multiStream';
+import time from '../../utils/time';
 
 // Room 配信部屋
 const Room = () => {
   const [userType, setUserType] = useRecoilState(atom.user_type);
   const [me, setMe] = useRecoilState(atom.me);
+  const [locus, setLocus] = useRecoilState(atom.locus);
   const [ready, setReady] = useState(false);
   const [isHost, setIsHost] = useState<boolean>(false);
   const { room_id } = useParams();
@@ -28,7 +30,14 @@ const Room = () => {
   };
 
   useEffect(() => {
-    ;
+    setLocus((rev) => [
+      ...rev, 
+      {
+        content: "▶",
+        time: time(),
+        text: `配信を開始した！`
+      }
+    ])
   }, []);
 
   useEffect(() => {
