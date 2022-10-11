@@ -47,10 +47,6 @@ const Metaverse = ({ multiStream }) => {
 
   useResizeObserver([canvasSizeRef], handleResize);
 
-  useEffect(() => {
-    console.log(Object.keys(multiStream))
-  }, [multiStream]);
-
   if (!multiStream) return (<></>)
   return (
     <>
@@ -78,10 +74,6 @@ const Metaverse = ({ multiStream }) => {
 };
 
 const AvatarView = ({ user_name, face, range, index }) => {
-
-  useEffect(() => {
-    console.log(range);
-  }, [range]);
 
   const userData = useUserData(user_name);
   if (!userData) return (<></>)

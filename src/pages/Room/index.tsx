@@ -33,19 +33,17 @@ const Room = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('connect', () => {
-        socket.emit("join", {
-          room_id: room_id,
-          user_name: me.user_name,
-          user_type: userType
-        })
-        socket.on('host', () => {
-          setIsHost(true);
-        });
-        socket.on('delete_room', () => {
-          navigateEndStream()
-        })
+      socket.emit("join", {
+        room_id: room_id,
+        user_name: me.user_name,
+        user_type: userType
+      })
+      socket.on('host', () => {
+        setIsHost(true);
       });
+      socket.on('delete_room', () => {
+        navigateEndStream()
+      })
       setReady(true);
     }
   }, [socket]);

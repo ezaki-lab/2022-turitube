@@ -21,7 +21,6 @@ export const useSkyWay = (roomId: string, localStream, readyCam) => {
   // カメラの準備ができていれば実行される。
   useEffect(() => {
     if (readyCam) {
-      console.log(localStream.current);
       // SFUルームを利用する。
       const tmpRoom = peer.joinRoom<SfuRoom>(roomId, {
         mode: "sfu",

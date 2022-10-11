@@ -29,10 +29,9 @@ const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
     return base64img;
   }
 
-  // 0.2秒に一回撮影する
+  // 2秒に一回撮影する
   useInterval(() => {
-    if (!loading) {
-      console.log("a")
+    if (!loading && !expressionImg) {
       let base64img = acquisitionImg();
       setExpressionImg(base64img);
     }
@@ -43,24 +42,25 @@ const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
       base64img: expressionImg
     }).then((res) => {
       // 検知できていなかったら
-      if (!res.data.detect){
+      if (!res.data.detect) {
         // 準備中
         setFace(1);
       }
       else {
         // カメラ切り替え条件
-        if (res.data.face_id==3 && res.data.score>0.8) {
+        if (res.data.face_id == 3 && res.data.score > 0.8) {
           setCamera(true);
         }
         // 表情切り替え
         setFace(res.data.face_id);
       }
+      setExpressionImg("");
     })
   }, [expressionImg]);
 
   return (
     <>
-      <video ref={viewRef} muted playsInline />
+      <video ref={viewRef} muted playsInline className="hidden" />
     </>
   );
 }

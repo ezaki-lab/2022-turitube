@@ -19,10 +19,6 @@ const Chat = ({ socket }) => {
   const [data, setData] = useState<Message[]>([]);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  useEffect(() => {
     if (socket) {
       // チャット送信時
       socket.on('chat', (data) => {

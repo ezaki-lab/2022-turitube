@@ -114,7 +114,6 @@ const Display = ({ video }) => {
 
   useEffect(() => {
     if (video) {
-      console.log(video);
       viewRef.current!.srcObject = video.stream;
       viewRef.current.play().catch((e) => console.log(e));
     }

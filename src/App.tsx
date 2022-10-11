@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import * as atom from './common/atom';
@@ -24,7 +24,8 @@ import HeaderShadow from './components/Layout/headerShadow';
 import TopLayout from './components/Layout/top';
 import BottomLayout from './components/Layout/bottom';
 import ExplainModal from './components/ExplainModal';
-
+import useCamera from './hooks/useCamera';
+import { useGetPosition } from './hooks/useGetPosition';
 
 export const App = () => {
   const basename = process.env.BASENAME;
@@ -32,6 +33,7 @@ export const App = () => {
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
   const [userId, setUserId] = useRecoilState(atom.user_id);
   const [me, setMe] = useRecoilState(atom.me);
+  useGetPosition();
 
   // ログインする！！！！！
   useEffect(() => {
@@ -54,6 +56,15 @@ export const App = () => {
     })
   }, []);
 
+  // カメラの許可を取る
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        stream.getTracks().forEach((track) => { track.stop(); });
+      });
+  }, [])
+
+  // ログインできたら
   useEffect(() => {
     if (userId) {
       axios.get(Url("/user"), {

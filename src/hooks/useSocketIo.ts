@@ -23,12 +23,13 @@ const useSocketIo = (namespace: string = '') => {
   useEffect(() => {
     if (socket) {
       return (() => {
-        socket.disconnect();
+        socket.emit("leave");
       })
     }
   }, [socket]);
 
   window.addEventListener('beforeunload', (e) => {
+    socket.emit("leave");
     socket.disconnect();
   });
 

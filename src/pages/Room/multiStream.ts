@@ -18,7 +18,6 @@ const multiStreamManager = (socket) => {
   useEffect(() => {
     if (socket) {
       socket.on("update_stream", (data) => {
-        console.log(data);
         setMultiStream(data);
       })
     }
