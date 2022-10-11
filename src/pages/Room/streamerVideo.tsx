@@ -11,11 +11,20 @@ import { useInterval } from '../../hooks/useInterval';
 import ProgressBar from '../../components/ProgressBar';
 import ExpressionDiscrimination from './expressionDiscrimination';
 
+interface Constraints {
+  video: {
+    facingMode: string | { exact: string }
+  } | false,
+  audio: boolean
+}
+
 // 動画描画コンポーネントと音声配信
 const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotification, setCamera, setFace }) => {
   const [me] = useRecoilState(atom.me);
-  const { localStream, setConstraints, readyCam, change } = useCamera({ video: { facingMode: "user" }, audio: false });
+  const [constraints, setConstraints] = useState<Constraints>({ video: { facingMode: "user" }, audio: false });
   const { room_id } = useParams();
+  const [readyCam, setReadyCam] = useState(false);
+  const localStream = useRef<MediaStream>();
   const { remoteVideo, myPeer, room, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
   const [remotePeer, setRemotePeer] = useState("");
   const { lat, lng } = useGetPosition();
@@ -25,18 +34,42 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
 
   // 動画を描画 こっちのほうが安全...なはず
   useEffect(() => {
-    if (localStream&&viewRef.current) {
+    if (localStream && viewRef.current) {
       viewRef.current!.srcObject = localStream.current;
       viewRef.current.play();
     }
   }, [localStream.current, viewRef.current]);
+
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ ...constraints, audio: true })
+      .then(async (stream) => {
+        stream.getAudioTracks().forEach((track) => (track.enabled = constraints.audio));
+        localStream.current = stream;
+        setReadyCam(true);
+        if (room) {
+          room.replaceStream(localStream.current);
+          socket.emit("video", {
+            room_id: room_id,
+            enable: myStream.camera,
+            peer_id: myPeer,
+            user_name: me.user_name
+          })
+        }
+      });
+
+    return (() => {
+      if (localStream.current !== null) {
+        localStream.current.getTracks().forEach((track) => { track.stop(); });
+      }
+    })
+  }, [constraints]);
 
   // カメラ変更(readyCamも変わるよ)
   useEffect(() => {
     if (localStream.current) {
       setConstraints({
         audio: myStream.audio,
-        video: myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //本番用
+        video: myStream.camera ? { facingMode: "environment" } : { facingMode: "user" }, //本番用
         //video: !myStream.camera ? { facingMode: { exact: "environment" } } : { facingMode: "user" }, //デバッグ用
       });
       if (myStream.camera) {
@@ -56,23 +89,6 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
     }
     else setCloseCount((rev) => (rev - 1));
   }, delay);
-
-  // replace room setting
-  useEffect(() => {
-    (async () => {
-      if (room) {
-        room.replaceStream(localStream.current);
-        if (myStream.camera) await new Promise(resolve => setTimeout(resolve, 500));
-        socket.emit("video", {
-          room_id: room_id,
-          enable: myStream.camera,
-          peer_id: myPeer,
-          user_name: me.user_name
-        })
-      }
-    })()
-
-  }, [change]);
 
   // メタバース画面かビデオ画面か
   useEffect(() => {

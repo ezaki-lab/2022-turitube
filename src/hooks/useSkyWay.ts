@@ -44,7 +44,8 @@ export const useSkyWay = (roomId: string, localStream, readyCam) => {
       tmpRoom.on("stream", async (stream) => {
         console.log(`${stream.peerId} start stream`)
         setRemoteVideo((rev) => [...rev, {peerId: stream.peerId, stream: stream} ]);
-      })
+      });
+      
 
       // 誰かが退室したとき
       // remoteVideoから適したビデオ情報を削除する
