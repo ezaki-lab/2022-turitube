@@ -24,7 +24,6 @@ import HeaderShadow from './components/Layout/headerShadow';
 import TopLayout from './components/Layout/top';
 import BottomLayout from './components/Layout/bottom';
 import ExplainModal from './components/ExplainModal';
-import useCamera from './hooks/useCamera';
 import { useGetPosition } from './hooks/useGetPosition';
 
 export const App = () => {
@@ -47,7 +46,6 @@ export const App = () => {
         setUserId(localStorage.getItem("userId"));
         setIsLogin(true);
       }
-
       // ユーザーが存在しなかったらuserInfoとlocalStorageの情報を抹消
       else {
         localStorage.setItem("userId", "");
@@ -56,6 +54,7 @@ export const App = () => {
     })
   }, []);
 
+  
   // カメラの許可を取る
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })

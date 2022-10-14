@@ -1,9 +1,7 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useState, useRef } from 'react';
 import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Chat from './chat';
 import Metaverse from './metaverse';
 import Hamburger from '../../components/Layout/hamburger';
@@ -11,15 +9,12 @@ import { useInterval } from '../../hooks/useInterval';
 import Exit from "../../img/buttons/exit.png";
 import Send from "../../img/buttons/send.png";
 import myStreamManager from './myStream';
-import multiStreamManager from './multiStream';
-import useSocketIo from '../../hooks/useSocketIo';
 import { useParams } from 'react-router-dom';
 import ListenerVideo from './listenerVideo';
 
 // Room 視聴者視点の画面
-const Listener = ({socket, multiStream}) => {
+const Listener = ({socket, multiStream, remotePeer, isMetaverse}) => {
   const [width, height] = useWindowSize();
-  const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
   const [delay, setDelay] = useState<null | number>(null);
   const [touch, setTouch] = useState(false);
@@ -84,7 +79,7 @@ const Listener = ({socket, multiStream}) => {
 
         {/*映像 */}
         <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <ListenerVideo multiStream={multiStream} setIsMetaverse={setIsMetaverse} />
+          <ListenerVideo remotePeer={remotePeer} />
         </div>
 
         <div className={`${isMetaverse ? "bg-white" : ""} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16 ${HiddenLayerCount ? "" : "hidden"}`}>

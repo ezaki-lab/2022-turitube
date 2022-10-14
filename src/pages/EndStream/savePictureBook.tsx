@@ -1,15 +1,11 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import Calendar from "../../img/icons/calendar.png";
 import Fish from "../../img/icons/name.png";
 import Pin from "../../img/icons/pin.png";
 import Measure from "../../img/icons/measure.png";
-import Kari5 from "../../img/kari5.png";
 import TitleHeader from '../../components/TitleHeader';
 import { useNavigate } from 'react-router-dom';
-import Kari17 from "../../img/kari17.png";
-import Kari18 from "../../img/kari18.png";
 import Url from '../../utils/url';
 import axios from 'axios';
 import * as atom from '../../common/atom';

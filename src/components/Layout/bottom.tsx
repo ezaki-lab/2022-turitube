@@ -8,17 +8,9 @@ import StreamButton from "../../img/buttons/stream.png";
 import PictureBookButton from "../../img/buttons/picture_book.png";
 import DiaryButton from "../../img/buttons/diary.png";
 
-import HomeWideButton from "../../img/buttons/home_wide.png";
-import AchiveWideButton from "../../img/buttons/achive_wide.png";
-import DiaryWideButton from "../../img/buttons/diary_wide.png";
-import PictureBookWideButton from "../../img/buttons/picture_book_wide.png";
-
-import HomeSmallButton from "../../img/buttons/home_small.png";
 import PictureBookSmallButton from "../../img/buttons/picture_book_small.png";
 import DiarySmallButton from "../../img/buttons/diary_small.png";
 import AchiveSmallButton from "../../img/buttons/achive_small.png";
-import QuestSmallButton from "../../img/buttons/quest_small.png";
-import StreamSmallButton from "../../img/buttons/stream_small.png";
 import HomeButton2 from "../../img/buttons/home_2.png";
 
 import QuestBig from "../../img/buttons/quest_old.png";

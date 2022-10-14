@@ -1,8 +1,4 @@
-import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
-import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
-import useWindowSize from '../../hooks/useWindowSize';
 import Icon from '../../components/Icon';
 import useUserData from '../../hooks/useUserData';
 import ScrollToBottom from 'react-scroll-to-bottom';

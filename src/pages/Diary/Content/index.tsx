@@ -1,6 +1,4 @@
-import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
-import UndeFined from "../../../img/icons/picture_book_undefined.png";
 import { useParams } from 'react-router-dom';
 import BackHeader from '../../../components/BackHeader';
 import Calendar from "../../../img/icons/calendar.png";

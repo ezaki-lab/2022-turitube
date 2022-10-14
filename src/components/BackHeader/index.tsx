@@ -1,4 +1,3 @@
-import { useRecoilState } from 'recoil';
 import React from 'react';
 import { Outlet, Link } from "react-router-dom";
 import BackButton from "../../img/buttons/back.png";

@@ -1,9 +1,6 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
 import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
-import useWindowSize from '../../hooks/useWindowSize';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Streamer from './streamer';
 import Listener from './listener';
 import { useNavigate } from 'react-router-dom';
@@ -23,15 +20,24 @@ const Room = () => {
   const { room_id } = useParams();
   const socket = useSocketIo("stream");
   const multiStream = multiStreamManager(socket);
+  const [remotePeer, setRemotePeer] = useState<string>("");
+  const [myPeer, setMyPeer] = useState<string>("");
+  const [isMetaverse, setIsMetaverse] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const navigateEndStream = () => {
+    socket.emit("leave", {
+      user_name: me.user_name,
+      room_id: room_id,
+      user_type: userType,
+      myPeer: myPeer,
+      remotePeer: remotePeer
+    });
     navigate(`/end_stream/${room_id}`);
   };
 
   useEffect(() => {
     setLocus((rev) => [
-      ...rev, 
       {
         content: "▶",
         time: time(),
@@ -42,6 +48,11 @@ const Room = () => {
 
   useEffect(() => {
     if (socket) {
+      socket.on("connect", () => {
+        socket.emit("reconnect", {
+          room_id: room_id
+        })
+      })
       socket.emit("join", {
         room_id: room_id,
         user_name: me.user_name,
@@ -52,7 +63,18 @@ const Room = () => {
       });
       socket.on('delete_room', () => {
         navigateEndStream()
-      })
+      });
+
+      socket.on("camera_on", (data) => {
+        setRemotePeer(data.peer_id);
+        setIsMetaverse(false);
+        
+      });
+      socket.on("camera_off", (data) => {
+        setRemotePeer("");
+        setIsMetaverse(true);
+      });
+
       setReady(true);
     }
   }, [socket]);
@@ -82,8 +104,8 @@ const Room = () => {
           </div>
         </label>
       </label>
-      {userType == "streamer" ? <Streamer socket={socket} multiStream={multiStream} /> : <></>}
-      {userType == "listener" ? <Listener socket={socket} multiStream={multiStream} /> : <></>}
+      {userType == "streamer" ? <Streamer socket={socket} multiStream={multiStream} remotePeer={remotePeer} isMetaverse={isMetaverse} setMyPeer={setMyPeer} myPeer={myPeer} /> : <></>}
+      {userType == "listener" ? <Listener socket={socket} multiStream={multiStream} remotePeer={remotePeer} isMetaverse={isMetaverse} /> : <></>}
     </>
 
   )

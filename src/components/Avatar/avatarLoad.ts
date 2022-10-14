@@ -1,5 +1,3 @@
-import useImage from 'use-image';
-
 import n_body from './avatar/normal/body/body.PNG';
 
 import n_bottoms_1 from "./avatar/normal/bottoms/bottoms1.PNG";

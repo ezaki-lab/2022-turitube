@@ -1,6 +1,5 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState, useRef } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import React from 'react';
 import * as atom from '../../common/atom';
 import { useNavigate } from 'react-router-dom';
 import Url from '../../utils/url';
@@ -8,7 +7,6 @@ import Time from "../../img/icons/time.png";
 import Group from "../../img/icons/group.png";
 import EnteredSum from "../../img/icons/entered_sum.png";
 import useUserData from '../../hooks/useUserData';
-import Icon from '../../components/Icon';
 import Modal from '../../components/Icon/modal';
 import TitleHeader from '../../components/TitleHeader';
 import User from '../../components/User';

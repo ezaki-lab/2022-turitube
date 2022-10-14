@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as atom from '../../common/atom';
 import SaveDiary from "./savediary";
 import SavePictureBook from "./savePictureBook";

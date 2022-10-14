@@ -1,8 +1,7 @@
-
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
-import React, { useState } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import React from 'react';
+import { Outlet } from "react-router-dom";
 import CloseButton from "../../img/buttons/close.png";
 
 

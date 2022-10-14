@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import useHeadRoute from "./useHeadRoute"
-import { useRecoilState } from 'recoil';
-import * as atom from '../common/atom';
 
 interface MyStream {
   cam: boolean,

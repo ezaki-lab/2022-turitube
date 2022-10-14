@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from 'recoil';
-import * as atom from '../../common/atom';
+import { useState, useEffect } from "react";
 
 interface MultiStream {
   streamer: [],

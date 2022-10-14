@@ -19,7 +19,7 @@ interface Books {
 // 図鑑 - index
 const PictureBook = () => {
   const [books, setBooks] = useState<Books>();
-  const [userId, setUserId] = useRecoilState(atom.user_id);
+  const [userId] = useRecoilState(atom.user_id);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const PictureBook = () => {
         <div className="h-full w-full px-4 max-w-7xl flex flex-wrap items-center overflow-y-auto sm-max:pb-56">
           {Object.keys(books).map((key, index) => {
             return (
-              <Link to={books[key].data.length ? `/picture_book/${key}` : `/picture_book`} className="w-1/3 sm:w-1/5 lg:w-1/5 xl:w-1/6 p-1 sm:p-1 flex flex-col justify-center items-center" key={key}>
+              <Link to={books[key].data.length ? `/picture_book/${key}` : `/picture_book`} className="w-1/3 sm:w-1/5 lg:w-1/5 xl:w-1/6 p-1 sm:p-1 flex flex-col justify-center items-center active:animate-button-push" key={key}>
                 <div className="w-full aspect-square flex flex-col items-center">
                   <div className="rounded-2xl border-4 lg:border-8 border-gray">
                     <img src={!books[key].data.length ? UndeFined : Url(`/img/stream_photo/${books[key].data[0].img}`)} className="object-cover aspect-square h-full w-full rounded-xl" />

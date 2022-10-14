@@ -13,49 +13,6 @@ import Url from '../../../utils/url';
 const AchiveComponent = ({ enable = true, setModalId = null }) => {
   const [tab, setTab] = useState<number>(1);
 
-  const received_data = [
-    {
-      text: "魚を初めて釣り上げる",
-      id: 1,
-      reword: "100xp 20pt"
-    },
-    {
-      text: "初めて配信をする",
-      id: 2,
-      reword: "100xp 20pt"
-    },
-    {
-      text: "初めて配信を視聴する",
-      id: 3,
-      reword: "100xp 20pt"
-    },
-    {
-      text: "初めて配信のホストになる",
-      id: 4,
-      reword: "100xp 20pt"
-    },
-    {
-      text: "5匹釣り上げる",
-      id: 5,
-      reword: "200xp 20pt"
-    },
-    {
-      text: "5匹釣り上げる",
-      id: 6,
-      reword: "200xp 20pt"
-    },
-    {
-      text: "5匹釣り上げる",
-      id: 7,
-      reword: "200xp 20pt"
-    },
-    {
-      text: "5匹釣り上げる",
-      id: 8,
-      reword: "200xp 20pt"
-    },
-  ]
-
   return (
     <>
       <div className={`mx-4 h-full w-full max-w-4xl bg-white drop-shadow-2xl rounded-2xl flex flex-col ${!enable ? "animate-fadein" : ""}`}>

@@ -8,12 +8,9 @@ import Group from "../../img/icons/group.png";
 import EnteredSum from "../../img/icons/entered_sum.png";
 import Time from "../../img/icons/time.png";
 import Footprints from "../../img/icons/Footprints.png";
-import { Link } from 'react-router-dom';
 import TitleHeader from '../../components/TitleHeader';
 import Url from '../../utils/url';
 import today from '../../utils/today';
-import Kari10 from "../../img/kari10.png";
-import Kari8 from "../../img/kari8.png";
 import TitleIcon from "../../img/icons/title.png";
 import axios from 'axios';
 
@@ -131,7 +128,7 @@ const DiaryCarousel = ({ data }) => {
         {data.map((v, i) => {
           return (
             <div className="carousel-item h-full aspect-video max-w-[80%] rounded-xl bg-gray mx-auto" key={i}>
-              <img src={Url(`/img/stream_photo/${v.img_name}`)} className="h-full w-full object-cover rounded-xl" />
+              <img src={Url(`/img/stream_photo/${v.img_name}`)} className="h-full w-full object-contain rounded-xl" />
             </div>
           )
         })}

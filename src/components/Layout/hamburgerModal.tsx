@@ -1,9 +1,7 @@
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
-import { Outlet, Link } from "react-router-dom";
 import * as atom from '../../common/atom';
 
-import HamburgerButton from "../../img/buttons/hamburger.png";
 import CloseButton from "../../img/buttons/close.png";
 import OptionModalButton from "../../img/buttons/option_modal.png";
 import ProfileModalButton from "../../img/buttons/profile_modal.png";
@@ -17,7 +15,6 @@ import ProfileComponent from './Modals/profile';
 import { useNavigate } from 'react-router-dom';
 
 const HamburgerModal = () => {
-  const navigate = useNavigate();
   const [userId, setUserId] = useRecoilState(atom.user_id);
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
 

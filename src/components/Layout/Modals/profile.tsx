@@ -8,7 +8,7 @@ import Url from '../../../utils/url';
 import useGetItems from '../../../hooks/useGetItems';
 import ChangeImgButton from "../../../img/buttons/change_img.png";
 import Avatar from '../../Avatar';
-import { Stage, Layer, Rect, Circle, Image } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import useResizeObserver from '../../../hooks/useResizeObserver';
 import * as img from "../../Avatar/avatarLoad"
 import BottomsIcon from "../../../img/icons/bottoms.PNG";
@@ -66,12 +66,8 @@ const User = () => {
 
   useEffect(() => {
     screenNameRef.current.value = me.screen_name;
-  }, [screenNameRef.current]);
-
-  useEffect(() => {
     introductionRef.current.value = me.introduction;
-  }, [introductionRef.current]);
-
+  }, []);
 
   const handleOnAddImage = (e) => {
     var base64img = null;

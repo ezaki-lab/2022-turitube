@@ -1,19 +1,15 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
-import useCamera from '../../hooks/useCamera';
 import User from '../../components/User';
 import useUserData from '../../hooks/useUserData';
-import axios from 'axios';
-import Url from '../../utils/url';
 
 // Home - index.tsx
 const Debug = () => {
   const [userId, setUserId] = useRecoilState(atom.user_id);
   const [isLogin, setIsLogin] = useRecoilState(atom.is_login);
   const [isFront, setIsFront] = useState<boolean>(false);
-  const { videoRef, localStream, readyCam, setConstraints } = useCamera({ video: { facingMode: "user" }, audio: true });
+  // const { videoRef, localStream, readyCam, setConstraints } = useCamera({ video: { facingMode: "user" }, audio: true });
   const userData = useUserData("kosakae256");
 
   const Logout = () => {
@@ -22,11 +18,13 @@ const Debug = () => {
     setIsLogin(false);
   };
 
+  /*
   const changeConstraints = () => {
     setIsFront((rev) => (!rev));
     if (isFront) setConstraints((rev) => ({ ...rev, video: { facingMode: "user" } }));
     else setConstraints((rev) => ({ ...rev, video: { facingMode: { exact: "environment" } } }));
   }
+  */
 /*
   return (
     <>
@@ -47,7 +45,7 @@ const Debug = () => {
       <User data={userData} />
     </>
   )
-
+    /*
   // 将来的にはスライドショー流します
   return (
     <>
@@ -59,6 +57,7 @@ const Debug = () => {
       </div>
     </>
   );
+  */
 };
 
 export default Debug;

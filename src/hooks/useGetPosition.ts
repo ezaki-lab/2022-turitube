@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInterval } from './useInterval';
-import { useRecoilState } from 'recoil';
-import * as atom from '../common/atom';
-import axios from 'axios'
 
 // 現在地を取得します(5秒おき)
 export const useGetPosition = () => {

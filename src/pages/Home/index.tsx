@@ -1,22 +1,16 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as atom from '../../common/atom';
 import axios from 'axios';
 import Url from '../../utils/url';
 import useUserData from '../../hooks/useUserData';
 import { useNavigate } from 'react-router-dom';
 import { useInterval } from '../../hooks/useInterval';
-import Icon from '../../components/Icon';
 import Modal from '../../components/Icon/modal';
-import { Link } from 'react-router-dom';
-import Person from '../../img/icons/person.png';
 import Eye from '../../img/icons/eye.png';
 import Beacon from '../../img/icons/beacon.png';
 import StreamOk from '../../img/icons/stream_ok.png';
-import StreamNg from '../../img/icons/stream_ng.png';
 import WatchOk from '../../img/icons/watch_ok.png';
-import WatchNg from '../../img/icons/watch_ng.png';
-import Kari from "../../img/kari4.png";
 import User from '../../components/User';
 
 interface Room {
@@ -86,8 +80,8 @@ const RoomModal = ({ roomList, index }) => {
       <label htmlFor="join" className="modal cursor-pointer">
         <label className="modal-box relative flex flex-col" htmlFor="">
           <div className="flex flex-row items-center justify-evenly h-16">
-            <button className="rounded-xl bg-basic p-4 text-white font-bold text-sm" onClick={() => join("streamer")}>配信者として参加</button>
-            <button className="rounded-xl bg-basic p-4 text-white font-bold text-sm" onClick={() => join("listener")}>視聴者として参加</button>
+            <button className="rounded-xl bg-basic p-4 text-white font-bold text-sm active:animate-button-push" onClick={() => join("streamer")}>配信者として参加</button>
+            <button className="rounded-xl bg-basic p-4 text-white font-bold text-sm active:animate-button-push" onClick={() => join("listener")}>視聴者として参加</button>
           </div>
         </label>
       </label>

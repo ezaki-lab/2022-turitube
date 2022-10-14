@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Url from '../utils/url';
 

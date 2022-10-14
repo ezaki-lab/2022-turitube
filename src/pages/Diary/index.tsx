@@ -3,12 +3,6 @@ import * as atom from '../../common/atom';
 import React, { useEffect, useState } from 'react';
 import TitleHeader from '../../components/TitleHeader';
 import { Link } from 'react-router-dom';
-import Kari4 from "../../img/kari4.png";
-import Kari6 from "../../img/kari6.jpg";
-import Kari7 from "../../img/kari7.jpg";
-import Kari8 from "../../img/kari8.png";
-import Kari9 from "../../img/kari9.png";
-import Kari10 from "../../img/kari10.png";
 import axios from 'axios';
 import Url from '../../utils/url';
 
@@ -49,8 +43,8 @@ const Diary = () => {
 
 const Content = ({data}) => {
   return (
-    <Link to={`/diary/${data.diary_id}`} className="w-full flex flex-row h-24 md:h-28 lg:h-36 xl:h-48 border-b border-gray max-w-5xl">
-      <img src={Url(`/img/stream_photo/${data.thumbnail}`)} className="h-full aspect-video object-cover p-2" />
+    <Link to={`/diary/${data.diary_id}`} className="w-full flex flex-row h-24 md:h-28 lg:h-36 xl:h-48 border-b border-gray max-w-5xl active:animate-button-push">
+      <img src={Url(`/img/stream_photo/${data.thumbnail}`)} className="h-full aspect-video object-contain p-2" />
       <div className="h-full w-12 flex-auto flex flex-col justify-start px-2 pt-2">
         <h3 className="text-lg sm:text-xl lg:text-xl text-tcolor line-clamp-2">{data.title}</h3>
         <h3 className="text-md sm:text-xl lg:text-xl text-tcolor">{data.date}</h3>

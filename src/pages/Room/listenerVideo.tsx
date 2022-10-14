@@ -1,38 +1,39 @@
-import { useRecoilState } from 'recoil';
 import React, { useEffect, useState, useRef } from 'react';
-import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
 import useCamera from '../../hooks/useCamera';
 import { useSkyWay } from '../../hooks/useSkyWay';
 import { useParams } from 'react-router-dom';
-import Kari100 from "../../img/kari100.png";
 
 // 動画描画コンポーネントと音声配信
-const ListenerVideo = ({ multiStream, setIsMetaverse }) => {
-  const { localStream, readyCam } = useCamera({ video: false, audio: false });
+const ListenerVideo = ({ remotePeer }) => {
   const { room_id } = useParams();
-  const { remoteVideo, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
-  const [remotePeer, setRemotePeer] = useState("");
+  const [stream, setStream] = useState<MediaStream>(null);
+  const [readyCam, setReadyCam] = useState(false);
+  const { remoteVideo, readySkyWay } = useSkyWay(room_id, stream, readyCam);
 
+  // 変更時処理
   useEffect(() => {
-    if (multiStream.displayPeer) {
-      setIsMetaverse(false);
+    // 既存ストリームを削除
+    if (stream) {
+      stream.getTracks().forEach((track) => { stream.removeTrack(track); track.stop(); });
     }
-    else {
-      setIsMetaverse(true);
-    }
-    setRemotePeer(multiStream.displayPeer);
-  }, [multiStream.displayPeer]);
+    navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+      .then(async (stream) => {
+        stream.getAudioTracks().forEach((track) => (track.enabled = false));
+        setStream(stream);
+        setReadyCam(true);
+      });
+  }, []);
 
-  if (!readyCam && !readySkyWay) return (<></>)
+  if (!readySkyWay && !readyCam) return (<></>)
   return (
     <>
       {remoteVideo.map((v, i) => {
-        return (
-          <div key={v.peerId}>
-            {remotePeer == v.peerId ? <Display video={v.stream} key={v.peerId} /> : <Audio video={v.stream} key={v.peerId} />}
-          </div>
-        )
+
+        return (<div key={v.peerId}>
+          {remotePeer == v.peerId
+            ? <Display video={v} />
+            : <Audio video={v} />}
+        </div>)
       })}
     </>
   )
@@ -44,15 +45,13 @@ const Display = ({ video }) => {
 
   useEffect(() => {
     if (video) {
-      viewRef.current!.srcObject = video;
-      viewRef.current.play();
+      viewRef.current!.srcObject = video.stream;
+      viewRef.current.play().catch((e) => console.log(e));
     }
-  }, [viewRef.current]);
+  }, [video]);
 
   return (
-    <>
-      <video ref={viewRef} playsInline className={`object-contain w-full h-full`} />
-    </>
+    <video ref={viewRef} playsInline muted className={`object-contain w-full h-full`} />
   )
 }
 
@@ -61,13 +60,13 @@ const Audio = ({ video }) => {
 
   useEffect(() => {
     if (video) {
-      viewRef.current!.srcObject = video;
-      viewRef.current.play();
+      viewRef.current!.srcObject = video.stream;
+      viewRef.current.play().catch((e) => console.log(e));
     }
-  }, [viewRef.current]);
+  }, [video]);
 
   return (
-    <video ref={viewRef} playsInline className={`hidden`} />
+    <video ref={viewRef} playsInline muted className={`hidden`} />
   )
 }
 

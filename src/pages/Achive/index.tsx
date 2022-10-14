@@ -1,11 +1,5 @@
-import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
-import * as atom from '../../common/atom';
-import BackHeader from '../../components/BackHeader';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import TitleHeader from '../../components/TitleHeader';
-import ProgressBar from '../../components/ProgressBar';
-import Title from '../../components/Title';
 import AchiveComponent from '../../components/Layout/Modals/achive';
 
 // クエスト - index

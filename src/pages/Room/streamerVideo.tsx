@@ -1,7 +1,6 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useState, useRef } from 'react';
 import * as atom from '../../common/atom';
-import useCamera from '../../hooks/useCamera';
 import { useSkyWay } from '../../hooks/useSkyWay';
 import { useParams } from 'react-router-dom';
 import { useGetPosition } from '../../hooks/useGetPosition';
@@ -20,36 +19,36 @@ interface Constraints {
 }
 
 // 動画描画コンポーネントと音声配信
-const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotification, setCamera, setFace }) => {
+const StreamerVideo = ({ myStream, socket, setNotification, setCamera, setFace, remotePeer, setMyPeer }) => {
   const [me] = useRecoilState(atom.me);
   const [constraints, setConstraints] = useState<Constraints>({ video: { facingMode: "user" }, audio: false });
   const { room_id } = useParams();
   const [readyCam, setReadyCam] = useState(false);
-  const localStream = useRef<MediaStream>();
-  const { remoteVideo, myPeer, room, readySkyWay } = useSkyWay(room_id, localStream, readyCam);
-  const [remotePeer, setRemotePeer] = useState("");
+  const [stream, setStream] = useState<MediaStream>(null);
+  const { remoteVideo, myPeer, room, readySkyWay } = useSkyWay(room_id, stream, readyCam);
   const { lat, lng } = useGetPosition();
   const [closeCount, setCloseCount] = useState(60);
   const [delay, setDelay] = useState(null);
   const viewRef = useRef<HTMLVideoElement>(null);
 
-  // 動画を描画 こっちのほうが安全...なはず
   useEffect(() => {
-    if (localStream && viewRef.current) {
-      viewRef.current!.srcObject = localStream.current;
-      viewRef.current.play();
-    }
-  }, [localStream.current, viewRef.current]);
+    setMyPeer(myPeer);
+  }, [myPeer]);
 
+  // 変更時処理
   useEffect(() => {
+    // 既存ストリームを削除
+    if (stream) {
+      stream.getTracks().forEach((track) => { stream.removeTrack(track); track.stop(); });
+    }
     navigator.mediaDevices.getUserMedia({ ...constraints, audio: true })
       .then(async (stream) => {
         stream.getAudioTracks().forEach((track) => (track.enabled = constraints.audio));
-        localStream.current = stream;
+        setStream(stream);
         setReadyCam(true);
         if (room) {
-          room.replaceStream(localStream.current);
-          socket.emit("video", {
+          room.replaceStream(stream);
+          socket.emit("camera", {
             room_id: room_id,
             enable: myStream.camera,
             peer_id: myPeer,
@@ -57,17 +56,22 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
           })
         }
       });
+  }, [constraints]);
 
+  useEffect(() => {
+    if (stream && viewRef && viewRef.current) {
+      viewRef.current.srcObject = stream;
+    }
     return (() => {
-      if (localStream.current !== null) {
-        localStream.current.getTracks().forEach((track) => { track.stop(); });
+      if (stream) {
+        stream.getTracks().forEach((track) => { stream.removeTrack(track); track.stop(); });
       }
     })
-  }, [constraints]);
+  }, [stream]);
 
   // カメラ変更(readyCamも変わるよ)
   useEffect(() => {
-    if (localStream.current) {
+    if (stream) {
       setConstraints({
         audio: myStream.audio,
         video: myStream.camera ? { facingMode: "environment" } : { facingMode: "user" }, //本番用
@@ -91,21 +95,10 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
     else setCloseCount((rev) => (rev - 1));
   }, delay);
 
-  // メタバース画面かビデオ画面か
-  useEffect(() => {
-    if (multiStream.displayPeer) {
-      setIsMetaverse(false);
-    }
-    else {
-      setIsMetaverse(true);
-    }
-    setRemotePeer(multiStream.displayPeer);
-  }, [multiStream.displayPeer]);
-
   // マイク変更
   useEffect(() => {
-    if (localStream.current) {
-      localStream.current.getAudioTracks().forEach((track) => (track.enabled = myStream.audio));
+    if (stream) {
+      stream.getAudioTracks().forEach((track) => (track.enabled = myStream.audio));
     }
   }, [myStream.audio]);
 
@@ -120,6 +113,7 @@ const StreamerVideo = ({ myStream, socket, multiStream, setIsMetaverse, setNotif
             : <Audio video={v} />}
         </div>)
       })}
+      <video ref={viewRef} playsInline muted autoPlay className="object-contain w-full h-full" />
       {remotePeer == myPeer ? <MyVideo viewRef={viewRef} setNotification={setNotification} lat={lat} lng={lng} /> : <ExpressionDiscrimination setCamera={setCamera} viewRef={viewRef} setFace={setFace} />}
     </>
   )
@@ -137,7 +131,7 @@ const Display = ({ video }) => {
   }, [video]);
 
   return (
-    <video ref={viewRef} playsInline className={`object-contain w-full h-full`} />
+    <video ref={viewRef} playsInline muted className={`object-contain w-full h-full`} />
   )
 }
 
@@ -152,7 +146,7 @@ const Audio = ({ video }) => {
   }, [video]);
 
   return (
-    <video ref={viewRef} playsInline className={`hidden`} />
+    <video ref={viewRef} playsInline muted className={`hidden`} />
   )
 }
 
@@ -167,7 +161,6 @@ const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
   const [me] = useRecoilState(atom.me);
   const [locus, setLocus] = useRecoilState(atom.locus);
   const [detectingCount, setDetectingCount] = useState<number>(0);
-
 
   useInterval(() => {
     if (detectionCooltime == 0) { setDetectionDelay(null); setLoading(false); }
@@ -213,7 +206,7 @@ const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
           setDetectingCount(0);
           setNotification(`判別結果: ${res.data.name} 写真を保存しました！`)
           setLocus((rev) => [
-            ...rev, 
+            ...rev,
             {
               content: "★",
               time: time(),
@@ -258,7 +251,6 @@ const MyVideo = ({ setNotification, lat, lng, viewRef }) => {
 
   return (
     <>
-      <video ref={viewRef} playsInline muted className="object-contain w-full h-full" />
       <div className="fixed bottom-16 w-full h-24 flex items-center flex-col z-20">
         <button className="bg-gray bg-opacity-50 w-16 h-16 rounded-full flex items-center justify-center active:animate-button-push" onClick={() => { writeNewPicture() }}>
           <div className="rounded-full w-12 h-12 bg-gray bg-opacity-75" />

@@ -1,8 +1,4 @@
-import React, { useEffect, useState, useRef, Ref } from 'react';
-import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import useCamera from './useCamera';
-import * as atom from '../common/atom';
+import { useEffect, useState } from 'react';
 import Peer, { SfuRoom } from "skyway-js";
 
 type VideoStream = {
@@ -24,7 +20,7 @@ export const useSkyWay = (roomId: string, localStream, readyCam) => {
       // SFUルームを利用する。
       const tmpRoom = peer.joinRoom<SfuRoom>(roomId, {
         mode: "sfu",
-        stream: localStream.current,
+        stream: localStream,
       });
 
       // 自分が入室したときの処理

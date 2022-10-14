@@ -1,19 +1,10 @@
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from '../../utils/url';
 import time from '../../utils/time';
 import { useInterval } from '../../hooks/useInterval';
-
-// Example - example.jsx
-
-interface emotion {
-  detect: boolean,
-  face_id: number,
-  score: number
-}
 
 const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
   const [expressionImg, setExpressionImg] = useState("");
@@ -37,7 +28,6 @@ const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
     if (!loading && !expressionImg) {
       let base64img = acquisitionImg();
       setExpressionImg(base64img);
-      console.log("a");
     }
   }, 2000);
 
@@ -75,7 +65,7 @@ const ExpressionDiscrimination = ({ setCamera, viewRef, setFace }) => {
 
   return (
     <>
-      <video ref={viewRef} muted playsInline className="z-100000 fixed top-0" />
+      
     </>
   );
 }

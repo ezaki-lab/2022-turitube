@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 // 音声認識からカメラを模した物を作成

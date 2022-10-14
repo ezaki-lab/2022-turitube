@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import ReactLoading from 'react-loading';
 import Logo from "./img/icons/mainlogo.png";
 

@@ -1,7 +1,6 @@
 import { useRecoilState } from 'recoil';
 import React, { useEffect, useRef } from 'react';
 import * as atom from './common/atom';
-import { Link } from 'react-router-dom';
 import TitleHeader from './components/TitleHeader';
 import axios from 'axios';
 import Url from './utils/url';

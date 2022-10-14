@@ -17,21 +17,8 @@ const useSocketIo = (namespace: string = '') => {
   );
 
   useEffect(() => {
-    setSocket(io(uri, { path: path, transports: ["polling"] })); // pollingにしないとエラー吐くよ
+    setSocket(io(uri, { path: path, transports: ["polling"], reconnection:true })); // pollingにしないとエラー吐くよ
   }, [namespace]);
-
-  useEffect(() => {
-    if (socket) {
-      return (() => {
-        socket.emit("leave");
-      })
-    }
-  }, [socket]);
-
-  window.addEventListener('beforeunload', (e) => {
-    socket.emit("leave");
-    socket.disconnect();
-  });
 
   return socket;
 };

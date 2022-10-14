@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
-import Item0 from "../../img/items/item0.png";
 import Item900 from "../../img/items/item900.png";
 import Item901 from "../../img/items/item901.png";
 

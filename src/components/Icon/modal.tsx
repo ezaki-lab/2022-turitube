@@ -1,7 +1,6 @@
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Url from '../../utils/url';
 import Title from '../Title';
 

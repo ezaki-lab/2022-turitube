@@ -1,7 +1,5 @@
-import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import TitleHeader from '../../components/TitleHeader';
-import Item from '../../components/Item';
 import QuestComponent from '../../components/Layout/Modals/quest';
 
 // クエスト - index

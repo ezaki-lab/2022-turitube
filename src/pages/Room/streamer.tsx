@@ -1,40 +1,26 @@
-import { useRecoilState } from 'recoil';
 import React, { useEffect, useState, useRef } from 'react';
-import * as atom from '../../common/atom';
-import { Link } from 'react-router-dom';
-import useWindowSize from '../../hooks/useWindowSize';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Chat from './chat';
 import Metaverse from './metaverse';
 import Hamburger from '../../components/Layout/hamburger';
 import { useInterval } from '../../hooks/useInterval';
 import Exit from "../../img/buttons/exit.png";
-import Send from "../../img/buttons/send.png";
 import CameraActive from "../../img/icons/camera.active.png";
 import CameraInactive from "../../img/icons/camera.inactive.png";
 import AudioActive from "../../img/icons/mic.active.png";
 import AudioInactive from "../../img/icons/mic.inactive.png";
 import myStreamManager from './myStream';
-import multiStreamManager from './multiStream';
-import useSocketIo from '../../hooks/useSocketIo';
-import { useParams } from 'react-router-dom';
 import StreamerVideo from './streamerVideo';
-import isSmartPhone from '../../utils/isSmartPhone';
 import VideoChat from './videoChat';
 import Notification from '../../components/Notification';
-import ExpressionDiscrimination from './expressionDiscrimination';
 
 // Room 視聴者視点の画面
-const Streamer = ({ socket, multiStream }) => {
-  const [isMetaverse, setIsMetaverse] = useState<boolean>(true); // メタバース画面であるか
+const Streamer = ({ socket, multiStream, remotePeer, isMetaverse, setMyPeer, myPeer }) => {
   const [HiddenLayerCount, setHiddenLayerCount] = useState<number>(3); //　状態:ビデオ時に他のレイヤーが消えているかどうか
   const [delay, setDelay] = useState<null | number>(null);
   const [touch, setTouch] = useState(false);
-  const [isInput, setIsInput] = useState(false);
+  const [isInput] = useState(false);
   const { myStream, setAudio, setCamera, setFace } = myStreamManager(socket);
   const [notification, setNotification] = useState<string>("");
-  const [me, setMe] = useRecoilState(atom.me);
-  const { room_id } = useParams();
 
   useInterval(() => {
     if (HiddenLayerCount && !isMetaverse && !isInput) setHiddenLayerCount((rev) => (rev - 1));
@@ -55,6 +41,14 @@ const Streamer = ({ socket, multiStream }) => {
     if (touch) { setDelay(null); setHiddenLayerCount(3); }
     else { setDelay(1000); setHiddenLayerCount(3); }
   }, [touch]);
+
+  useEffect(() => {
+    if (socket && myPeer) {
+      socket.on("camera_on", (data) => {
+        if (data.peer_id!==myPeer) setCamera(false);
+      });
+    }
+  }), [socket, myPeer];
 
   return (
     <>
@@ -86,8 +80,8 @@ const Streamer = ({ socket, multiStream }) => {
         </div>
 
         {/*映像 */}
-        <div className={`w-full h-full bg-black fixed ${isMetaverse ? "hidden" : ""}`}>
-          <StreamerVideo myStream={myStream} socket={socket} multiStream={multiStream} setIsMetaverse={setIsMetaverse} setNotification={setNotification} setCamera={setCamera} setFace={setFace} />
+        <div className={`w-full h-full bg-black fixed ${isMetaverse ? "opacity-0" : ""}`}>
+          <StreamerVideo myStream={myStream} socket={socket} setNotification={setNotification} setCamera={setCamera} setFace={setFace} remotePeer={remotePeer} setMyPeer={setMyPeer} />
         </div>
 
         <div className={`${isMetaverse ? "bg-white" : "hidden"} flex-auto flex flex-col-reverse items-center z-10 sm:pt-16`}>

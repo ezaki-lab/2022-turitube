@@ -1,7 +1,4 @@
-import { useRecoilState } from 'recoil';
 import React from 'react';
-import BottomAppbar from './bottomAppBar';
-import { Outlet } from "react-router-dom"
 import Logo from "../../img/icons/mainlogo.png";
 import Map from "../../img/icons/map.png";
 import Stream from "../../img/icons/stream.png";

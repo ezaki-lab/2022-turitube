@@ -1,6 +1,6 @@
 /* アバター描画コンポーネント*/
-import React, { useState, useEffect } from 'react';
-import { Stage, Layer, Group, Rect, Circle, Image } from 'react-konva';
+import React from 'react';
+import { Group, Image } from 'react-konva';
 import * as img from "./avatarLoad"
 import useImage from 'use-image';
 

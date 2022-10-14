@@ -1,9 +1,7 @@
 import { useRecoilState } from 'recoil';
 import * as atom from '../../common/atom';
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Url from '../../utils/url';
-import Modal from './modal';
 
 // Icon 押したらユーザー情報が出てくる丸型のアイコンを提供
 const Icon = ({ data }) => {

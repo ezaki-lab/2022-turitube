@@ -1,6 +1,5 @@
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import { RoomIdCreate } from '../../../utils/roomIdCreate';
 import { useNavigate } from 'react-router-dom';

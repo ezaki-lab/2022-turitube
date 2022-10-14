@@ -1,6 +1,5 @@
-import { useRecoilState } from 'recoil';
 import React from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import HamburgerButton from "../../img/buttons/hamburger.png";
 import HamburgerModal from './hamburgerModal';
 

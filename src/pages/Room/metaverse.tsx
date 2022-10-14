@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Stage, Layer, Group, Rect, Circle, Image, Text } from 'react-konva';
 import * as atom from '../../common/atom';
 import useImage from 'use-image';
-import useWindowSize from '../../hooks/useWindowSize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 
 import BackGround from '../../img/metaverse_background2.png';
